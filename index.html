@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雨中冒险2 · 物品图鉴</title>
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh;line-height:1.5}
+a{color:inherit;text-decoration:none}
+
+/* ===== Header ===== */
+.header{position:sticky;top:0;z-index:100;background:#161b22;border-bottom:1px solid #30363d;padding:12px 16px 0}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.logo{font-size:1.3rem;font-weight:700;color:#58a6ff;white-space:nowrap}
+.count{font-size:0.8rem;color:#8b949e;white-space:nowrap}
+.search-box{position:relative;flex:1;min-width:180px;max-width:360px}
+.search-box input{width:100%;padding:8px 12px 8px 36px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:0.9rem;outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:#58a6ff}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:#8b949e}
+
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:8px 16px;border-radius:8px 8px 0 0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid transparent;border-bottom:none;position:relative;white-space:nowrap;user-select:none}
+.tab:hover{background:rgba(255,255,255,0.04)}
+.tab.active{border-color:#30363d;background:#0d1117;z-index:1}
+.tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.tab .badge{font-size:0.7rem;padding:1px 6px;border-radius:10px;margin-left:4px;background:rgba(255,255,255,0.1)}
+
+/* ===== Main Content ===== */
+.main{padding:16px;max-width:1400px;margin:0 auto}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:#8b949e;font-size:1.1rem}
+
+/* ===== Item Card ===== */
+.card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,border-color .15s,box-shadow .15s;cursor:default}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
+.card-header{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.card-icon{width:44px;height:44px;border-radius:8px;flex-shrink:0;overflow:hidden}
+.card-icon img{display:block;width:44px;height:44px}
+.card-info{min-width:0}
+.card-name{font-weight:600;font-size:0.95rem;line-height:1.3}
+.card-name-en{font-size:0.75rem;color:#8b949e;margin-top:1px}
+.card-body{padding:10px 12px}
+.card-desc{font-size:0.82rem;color:#b0b8c1;line-height:1.5}
+.card-stack{font-size:0.72rem;color:#8b949e;margin-top:6px}
+.card-dlc{display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:10px;margin-top:6px;font-weight:600}
+
+/* Quality border colors */
+.q-white .card-header{border-left:3px solid #a0a0a0}
+.q-green .card-header{border-left:3px solid #4ade80}
+.q-red .card-header{border-left:3px solid #f87171}
+.q-orange .card-header{border-left:3px solid #fb923c}
+.q-blue .card-header{border-left:3px solid #60a5fa}
+.q-void .card-header{border-left:3px solid #c084fc}
+.q-boss .card-header{border-left:3px solid #facc15}
+.q-storm .card-header{border-left:3px solid #22d3ee}
+
+.q-white .card-icon{background:#3a3a3a}
+.q-green .card-icon{background:#14532d}
+.q-red .card-icon{background:#7f1d1d}
+.q-orange .card-icon{background:#7c2d12}
+.q-blue .card-icon{background:#1e3a5f}
+.q-void .card-icon{background:#3b0764}
+.q-boss .card-icon{background:#713f12}
+.q-storm .card-icon{background:#164e63}
+
+/* ===== Footer ===== */
+.footer{text-align:center;padding:30px;color:#484f58;font-size:0.75rem}
+
+/* ===== Mobile ===== */
+@media(max-width:600px){
+  .items{grid-template-columns:1fr;gap:8px}
+  .header{padding:8px 10px 0}
+  .tab{padding:6px 10px;font-size:0.78rem}
+  .card-header{padding:8px 10px}
+  .card-body{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="logo">🌧 雨中冒险2 · 物品图鉴</span>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search" placeholder="搜索物品名..." autocomplete="off">
+    </div>
+    <span class="count" id="count">---</span>
+  </div>
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<div class="main">
+  <div class="items" id="items"></div>
+</div>
+
+<div class="footer">数据来源 Risk of Rain 2 Wiki · 仅供学习参考</div>
+
+<script>
+// ===== ITEM DATA =====
+const ITEMS = [
+  // ========== 白色 / Common ==========
+  {n:"穿甲弹",en:"Armor-Piercing Rounds",q:"white",d:"对Boss造成额外20%伤害（每层+20%）",s:"线性叠加"},
+  {n:"备用弹匣",en:"Backup Magazine",q:"white",d:"副技能充能次数+1（每层+1）",s:"线性叠加"},
+  {n:"野牛牛排",en:"Bison Steak",q:"white",d:"最大生命值+25（每层+25）",s:"线性叠加"},
+  {n:"鼓舞灯笼",en:"Bolstering Lantern",q:"white",d:"对你和20米内最多3名友军（每层+1）提高10%攻速（每层+3.5%）",s:"线性叠加",dlc:"风暴"},
+  {n:"烟花束",en:"Bundle of Fireworks",q:"white",d:"激活可互动物件时发射8枚烟花（每层+4），每枚造成300%基础伤害",s:"线性叠加"},
+  {n:"生菌蘑菇",en:"Bustling Fungus",q:"white",d:"站立不动1秒后创造治疗区，每秒回复4.5%最大生命值（每层+2.25%），范围3米（每层+1.5米）",s:"线性叠加"},
+  {n:"谨慎蛞蝓",en:"Cautious Slug",q:"white",d:"脱战状态下基础生命回复+3 hp/s（每层+3 hp/s）",s:"线性叠加"},
+  {n:"慢性膨胀",en:"Chronic Expansion",q:"white",d:"击杀敌人时+3.5%伤害（每层+1%），最多10层（每层+5），持续7秒，造成伤害刷新计时",s:"线性叠加",dlc:"风暴"},
+  {n:"撬棍",en:"Crowbar",q:"white",d:"对生命值高于90%的敌人造成+75%伤害（每层+75%）",s:"线性叠加"},
+  {n:"精致手表",en:"Delicate Watch",q:"white",d:"伤害+20%（每层+20%）。受到伤害使生命值低于25%时该物品破碎",s:"线性叠加"},
+  {n:"日蚀光",en:"Eclipse Lite",q:"white",d:"技能冷却完毕时获得临时护盾，数值为最大生命值的1%（每层+0.25%）×技能基础冷却秒数",s:"线性叠加",dlc:"合金"},
+  {n:"灵巧鹿角",en:"Elusive Antlers",q:"white",d:"每10秒（每层-10%）生成能量球，每颗提供+12%移速，最多3层（每层+3），持续12秒",s:"线性叠加",dlc:"风暴"},
+  {n:"能量饮料",en:"Energy Drink",q:"white",d:"冲刺速度+25%（每层+25%）",s:"线性叠加"},
+  {n:"聚焦水晶",en:"Focus Crystal",q:"white",d:"对13米内敌人伤害+20%（每层+20%）",s:"线性叠加"},
+  {n:"汽油",en:"Gasoline",q:"white",d:"击杀敌人点燃12米内敌人（每层+4米），造成150%基础伤害并附加150%燃烧伤害（每层+75%）",s:"线性叠加"},
+  {n:"登山靴",en:"Hiker's Boots",q:"white",d:"从高处攻击敌人时获得+1%暴击率和暴击伤害（每层+1%），最多10层，持续10秒",s:"线性叠加",dlc:"合金"},
+  {n:"透镜制造者眼镜",en:"Lens-Maker's Glasses",q:"white",d:"攻击有10%几率暴击（每层+10%），造成双倍伤害",s:"线性叠加"},
+  {n:"医疗包",en:"Medkit",q:"white",d:"受伤害2秒后回复20+5%最大生命值（每层+5%）",s:"线性叠加"},
+  {n:"摩卡",en:"Mocha",q:"white",d:"攻速+7.5%（每层+7.5%），移速+7%（每层+7%）",s:"线性叠加"},
+  {n:"怪物牙齿",en:"Monster Tooth",q:"white",d:"击杀敌人生成治疗球，回复8+2%最大生命值（每层+2%）",s:"线性叠加"},
+  {n:"奇异蛋白石",en:"Oddly-shaped Opal",q:"white",d:"脱战状态下护甲+100（每层+100）",s:"线性叠加"},
+  {n:"保罗的羊蹄",en:"Paul's Goat Hoof",q:"white",d:"移动速度+14%（每层+14%）",s:"线性叠加"},
+  {n:"个人护盾发生器",en:"Personal Shield Generator",q:"white",d:"获得相当于最大生命值8%的护盾（每层+8%），脱战后充能",s:"线性叠加"},
+  {n:"力量灵药",en:"Power Elixir",q:"white",d:"生命值低于25%时消耗此物品，回复75%最大生命值",s:"一次性触发"},
+  {n:"排斥护甲板",en:"Repulsion Armor Plate",q:"white",d:"减免所有受到的伤害5点（每层+5），最低不低于1点",s:"线性叠加"},
+  {n:"幸运硬币",en:"Roll of Pennies",q:"white",d:"受到敌人伤害获得3金币（每层+3），随时间缩放",s:"线性叠加"},
+  {n:"生锈钥匙",en:"Rusted Key",q:"white",d:"每个关卡随机生成一个隐藏宝箱（80%/20%品质概率），打开消耗此物品",s:"-"},
+  {n:"士兵注射器",en:"Soldier's Syringe",q:"white",d:"攻击速度+15%（每层+15%）",s:"线性叠加"},
+  {n:"粘性炸弹",en:"Sticky Bomb",q:"white",d:"命中时有5%几率（每层+5%）附着炸弹，爆炸造成180%总伤害",s:"线性叠加"},
+  {n:"眩晕手雷",en:"Stun Grenade",q:"white",d:"命中时有5%几率（每层+5%）眩晕敌人2秒",s:"双曲线"},
+  {n:"黄玉胸针",en:"Topaz Brooch",q:"white",d:"击杀敌人获得15点临时护盾（每层+15）",s:"线性叠加"},
+  {n:"坚韧时刻",en:"Tougher Times",q:"white",d:"15%几率阻挡受到的伤害（每层+15%），不受幸运值影响",s:"双曲线"},
+  {n:"三尖匕首",en:"Tri-Tip Dagger",q:"white",d:"10%几率造成流血，造成240%基础伤害（每层+10%）",s:"线性叠加"},
+  {n:"战旗",en:"Warbanner",q:"white",d:"升级或启动传送器时掉落旗帜，强化16米内友军（每层+8米），攻速和移速+30%",s:"线性叠加"},
+  {n:"扭曲回响",en:"Warped Echo",q:"white",d:"下一次受伤害减少10%并分为3段（每层+1），除最后一段外不会致死，每15秒充能",s:"线性叠加",dlc:"风暴"},
+
+  // ========== 绿色 / Uncommon ==========
+  {n:"AtG导弹Mk.1",en:"AtG Missile Mk. 1",q:"green",d:"10%几率发射导弹，造成300%总伤害（每层+300%）",s:"线性叠加"},
+  {n:"弹药带",en:"Bandolier",q:"green",d:"击杀时有18%几率（每层+10%）掉落弹药包，重置所有技能冷却",s:"特殊"},
+  {n:"狂战士肩甲",en:"Berzerker's Pauldron",q:"green",d:"1秒内击杀4名敌人进入狂暴，持续6秒（每层+4秒），移速+50%，攻速+100%",s:"线性叠加"},
+  {n:"炸药箱",en:"Box of Dynamite",q:"green",d:"获得Droneboy中尉。战斗中你的无人机投掷炸药，造成240%伤害（每层+85%），眩晕敌人。10秒充能",s:"线性叠加",dlc:"合金"},
+  {n:"突破鳍",en:"Breaching Fin",q:"green",d:"地面敌人被任意技能命中会被击飞并眩晕。空中敌人被击中可再次击飞最多2次（每层+1）。被击飞敌人承受伤害+10%/次",s:"线性叠加",dlc:"风暴"},
+  {n:"幸运娃娃",en:"Chance Doll",q:"green",d:"在机会祭坛成功时有40%几率（每层+10%）获得更高品质物品",s:"线性叠加",dlc:"风暴"},
+  {n:"时空球",en:"Chronobauble",q:"green",d:"命中敌人减速-60%移速，持续2秒（每层+2秒）",s:"线性叠加"},
+  {n:"收藏家强迫症",en:"Collector's Compulsion",q:"green",d:"拾取物品时全属性+3%持续20秒，最多3层（每层+2）。木桶会给予小型拾取物",s:"线性叠加",dlc:"合金"},
+  {n:"死亡标记",en:"Death Mark",q:"green",d:"带有4种以上负面效果的敌人被标记，受到所有来源伤害+50%，持续7秒（每层+7秒）",s:"线性叠加"},
+  {n:"法拉第刺",en:"Faraday Spur",q:"green",d:"移动积累电荷，满充能时+160%移速和+200%跳跃高度。25%充能以上跳跃触发爆炸，造成400%（每层+280%）伤害，范围5~32.3米（每层+7.5米）",s:"线性叠加",dlc:"合金"},
+  {n:"燃料电池",en:"Fuel Cell",q:"green",d:"装备充能次数+1（每层+1），装备冷却减少15%（每层+15%）",s:"指数叠加"},
+  {n:"戈尔之书",en:"Ghor's Tome",q:"green",d:"击杀时有4%几率掉落价值$25的宝藏（每层+4%），随时间缩放",s:"线性叠加"},
+  {n:"收割者镰刀",en:"Harvester's Scythe",q:"green",d:"暴击率+5%。暴击时回复8点生命值（每层+4）",s:"线性叠加"},
+  {n:"霍普羽毛",en:"Hopoo Feather",q:"green",d:"跳跃次数上限+1（每层+1）",s:"线性叠加"},
+  {n:"猎人鱼叉",en:"Hunter's Harpoon",q:"green",d:"击杀敌人后移速+125%，在1秒（每层+0.5秒）内逐渐衰减",s:"线性叠加"},
+  {n:"点燃坦克",en:"Ignition Tank",q:"green",d:"点燃效果造成的持续伤害+300%（每层+300%）",s:"线性叠加"},
+  {n:"灌输",en:"Infusion",q:"green",d:"击杀敌人永久+1生命值（每层+1），上限100（每层+100）",s:"线性叠加"},
+  {n:"动能阻尼器",en:"Kinetic Dampener",q:"green",d:"有护盾时护甲+30（每层+30）。护盾破碎时释放眩晕脉冲，造成100%伤害+100%最大护盾值（每层+10%）。获得最大生命值4%的护盾",s:"线性叠加",dlc:"合金"},
+  {n:"卡哈罗之戒",en:"Kjaro's Band",q:"green",d:"造成超过400%伤害的命中触发符文火焰龙卷风，造成300%总伤害持续伤害（每层+300%），10秒冷却",s:"线性叠加"},
+  {n:"吸取种子",en:"Leeching Seed",q:"green",d:"造成伤害时回复1点生命值（每层+1）",s:"线性叠加"},
+  {n:"轻子雏菊",en:"Lepton Daisy",q:"green",d:"传送器事件期间释放治疗新星，回复附近友军50%最大生命值。触发1次（每层+1次）",s:"线性叠加"},
+  {n:"光耀射击",en:"Luminous Shot",q:"green",d:"使用副技能存储最多5层充能（每层+1）。3次充能后主技能发射闪电，每发175%总伤害（每层+50%）。副技能冷却-20%",s:"线性叠加",dlc:"风暴"},
+  {n:"毒荆棘",en:"Noxious Thorn",q:"green",d:"+10%几率造成流血。击杀敌人时转移33%负面效果叠加到20米内1名敌人（每层+1，每层+5米范围）",s:"线性叠加",dlc:"风暴"},
+  {n:"旧断头台",en:"Old Guillotine",q:"green",d:"精英怪物生命值低于13%（每层+13%）时立即处决",s:"双曲线"},
+  {n:"旧战争隐形装置",en:"Old War Stealthkit",q:"green",d:"生命值低于25%时获得40%移速和隐身5秒。每30秒充能（每层-50%冷却）",s:"指数递减"},
+  {n:"念珠",en:"Prayer Beads",q:"green",d:"随你获得经验而成长，存储20%额外属性（生命/回复/伤害，每层+5%）。移除时获得所有存储属性",s:"线性叠加",dlc:"风暴"},
+  {n:"掠食本能",en:"Predatory Instincts",q:"green",d:"暴击率+5%。暴击时攻速+12%，最大上限36%（每层+24%）",s:"线性叠加"},
+  {n:"剃刀线",en:"Razorwire",q:"green",d:"受到伤害时爆发剃刀，造成160%伤害，命中最多5个目标（每层+2），范围25米（每层+10米）",s:"线性叠加"},
+  {n:"红色鞭子",en:"Red Whip",q:"green",d:"脱战后移速+30%（每层+30%）",s:"线性叠加"},
+  {n:"再生废料",en:"Regenerating Scrap",q:"green",d:"优先用于绿色3D打印机。每关开始时再生",s:"-"},
+  {n:"玫瑰圆盾",en:"Rose Buckler",q:"green",d:"冲刺时护甲+30（每层+30）",s:"线性叠加"},
+  {n:"鲁纳德之戒",en:"Runald's Band",q:"green",d:"造成超过400%伤害的命中触发符文冰爆，减速80%持续3秒（每层+3秒），造成250%总伤害（每层+250%），10秒冷却",s:"线性叠加"},
+  {n:"促销星",en:"Sale Star",q:"green",d:"每关首次开箱获得额外物品。每层+5%概率获得更多物品",s:"线性叠加",dlc:"风暴"},
+  {n:"运输请求单",en:"Shipping Request Form",q:"green",d:"每关随机生成一个包含2件物品的快递（79%/20%/1%品质概率，每层提高稀有度概率）",s:"特殊"},
+  {n:"手里剑",en:"Shuriken",q:"green",d:"使用主技能时投掷手里剑造成400%基础伤害（每层+100%）。最多持有3发（每层+1），10秒装填",s:"线性叠加"},
+  {n:"鱿鱼触手",en:"Squid Polyp",q:"green",d:"激活可互动物件时召唤鱿鱼炮塔，以100%攻速攻击附近敌人（每层+100%），持续30秒",s:"线性叠加"},
+  {n:"尤克里里",en:"Ukulele",q:"green",d:"25%几率发射连锁闪电造成80%总伤害，弹射最多3个目标（每层+2），范围20米（每层+2米）",s:"线性叠加"},
+  {n:"不稳定传送器",en:"Unstable Transmitter",q:"green",d:"生命值低于25%时获得60%最大生命值临时护盾并释放维度光环8秒，流血并传送走敌人。被光环击杀的敌人延长1秒持续时间。每关再生",s:"一次性",dlc:"风暴"},
+  {n:"战争号角",en:"War Horn",q:"green",d:"激活装备时攻速+70%，持续8秒（每层+4秒）",s:"线性叠加"},
+  {n:"蜡鹌鹑",en:"Wax Quail",q:"green",d:"冲刺中跳跃向前猛冲10米（每层+10米）",s:"线性叠加"},
+  {n:"鬼火",en:"Will-o'-the-wisp",q:"green",d:"击杀敌人时在12米范围（每层+2.4米）内生成熔岩柱，造成350%基础伤害（每层+280%）",s:"线性叠加"},
+
+  // ========== 红色 / Legendary ==========
+  {n:"57叶草",en:"57 Leaf Clover",q:"red",d:"所有随机效果额外掷骰1次（每层+1），选择有利结果",s:"线性叠加"},
+  {n:"神盾",en:"Aegis",q:"red",d:"过量治疗时获得临时护盾，为治疗量的50%（每层+50%）",s:"线性叠加"},
+  {n:"外星人头",en:"Alien Head",q:"red",d:"技能冷却时间减少25%（每层+25%）",s:"指数叠加"},
+  {n:"本的雨衣",en:"Ben's Raincoat",q:"red",d:"阻挡1个负面效果（每层+1），并改为获得10%最大生命值临时护盾。每5秒充能一次",s:"线性叠加"},
+  {n:"瓶装混沌",en:"Bottled Chaos",q:"red",d:"触发1次随机装备效果（每层+1）",s:"线性叠加"},
+  {n:"脑柄",en:"Brainstalks",q:"red",d:"击杀精英怪物进入4秒狂暴（每层+4秒），技能冷却固定为0.5秒",s:"线性叠加"},
+  {n:"辉煌巨兽",en:"Brilliant Behemoth",q:"red",d:"所有攻击在4米范围内爆炸（每层+2.5米），造成额外60%总伤害",s:"线性叠加"},
+  {n:"礼仪匕首",en:"Ceremonial Dagger",q:"red",d:"击杀敌人发射3把追踪匕首，每把造成150%基础伤害（每层+150%）",s:"线性叠加"},
+  {n:"防御微型机器人",en:"Defensive Microbots",q:"red",d:"每0.5秒击落20米内1发投射物（每层+1）。充能速度受攻速影响",s:"线性叠加"},
+  {n:"Dio的最好朋友",en:"Dio's Best Friend",q:"red",d:"死亡时消耗此物品，以3秒无敌状态复生",s:"一次性"},
+  {n:"电击回旋镖",en:"Electric Boomerang",q:"red",d:"15%几率发射电击回旋镖，造成120%伤害（每层+120%），眩晕所有命中敌人，附加42%/秒（每层+42%）持续伤害",s:"线性叠加",dlc:"风暴"},
+  {n:"冰霜遗物",en:"Frost Relic",q:"red",d:"击杀敌人环绕冰风暴，每秒1200%伤害并减速80%持续1.5秒。风暴随击杀扩大半径2米，最大18米（每层+12米）",s:"线性叠加"},
+  {n:"成长花蜜",en:"Growth Nectar",q:"red",d:"每个增益效果提供全属性+4%，最多4层（每层+4）",s:"线性叠加",dlc:"风暴"},
+  {n:"H3AD-5T v2",en:"H3AD-5T v2",q:"red",d:"提高跳跃高度。落地时创造5-100米范围的动能爆炸，根据坠落距离造成1000%-10000%基础伤害。10秒充能（每层-50%）",s:"倒数叠加"},
+  {n:"最快乐的面具",en:"Happiest Mask",q:"red",d:"击杀敌人有7%几率召唤其幽灵，拥有1500%伤害，持续30秒（每层+30秒）",s:"线性叠加"},
+  {n:"强光加力燃烧室",en:"Hardlight Afterburner",q:"red",d:"功能技能（位移技能）充能次数+2（每层+2），冷却减少33%",s:"线性叠加"},
+  {n:"星际办公桌植物",en:"Interstellar Desk Plant",q:"red",d:"击杀时种植治疗果实，5秒后成长为植物，每0.5秒回复5%最大生命值给10米内友军（每层+5米），持续10秒",s:"线性叠加"},
+  {n:"激光瞄准镜",en:"Laser Scope",q:"red",d:"暴击额外造成+100%伤害（每层+100%）",s:"线性叠加"},
+  {n:"恩库哈纳的意见",en:"N'kuhana's Opinion",q:"red",d:"存储100%治疗量为灵魂能量（每层+100%）。灵魂能量达10%最大生命值时发射骷髅，造成250%灵魂能量伤害",s:"线性叠加"},
+  {n:"联网苦难",en:"Networked Suffering",q:"red",d:"感染最多4名敌人（每层+2）植入计算机病毒，复制45%受伤并汇入全局伤害池。每3秒所有被感染敌人承受100%池内伤害",s:"线性叠加",dlc:"合金"},
+  {n:"孤儿核心",en:"Orphaned Core",q:"red",d:"获得友好的Solus单位，冲向敌人造成400%伤害（每层+400%）。继承你的移速物品，移速越快伤害越高。可抚摸以清除负面效果，15秒充能",s:"线性叠加",dlc:"合金"},
+  {n:"口袋洲际弹道导弹",en:"Pocket I.C.B.M.",q:"red",d:"所有导弹物品和装备额外发射2枚导弹。导弹伤害+0%（每层+50%）",s:"线性叠加"},
+  {n:"活力架",en:"Rejuvenation Rack",q:"red",d:"治疗量+100%（每层+100%）",s:"线性叠加"},
+  {n:"共鸣碟",en:"Resonance Disc",q:"red",d:"7秒内击杀4名敌人充能共鸣碟。发射后造成300%（每层+300%）伤害穿透未击杀的敌人，然后爆炸造成1000%（每层+1000%）伤害。返回时再次造成300%（每层+300%）伤害",s:"线性叠加"},
+  {n:"符文透镜",en:"Runic Lens",q:"red",d:"3%几率召唤陨石，造成2000%基础伤害。每造成100%攻击伤害增加3%触发率（每层+3%）和150%伤害（每层+50%）",s:"线性叠加",dlc:"风暴"},
+  {n:"有知肉钩",en:"Sentient Meat Hook",q:"red",d:"20%几率（每层+20%）发射追踪钩子命中最多10个敌人（每层+5），造成100%总伤害",s:"双曲线/线性"},
+  {n:"粉碎正义",en:"Shattering Justice",q:"red",d:"命中敌人5次后降低其护甲60点，持续8秒（每层+8秒）",s:"线性叠加"},
+  {n:"洪亮低语",en:"Sonorous Whispers",q:"red",d:"大型怪物死亡必定掉落物品。精英怪物有5%几率掉落物品（每层+1%）",s:"线性叠加",dlc:"风暴"},
+  {n:"灵魂催化剂",en:"Soulbound Catalyst",q:"red",d:"击杀减少装备冷却4秒（每层+2秒）",s:"线性叠加"},
+  {n:"备用无人机零件",en:"Spare Drone Parts",q:"red",d:"获得Col. Droneman。无人机攻速和冷却+25%（每层+25%）。无人机命中时有10%几率发射导弹，造成150%总伤害。无人机获得自动链枪，造成6×50%伤害，弹射2名敌人",s:"指数/线性"},
+  {n:"次级复制器",en:"Substandard Duplicator",q:"red",d:"拾取物品时获得该物品的临时复制品，临时物品持续时间+10秒（每层+10秒）",s:"线性叠加",dlc:"合金"},
+  {n:"共生蝎",en:"Symbiotic Scorpion",q:"red",d:"100%几率命中时永久降低敌人护甲2点（每层+2）",s:"线性叠加"},
+  {n:"不稳定特斯拉线圈",en:"Unstable Tesla Coil",q:"red",d:"每0.5秒释放闪电命中3名敌人（每层+2），造成200%基础伤害。每10秒关闭一次",s:"线性叠加"},
+  {n:"秃鹫之觉醒",en:"Wake of Vultures",q:"red",d:"击杀精英怪物获得其力量，持续8秒（每层+5秒）",s:"线性叠加"},
+  {n:"战争债券",en:"War Bonds",q:"red",d:"Boss战期间5枚导弹轰击区域，每枚造成Boss最大生命值2.5%伤害（每层+2.5%）。Boss战前每获得50金币增加1枚导弹，最多20枚（每层+5），金币要求随时间增长",s:"线性叠加",dlc:"风暴"},
+
+  // ========== 橙色 / Equipment (主动装备) ==========
+  {n:"一次性导弹发射器",en:"Disposable Missile Launcher",q:"orange",d:"发射12枚导弹，每枚造成300%伤害。45秒冷却",s:"-"},
+  {n:"外来水果",en:"Foreign Fruit",q:"orange",d:"立即回复25%最大生命值。45秒冷却",s:"-"},
+  {n:"原始立方体",en:"Primordial Cube",q:"orange",d:"发射黑洞将10米内敌人拉向中心。60秒冷却",s:"-"},
+  {n:"眼罩HUD",en:"Ocular HUD",q:"orange",d:"获得100%暴击率持续8秒。60秒冷却",s:"-"},
+  {n:"后备无人机",en:"The Back-up",q:"orange",d:"召唤4架攻击无人机持续战斗。60秒冷却",s:"-"},
+  {n:"预充能累加器",en:"Preon Accumulator",q:"orange",d:"发射大型等离子球造成最高6000%伤害（随距离增大）。140秒冷却",s:"-"},
+  {n:"火山蛋",en:"Volcanic Egg",q:"orange",d:"变为燃烧彗星滚动，对周围敌人造成大量伤害。30秒冷却",s:"-"},
+  {n:"皇家电容器",en:"Royal Capacitor",q:"orange",d:"对目标降下闪电打击，造成3000%伤害。20秒冷却",s:"-"},
+  {n:"爆炸淋浴",en:"Blast Shower",q:"orange",d:"清除所有负面效果并对周围造成少量伤害。20秒冷却",s:"-"},
+  {n:"乳白蛹",en:"Milky Chrysalis",q:"orange",d:"获得飞行能力，移速+20%。15秒冷却",s:"-"},
+  {n:"雷达扫描仪",en:"Radar Scanner",q:"orange",d:"揭示所有互动对象位置。45秒冷却",s:"-"},
+  {n:"古怪花瓶",en:"Eccentric Vase",q:"orange",d:"创建连接两点的隧道持续30秒。60秒冷却",s:"-"},
+  {n:"瘤木精灵",en:"Gnarled Woodsprite",q:"orange",d:"伴生治疗生物，被动回复1.5%/秒最大生命值。主动使用立即回复10%。15秒冷却",s:"-"},
+  {n:"戈拉格的杰作",en:"Gorag's Opus",q:"orange",d:"附近所有友军进入狂暴7秒，攻速移速+50%。45秒冷却",s:"-"},
+  {n:"请原谅我",en:"Forgive Me Please",q:"orange",d:"投掷玩偶，每1秒触发一次'击杀时效果'共8次。45秒冷却",s:"-"},
+  {n:"锯回旋镖",en:"Sawmerang",q:"orange",d:"投掷锯片回旋镖，命中敌人造成流血。30秒冷却",s:"-"},
+  {n:"回收器",en:"Recycler",q:"orange",d:"将一件物品转化为同品质的随机另一件。仅限使用一次",s:"一次性"},
+  {n:"燃料阵列",en:"Fuel Array",q:"orange",d:"受到伤害时消耗此物品产生巨大爆炸。用于获取机器人角色",s:"特殊"},
+  {n:"尖晶石补药",en:"Spinel Tonic",q:"orange",d:"全属性+100%持续20秒。使用后有20%几率全属性-5%（永久）。60秒冷却",s:"-"},
+  {n:"地狱火酊剂",en:"Hellfire Tincture",q:"orange",d:"点燃自身和8米内所有敌人。45秒冷却",s:"-"},
+  {n:"发光陨石",en:"Glowing Meteorite",q:"orange",d:"在玩家位置召唤陨石雨造成巨大伤害。45秒冷却",s:"-"},
+  {n:"玉象",en:"Jade Elephant",q:"orange",d:"获得+500护甲持续5秒。45秒冷却",s:"-"},
+  {n:"小型古布",en:"Goobo Jr.",q:"orange",d:"生成拥有800%伤害和800%生命值的分身AI，持续30秒。100秒冷却",s:"-"},
+  {n:"行政卡",en:"Executive Card",q:"orange",d:"每次购物获得额外一件相同物品。45秒冷却",s:"-"},
+  {n:"远程咖啡机",en:"Remote Caffeinator",q:"orange",d:"召唤咖啡机，给予附近友军25%攻速和移速。30秒冷却",s:"-"},
+  {n:"战利品猎人帽",en:"Trophy Hunter's Tricorn",q:"orange",d:"处决大型怪物必定掉落其对应独特物品。消耗此装备",s:"一次性"},
+  {n:"燃烧弹(6联装)",en:"Molotov (6-Pack)",q:"orange",d:"投掷6枚燃烧弹点燃地面造成持续伤害。45秒冷却",s:"-"},
+  {n:"超级水蛭",en:"Super Massive Leech",q:"orange",d:"释放超级水蛭附着在敌人身上，持续偷取生命回复自身。60秒冷却",s:"-"},
+  {n:"众筹者",en:"The Crowdfunder",q:"orange",d:"消耗金币发射子弹对敌人造成伤害。5秒冷却",s:"-"},
+
+  // ========== 蓝色 / Lunar (月球装备) ==========
+  {n:"效忠念珠",en:"Beads of Fealty",q:"blue",d:"似乎什么都没做...但在传送器完成时会产生不同的结果",s:"-"},
+  {n:"易碎冠冕",en:"Brittle Crown",q:"blue",d:"命中时30%几率获得2金币（每层+2），随时间缩放。受到伤害时失去金币，失去量为最大生命值损失百分比×100%（每层+100%）",s:"线性叠加"},
+  {n:"尸花",en:"Corpsebloom",q:"blue",d:"治疗量+100%（每层+100%）。所有治疗转为持续治疗，每秒最多恢复10%最大生命值（每层-50%）",s:"线性/倒数"},
+  {n:"挑衅者凿子",en:"Defiant Gouge",q:"blue",d:"使用祭坛时召唤敌人（每层增强）出现在附近，随时间缩放",s:"线性叠加"},
+  {n:"自我中心",en:"Egocentrism",q:"blue",d:"每3秒（每层-50%）获得一颗轨道炸弹，碰撞爆炸造成360%伤害，最多3颗（每层+1）。每60秒将一件随机物品转化为此物品",s:"倒数/线性"},
+  {n:"异端精华",en:"Essence of Heresy",q:"blue",d:"将你的特殊技能替换为：造成伤害叠加Ruin印记（每层+10秒持续）。激活技能引爆所有印记造成300%+每层120%伤害。8秒充能（每层+8）",s:"线性叠加"},
+  {n:"颂赞归零",en:"Eulogy Zero",q:"blue",d:"物品有5%几率（每层+5%）变为月球装备",s:"线性叠加"},
+  {n:"聚焦汇聚",en:"Focused Convergence",q:"blue",d:"传送器充能加速30%（每层+30%），但传送器区域缩小50%（每层-50%）",s:"线性/倒数"},
+  {n:"溺水者手势",en:"Gesture of the Drowned",q:"blue",d:"装备冷却减少50%（每层+15%）。强制装备在冷却完毕时自动激活",s:"指数叠加"},
+  {n:"异端钩子",en:"Hooks of Heresy",q:"blue",d:"将副技能替换为：充能发射切割风暴，每秒875%伤害，3秒后爆炸造成700%伤害并定身敌人3秒（每层+3秒），5秒充能（每层+5）",s:"线性叠加"},
+  {n:"光通量肩甲",en:"Light Flux Pauldron",q:"blue",d:"技能冷却-50%（每层+50%），攻速-50%（每层+50%）",s:"指数/倒数"},
+  {n:"长久孤独",en:"Longstanding Solitude",q:"blue",d:"升级时获得下次购买的免费解锁（每层+1），但所有金币转化为经验。任何使用金币的购买费用+50%（每层+50%）",s:"线性叠加",dlc:"风暴"},
+  {n:"水银轴",en:"Mercurial Rachis",q:"blue",d:"在随机位置创造力量结界，16米内（每层+50%）敌我双方+50%伤害",s:"指数叠加"},
+  {n:"中子星重量",en:"Neutronium Weight",q:"blue",d:"战斗中降低属性，命中时将物品传给敌人。死亡时传给击杀者。伤害-30%（每层+10%），攻速-30%（每层+10%），移速-30%（每层+10%），护甲-35（每层+15）",s:"指数/线性",dlc:"合金"},
+  {n:"纯净",en:"Purity",q:"blue",d:"所有技能冷却-2秒（每层+1）。所有随机效果额外掷骰1次（每层+1）选择不利结果",s:"线性叠加"},
+  {n:"塑形玻璃",en:"Shaped Glass",q:"blue",d:"基础伤害+100%（每层+100%）。最大生命值-50%（每层+50%）",s:"指数叠加"},
+  {n:"石通量肩甲",en:"Stone Flux Pauldron",q:"blue",d:"最大生命值+100%（每层+100%）。移速-50%（每层+50%）",s:"线性/倒数"},
+  {n:"异端步态",en:"Strides of Heresy",q:"blue",d:"将功能技能替换为：虚无化并+30%移速，回复18.2%最大生命值（每层+18.2%），持续3秒（每层+3）",s:"线性叠加"},
+  {n:"超越",en:"Transcendence",q:"blue",d:"将除1点外的所有生命值转化为可再生护盾。获得+50%最大生命值（每层+25%）",s:"线性叠加"},
+  {n:"异端幻象",en:"Visions of Heresy",q:"blue",d:"将主技能替换为：发射追踪碎片延迟爆炸造成120%基础伤害。最多12发充能（每层+12），2秒装填（每层+2）",s:"线性叠加"},
+
+  // ========== 虚空 / Void (紫色) ==========
+  {n:"底栖绽放",en:"Benthic Bloom",q:"void",d:"每关开始时将3件随机物品（每层+3）升级为下一级品质。腐化所有57叶草",s:"线性叠加"},
+  {n:"包壳钥匙",en:"Encrusted Key",q:"void",d:"每关随机生成隐藏宝箱含虚空物品（60%/30%/10%品质）。消耗此物品。腐化所有生锈钥匙",s:"-"},
+  {n:"失落的预言者镜片",en:"Lost Seer's Lenses",q:"void",d:"攻击有0.5%几率（每层+0.5%）立即处决非Boss敌人。腐化所有透镜制造者眼镜",s:"线性叠加"},
+  {n:"针刺",en:"Needletick",q:"void",d:"10%几率（每层+10%）使敌人坍缩，造成400%基础伤害。腐化所有三尖匕首",s:"线性叠加"},
+  {n:"新生的佐伊亚",en:"Newly Hatched Zoea",q:"void",d:"每60秒（每层-50%）召唤随机虚空盟友，最多1名（每层+1）。腐化所有黄色/Boss物品",s:"倒数"},
+  {n:"等离子虾",en:"Plasma Shrimp",q:"void",d:"获得护盾时发射一枚导弹造成200%总伤害（每层+100%）。腐化所有AtG导弹Mk.1",s:"线性叠加"},
+  {n:"多形性护符",en:"Polylute",q:"void",d:"25%几率发射闪电弹射造成80%总伤害，额外对每名敌人造成80%伤害。腐化所有尤克里里",s:"线性叠加"},
+  {n:"虚空之焰",en:"Safer Spaces",q:"void",d:"阻挡下一次伤害并提供一个临时无敌帧。每15秒充能一次（每层-25%冷却）。腐化所有坚韧时刻",s:"倒数"},
+  {n:"奇点带",en:"Singularity Band",q:"void",d:"造成超过400%伤害的命中触发引力奇点，将10米内（每层+5米）的敌人拉入并造成400%总伤害（每层+400%）。腐化所有符文之戒",s:"线性叠加"},
+  {n:"虚空熊",en:"Voidsent Flame",q:"void",d:"击杀点燃敌方单位，但伤害类型改为虚空伤害。腐化所有汽油",s:"线性叠加"},
+  {n:"哭泣真菌",en:"Weeping Fungus",q:"void",d:"冲刺时产生治疗区，每秒回复7.5%最大生命值（每层+7.5%），范围4米（每层+2米）。腐化所有生菌蘑菇",s:"线性叠加"},
+  {n:"虚空伴侣",en:"Void Fiend's Grasp",q:"void",d:"获得1个虚空搭档为你作战。腐化所有鱿鱼触手",s:"线性叠加"},
+  {n:"微型黑洞",en:"Void Devastator",q:"void",d:"击杀敌人在其位置创造一个小型黑洞。腐化所有鬼火",s:"线性叠加"},
+  {n:"虚空之诱",en:"Tentabauble",q:"void",d:"命中时有5%几率定身敌人2秒。腐化所有时空球",s:"线性叠加"},
+
+  // ========== 合金 / Boss (黄色 = Boss掉落) ==========
+  {n:"神器钥匙",en:"Artifact Key",q:"boss",d:"一块蕴含着巨大力量的石碎片",s:"-",src:"堡垒的神器挑战"},
+  {n:"充能穿孔器",en:"Charged Perforator",q:"boss",d:"10%几率命中时落下闪电打击，造成500%伤害（每层+500%）",s:"线性叠加",src:"超载蠕虫"},
+  {n:"防御核心",en:"Defense Nucleus",q:"boss",d:"击杀精英怪物生成Alpha构造体，拥有300%伤害和300%生命值。最多4个（每层+4）",s:"线性叠加",src:"Xi构造体"},
+  {n:"共情核心",en:"Empathy Cores",q:"boss",d:"每30秒召唤2个Solus探测器，团队每多一名盟友伤害+100%（每层+100%）",s:"线性叠加",src:"Solus控制单元"},
+  {n:"加密小脑",en:"Encrypted Cerebellum",q:"boss",d:"包含集体网络加密残余。需要解密后才能返回",s:"-",src:"Solus之翼",dlc:"合金"},
+  {n:"暴露小脑",en:"Exposed Cerebellum",q:"boss",d:"代表集体网络的蜂群数据核心。可交给强大实体",s:"-",dlc:"合金"},
+  {n:"故障导体",en:"Faulty Conductor",q:"boss",d:"每15秒（每层-20%）释放电波激励友军7秒。被激励友军获得+30%攻速和移速，电击物品和攻击必定暴击",s:"双曲线叠加",src:"合金猎人",dlc:"合金"},
+  {n:"功能耦合器",en:"Functional Coupler",q:"boss",d:"额外持有1件装备（每层+1）。按互动和装备键循环切换持有的装备",s:"线性叠加",src:"Solus融合器",dlc:"合金"},
+  {n:"起源循环",en:"Genesis Loop",q:"boss",d:"生命值低于25%时爆炸，造成6000%基础伤害。每30/(2+每层1)秒充能",s:"倒数",src:"流浪巨人"},
+  {n:"金色种子",en:"Halcyon Seed",q:"boss",d:"传送器事件中召唤Aurelionite，拥有100%伤害（每层+50%）和100%生命值（每层+100%）",s:"线性叠加",src:"金色巨人"},
+  {n:"辐光珍珠",en:"Irradiant Pearl",q:"boss",d:"全属性+10%（每层+10%）",s:"线性叠加",src:"净化池"},
+  {n:"小门徒",en:"Little Disciple",q:"boss",d:"冲刺时每1.6秒发射追踪小精灵造成300%伤害（每层+300%），射击速度随移速增加",s:"线性叠加",src:"丛林守护者"},
+  {n:"泥沼瓮",en:"Mired Urn",q:"boss",d:"战斗中13米内最近1名（每层+1）敌人被牵引，每秒100%伤害附加焦油，你回复100%造成的伤害",s:"线性叠加",src:"沙行者"},
+  {n:"熔岩穿孔器",en:"Molten Perforator",q:"boss",d:"10%几率命中时召出3颗岩浆球，每颗造成300%伤害（每层+300%）",s:"线性叠加",src:"岩浆蠕虫"},
+  {n:"珍珠",en:"Pearl",q:"boss",d:"最大生命值+10%（每层+10%）",s:"线性叠加",src:"净化池"},
+  {n:"海葵",en:"Planula",q:"boss",d:"接下来受到的伤害回复15点（每层+15）",s:"线性叠加",src:"爷爷"},
+  {n:"监狱矩阵",en:"Prison Matrix",q:"boss",d:"护甲+50%。可放置在矩阵终端",s:"-",dlc:"合金"},
+  {n:"女王之腺",en:"Queen's Gland",q:"boss",d:"每30秒召唤甲虫守卫，拥有300%伤害和100%生命值。最多1名（每层+1）",s:"线性叠加",src:"甲虫女王"},
+  {n:"哨兵钥匙",en:"Sentry Key",q:"boss",d:"移速+15%。可放置在哨兵终端或用于解密",s:"-",dlc:"合金"},
+  {n:"碎裂脾脏",en:"Shatterspleen",q:"boss",d:"暴击率+5%。暴击造成240%基础伤害流血。流血敌人死亡时爆炸造成400%（每层+400%）伤害+15%（每层+15%）最大生命值额外伤害",s:"线性叠加",src:"小鬼霸主"},
+  {n:"钛巨结",en:"Titanic Knurl",q:"boss",d:"最大生命值+40（每层+40），基础生命回复+1.6 hp/s（每层+1.6 hp/s）",s:"线性叠加",src:"石巨人"},
+
+  // ========== 风暴 / Seekers of the Storm DLC items ==========
+  // (这些物品同时出现在对应品质中，这里独立列出DLC专属物品)
+];
+
+// ===== QUALITY CONFIG =====
+const QUALITIES = {
+  white: {label:"白",color:"#a0a0a0",bg:"#3a3a3a",cls:"q-white"},
+  green: {label:"绿",color:"#4ade80",bg:"#14532d",cls:"q-green"},
+  red:   {label:"红",color:"#f87171",bg:"#7f1d1d",cls:"q-red"},
+  orange:{label:"橙(主动)",color:"#fb923c",bg:"#7c2d12",cls:"q-orange"},
+  blue:  {label:"蓝(月球)",color:"#60a5fa",bg:"#1e3a5f",cls:"q-blue"},
+  void:  {label:"虚空",color:"#c084fc",bg:"#3b0764",cls:"q-void"},
+  boss:  {label:"合金(Boss)",color:"#facc15",bg:"#713f12",cls:"q-boss"},
+  storm: {label:"风暴(DLC)",color:"#22d3ee",bg:"#164e63",cls:"q-storm"},
+  all:   {label:"全部",color:"#8b949e",bg:"#21262d",cls:""},
+};
+const TAB_ORDER = ["all","white","green","red","boss","orange","blue","void","storm"];
+let activeTab = "all";
+let searchTerm = "";
+
+// ===== RENDER TABS =====
+function getCount(q) {
+  if (q === "storm") return ITEMS.filter(i => i.dlc === "风暴").length;
+  if (q === "all") return ITEMS.length;
+  return ITEMS.filter(i => i.q === q).length;
+}
+function renderTabs() {
+  const container = document.getElementById("tabs");
+  container.innerHTML = TAB_ORDER.map(q => {
+    const cfg = QUALITIES[q];
+    const count = getCount(q);
+    const active = q === activeTab ? " active" : "";
+    return `<div class="tab${active}" data-q="${q}" onclick="setTab('${q}')">
+      <span class="dot" style="background:${cfg.color}"></span>${cfg.label}
+      <span class="badge">${count}</span>
+    </div>`;
+  }).join("");
+}
+
+// ===== RENDER ITEMS =====
+function renderItems() {
+  const container = document.getElementById("items");
+  let filtered = ITEMS;
+
+  if (activeTab === "storm") {
+    filtered = filtered.filter(i => i.dlc === "风暴");
+  } else if (activeTab !== "all") {
+    filtered = filtered.filter(i => i.q === activeTab);
+  }
+  if (searchTerm) {
+    const s = searchTerm.toLowerCase();
+    filtered = filtered.filter(i =>
+      i.n.toLowerCase().includes(s) ||
+      i.en.toLowerCase().includes(s) ||
+      (i.d||"").toLowerCase().includes(s) ||
+      (i.dlc||"").toLowerCase().includes(s)
+    );
+  }
+
+  document.getElementById("count").textContent = `共 ${filtered.length} 件`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的物品</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(i => {
+    const cfg = QUALITIES[i.q] || QUALITIES.white;
+    const initials = i.n.replace(/[^\u4e00-\u9fff]/g,'').slice(0,2) || i.en.slice(0,2);
+    const svgIcon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><rect width="44" height="44" rx="8" fill="${cfg.bg}"/><text x="22" y="29" text-anchor="middle" font-size="16" font-weight="bold" fill="${cfg.color}" font-family="sans-serif">${initials}</text></svg>`)}`;
+    const webpFile = i.en.replace(/'/g,'').replace(/ /g,'_').replace(/\./g,'');
+    const webpPath = `icons/${webpFile}.webp`;
+    const dlcTag = i.dlc ? `<span class="card-dlc" style="background:${i.dlc==='合金'?'#713f12':'#164e63'};color:${i.dlc==='合金'?'#facc15':'#22d3ee'}">${i.dlc} DLC</span>` : "";
+    const srcTag = i.src ? `<span class="card-dlc" style="background:#1a1a2e;color:#8b949e">${i.src}</span>` : "";
+    return `
+    <div class="card ${cfg.cls}">
+      <div class="card-header">
+        <div class="card-icon">
+          <img src="${svgIcon}" class="icon-fb" alt="" style="width:44px;height:44px">
+          <img src="${webpPath}" class="icon-wp" alt="" style="width:44px;height:44px;display:none" onload="var fb=this.parentElement.querySelector('.icon-fb');fb.style.display='none';this.style.display=''">
+        </div>
+        <div class="card-info">
+          <div class="card-name" style="color:${cfg.color}">${i.n}</div>
+          <div class="card-name-en">${i.en}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">${i.d}</div>
+        ${i.s ? `<div class="card-stack">📊 叠加方式：${i.s}</div>` : ''}
+        ${dlcTag}${srcTag}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setTab(q) {
+  activeTab = q;
+  renderTabs();
+  renderItems();
+}
+
+// ===== SEARCH =====
+document.addEventListener("DOMContentLoaded", () => {
+  renderTabs();
+  renderItems();
+  document.getElementById("search").addEventListener("input", e => {
+    searchTerm = e.target.value.trim();
+    renderItems();
+  });
+});
+</script>
+
+</body>
+</html>
