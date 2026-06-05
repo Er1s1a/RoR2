@@ -390,10 +390,7 @@ function renderItems() {
     return `
     <div class="card ${cfg.cls}">
       <div class="card-header">
-        <div class="card-icon">
-          <img src="${svgIcon}" class="icon-fb" alt="" style="width:44px;height:44px">
-          <img src="${webpPath}" class="icon-wp" alt="" style="width:44px;height:44px;display:none" onload="var fb=this.parentElement.querySelector('.icon-fb');fb.style.display='none';this.style.display=''">
-        </div>
+        <div class="card-icon" data-svg="${svgIcon.replace(/"/g,'&quot;')}" data-webp="${webpPath}"></div>
         <div class="card-info">
           <div class="card-name" style="color:${cfg.color}">${i.n}</div>
           <div class="card-name-en">${i.en}</div>
@@ -406,6 +403,15 @@ function renderItems() {
       </div>
     </div>`;
   }).join("");
+
+  // Load icons: try webp first, fall back to SVG on error
+  container.querySelectorAll('.card-icon').forEach(el => {
+    const img = document.createElement('img');
+    img.style.cssText = 'width:44px;height:44px';
+    img.src = el.dataset.webp;
+    img.onerror = function() { this.src = el.dataset.svg; this.onerror = null; };
+    el.appendChild(img);
+  });
 }
 
 function setTab(q) {
