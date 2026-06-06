@@ -756,7 +756,7 @@ function renderSurvivors() {
       return sv.n.toLowerCase().indexOf(s) !== -1 ||
         sv.en.toLowerCase().indexOf(s) !== -1 ||
         sv.uk.toLowerCase().indexOf(s) !== -1 ||
-        (sv.dl||"").toLowerCase().indexOf(s) !== -1 ||
+        (sv.dc||"").toLowerCase().indexOf(s) !== -1 ||
         sv.sk.some(function(sk){ return sk.n.indexOf(s) !== -1 || sk.e.toLowerCase().indexOf(s) !== -1; });
     });
   }
@@ -785,7 +785,6 @@ function renderSurvivors() {
           '<div class="skill-desc">' + sk.d + (sk.cd ? ' <span class="skill-cd">CD ' + sk.cd + '</span>' : '') + (sk.pc ? ' <span class="skill-cd">PC ' + sk.pc + '</span>' : '') + '</div>' +
         '</div></div>';
     }).join("");
-    var iconFile = 'icons/survivor_' + sv.nEn.replace(/'/g,'').replace(/ /g,'_') + '.webp';
     return '<div class="survivor-card" onclick="this.classList.toggle(\'expanded\')">' +
       '<div class="survivor-header">' +
         '<div class="survivor-icon" style="background:' + bgCol + ';color:#e6edf3">' +
@@ -793,7 +792,7 @@ function renderSurvivors() {
         '</div>' +
         '<div class="survivor-info">' +
           '<div class="survivor-name">' + sv.n + '</div>' +
-          '<div class="survivor-name-en">' + sv.nEn + '</div>' +
+          '<div class="survivor-name-en">' + sv.en + '</div>' +
           '<div class="survivor-stats">' + statsHtml + '</div>' +
           dlcBadge +
         '</div>' +
