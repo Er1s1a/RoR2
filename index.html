@@ -88,39 +88,73 @@ a{color:inherit;text-decoration:none}
 .survivor-name{font-weight:700;font-size:1rem;color:#f0f6fc}
 .survivor-name-en{font-size:0.73rem;color:#8b949e;margin-top:1px}
 .survivor-stats{font-size:0.7rem;color:#6e7681;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
-.survivor-stats span{padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);white-space:nowrap}
+.survivor-stats span{padding:3px 10px;border-radius:12px;font-weight:600;font-size:0.68rem;white-space:nowrap;letter-spacing:0.3px}
+.survivor-stats span:nth-child(1){background:rgba(248,113,113,0.15);color:#fca5a5}
+.survivor-stats span:nth-child(2){background:rgba(251,146,60,0.15);color:#fdba74}
+.survivor-stats span:nth-child(3){background:rgba(96,165,250,0.15);color:#93c5fd}
+.survivor-stat-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-weight:600;font-size:0.68rem;white-space:nowrap;letter-spacing:0.3px}
 .survivor-dlc-badge{font-size:0.65rem;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:3px;display:inline-block}
 .survivor-expand{font-size:1rem;color:#484f58;transition:transform .25s;flex-shrink:0}
 .survivor-card.expanded .survivor-expand{transform:rotate(180deg)}
 .survivor-body{display:none;padding:14px;background:rgba(0,0,0,0.15)}
 .survivor-card.expanded .survivor-body{display:block}
-.survivor-unlock{font-size:0.73rem;color:#8b949e;margin-bottom:12px;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:2px solid #facc15}
+.survivor-unlock{font-size:0.73rem;color:#8b949e;margin-bottom:12px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:3px solid #facc15}
 
 /* Skills 4-column grid */
-.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.skill-slot{display:flex;flex-direction:column;gap:6px}
-.skill-slot-hd{text-align:center;font-size:0.7rem;font-weight:700;padding:4px 0 6px;border-radius:4px;color:#c9d1d9}
-.skill-slot-hd.m1{background:rgba(248,113,113,0.15);color:#f87171}
-.skill-slot-hd.m2{background:rgba(74,222,128,0.15);color:#4ade80}
-.skill-slot-hd.sf{background:rgba(96,165,250,0.15);color:#60a5fa}
-.skill-slot-hd.rr{background:rgba(251,146,60,0.15);color:#fb923c}
-.skill-slot-hd .key{font-size:0.6rem;opacity:0.7;margin-top:2px;display:block}
-.skill-card{border:1px solid #30363d;border-radius:6px;padding:8px;text-align:center;position:relative;transition:border-color .15s}
-.skill-card.def{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.02)}
-.skill-card.alt{border-color:rgba(255,255,255,0.05);background:rgba(0,0,0,0.1);margin-top:4px}
-.skill-card .sk-icon{width:32px;height:32px;margin:0 auto 4px;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.04)}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+
+/* Slot-level color coding */
+.skill-slot{display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:8px;border-left:3px solid transparent;background:rgba(255,255,255,0.01);transition:background .2s}
+.skill-slot:has(.m1){border-left-color:rgba(248,113,113,0.35);background:rgba(248,113,113,0.04)}
+.skill-slot:has(.m2){border-left-color:rgba(74,222,128,0.35);background:rgba(74,222,128,0.04)}
+.skill-slot:has(.sf){border-left-color:rgba(96,165,250,0.35);background:rgba(96,165,250,0.04)}
+.skill-slot:has(.rr){border-left-color:rgba(251,146,60,0.35);background:rgba(251,146,60,0.04)}
+
+/* Slot header */
+.skill-slot-hd{text-align:center;font-size:0.75rem;font-weight:700;padding:6px 0 8px;border-radius:4px 4px 0 0;color:#c9d1d9;letter-spacing:0.5px}
+.skill-slot-hd.m1{background:rgba(248,113,113,0.2);color:#fca5a5;border-bottom:1px solid rgba(248,113,113,0.3)}
+.skill-slot-hd.m2{background:rgba(74,222,128,0.2);color:#86efac;border-bottom:1px solid rgba(74,222,128,0.3)}
+.skill-slot-hd.sf{background:rgba(96,165,250,0.2);color:#93c5fd;border-bottom:1px solid rgba(96,165,250,0.3)}
+.skill-slot-hd.rr{background:rgba(251,146,60,0.2);color:#fdba74;border-bottom:1px solid rgba(251,146,60,0.3)}
+.skill-slot-hd .key{font-size:0.6rem;opacity:0.7;margin-top:2px;display:block;font-weight:400;letter-spacing:0}
+
+/* Skill cards base */
+.skill-card{border:1px solid #30363d;border-radius:8px;padding:8px;text-align:center;position:relative;transition:all .2s}
+
+/* Default skill — prominent */
+.skill-card.def{padding:12px 10px 14px;background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.1);box-shadow:0 0 12px rgba(255,255,255,0.015)}
+.skill-slot:has(.m1) .skill-card.def{border-left:3px solid rgba(248,113,113,0.55)}
+.skill-slot:has(.m2) .skill-card.def{border-left:3px solid rgba(74,222,128,0.55)}
+.skill-slot:has(.sf) .skill-card.def{border-left:3px solid rgba(96,165,250,0.55)}
+.skill-slot:has(.rr) .skill-card.def{border-left:3px solid rgba(251,146,60,0.55)}
+.skill-card.def:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);box-shadow:0 0 16px rgba(255,255,255,0.04);transform:translateY(-1px)}
+
+/* Alternate skill — compact secondary */
+.skill-card.alt{padding:6px 8px;background:rgba(0,0,0,0.12);border:1px dashed rgba(255,255,255,0.06);opacity:0.85;margin-top:2px}
+.skill-card.alt:hover{opacity:1;border-color:rgba(255,255,255,0.14);background:rgba(0,0,0,0.08);box-shadow:0 0 8px rgba(255,255,255,0.02)}
+
+/* Skill icon */
+.skill-card .sk-icon{width:36px;height:36px;margin:0 auto 5px;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.05)}
+.skill-card.alt .sk-icon{width:28px;height:28px;margin-bottom:3px}
 .skill-card .sk-icon img{width:100%;height:100%;object-fit:contain}
-.skill-card .sk-name{font-size:0.75rem;font-weight:600;color:#e6edf3;margin-bottom:2px}
-.skill-card .sk-desc{font-size:0.65rem;color:#8b949e;line-height:1.4}
-.skill-card .sk-tag{display:inline-block;font-size:0.55rem;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:3px}
-.skill-alt-badge{font-size:0.55rem;color:#facc15;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
-.sk-unlock{font-size:0.55rem;color:#8b949e;margin-top:4px;padding:3px 5px;background:rgba(250,204,21,0.06);border-radius:3px;line-height:1.3}
+.skill-card .sk-name{font-size:0.78rem;font-weight:600;color:#e6edf3;margin-bottom:3px}
+.skill-card.alt .sk-name{font-size:0.7rem}
+.skill-card .sk-desc{font-size:0.67rem;color:#8b949e;line-height:1.4}
+.skill-card.alt .sk-desc{font-size:0.6rem}
+.skill-card .sk-tag{display:inline-block;font-size:0.55rem;padding:2px 6px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:3px;margin-right:2px}
+
+/* Alternate badge */
+.skill-alt-badge{font-size:0.58rem;color:#facc15;margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 6px;background:rgba(250,204,21,0.1);border-radius:3px;display:inline-block}
+.skill-alt-badge::before{content:"\01F513  "}
+
+/* Unlock condition — more prominent */
+.sk-unlock{font-size:0.62rem;color:#e2b714;margin-top:5px;padding:5px 7px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.15);border-radius:4px;line-height:1.35}
 
 /* Passive section */
-.survivor-passive{padding:8px 10px;margin-bottom:10px;border-radius:6px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.15);display:flex;align-items:center;gap:8px}
-.survivor-passive .psv-tag{font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:3px;background:#713f12;color:#facc15;flex-shrink:0}
+.survivor-passive{padding:8px 12px;margin-bottom:12px;border-radius:6px;background:rgba(250,204,21,0.05);border:1px solid rgba(250,204,21,0.12);border-left:3px solid #facc15;display:flex;align-items:center;gap:10px}
+.survivor-passive .psv-tag{font-size:0.6rem;font-weight:700;padding:3px 7px;border-radius:4px;background:#713f12;color:#facc15;flex-shrink:0;letter-spacing:0.5px}
 .survivor-passive .psv-text{font-size:0.72rem;color:#b0b8c1}
-.survivor-passive .psv-name{font-weight:600;color:#e6edf3}
+.survivor-passive .psv-name{font-weight:600;color:#e6edf3;margin-right:4px}
 
 /* ===== Artifact Card ===== */
 .artifacts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -191,54 +225,54 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<div class="footer">数据来源 Risk of Rain 2 Wiki · 仅供学习参考</div>
+<div class="footer">数据来源 Risk of Rain 2 Wiki · 仅供学习交流参考</div>
 
 <script>
 // ===== ITEM DATA =====
 var ITEMS = [
-  {n:"穿甲弹",en:"Armor-Piercing Rounds",q:"white",d:"对Boss造成额外20%伤害（每层+20%）",s:"线性叠加"},
+  {n:"穿甲弹",en:"Armor-Piercing Rounds",q:"white",d:"对Boss伤害+20%（每层+20%）",s:"线性叠加"},
   {n:"备用弹匣",en:"Backup Magazine",q:"white",d:"副技能充能次数+1（每层+1）",s:"线性叠加"},
   {n:"野牛牛排",en:"Bison Steak",q:"white",d:"最大生命值+25（每层+25）",s:"线性叠加"},
-  {n:"鼓舞灯笼",en:"Bolstering Lantern",q:"white",d:"对你和20米内最多3名友军（每层+1）提高10%攻速（每层+3.5%）",s:"线性叠加",dlc:"风暴"},
+  {n:"鼓舞灯笼",en:"Bolstering Lantern",q:"white",d:"为你及20米内最多3名友军（每层+1）提供+10%攻速（每层+3.5%）",s:"线性叠加",dlc:"风暴"},
   {n:"烟花束",en:"Bundle of Fireworks",q:"white",d:"激活可互动物件时发射8枚烟花（每层+4），每枚造成300%基础伤害",s:"线性叠加"},
   {n:"生菌蘑菇",en:"Bustling Fungus",q:"white",d:"站立不动1秒后创造治疗区，每秒回复4.5%最大生命值（每层+2.25%），范围3米（每层+1.5米）",s:"线性叠加"},
   {n:"谨慎蛞蝓",en:"Cautious Slug",q:"white",d:"脱战状态下基础生命回复+3 hp/s（每层+3 hp/s）",s:"线性叠加"},
-  {n:"慢性膨胀",en:"Chronic Expansion",q:"white",d:"击杀敌人时+3.5%伤害（每层+1%），最多10层（每层+5），持续7秒，造成伤害刷新计时",s:"线性叠加",dlc:"风暴"},
-  {n:"撬棍",en:"Crowbar",q:"white",d:"对生命值高于90%的敌人造成+75%伤害（每层+75%）",s:"线性叠加"},
+  {n:"慢性膨胀",en:"Chronic Expansion",q:"white",d:"击杀敌人时伤害+3.5%（每层+1%），最多10层（每层+5层），持续7秒，造成伤害可刷新持续时间",s:"线性叠加",dlc:"风暴"},
+  {n:"撬棍",en:"Crowbar",q:"white",d:"对生命值高于90%的敌人伤害+75%（每层+75%）",s:"线性叠加"},
   {n:"精致手表",en:"Delicate Watch",q:"white",d:"伤害+20%（每层+20%）。受到伤害使生命值低于25%时该物品破碎",s:"线性叠加"},
-  {n:"日蚀光",en:"Eclipse Lite",q:"white",d:"技能冷却完毕时获得临时护盾，数值为最大生命值的1%（每层+0.25%）x技能基础冷却秒数",s:"线性叠加",dlc:"合金"},
-  {n:"灵巧鹿角",en:"Elusive Antlers",q:"white",d:"每10秒（每层-10%）生成能量球，每颗提供+12%移速，最多3层（每层+3），持续12秒",s:"线性叠加",dlc:"风暴"},
+  {n:"日蚀光",en:"Eclipse Lite",q:"white",d:"技能冷却就绪时获得护盾，数值=最大生命值1%（每层+0.25%）×技能基础冷却秒数",s:"线性叠加",dlc:"合金"},
+  {n:"灵巧鹿角",en:"Elusive Antlers",q:"white",d:"每10秒（每层-10%）生成能量球，每颗+12%移速，最多3层（每层+3），持续12秒",s:"线性叠加",dlc:"风暴"},
   {n:"能量饮料",en:"Energy Drink",q:"white",d:"冲刺速度+25%（每层+25%）",s:"线性叠加"},
   {n:"聚焦水晶",en:"Focus Crystal",q:"white",d:"对13米内敌人伤害+20%（每层+20%）",s:"线性叠加"},
-  {n:"汽油",en:"Gasoline",q:"white",d:"击杀敌人点燃12米内敌人（每层+4米），造成150%基础伤害并附加150%燃烧伤害（每层+75%）",s:"线性叠加"},
-  {n:"登山靴",en:"Hiker's Boots",q:"white",d:"从高处攻击敌人时获得+1%暴击率和暴击伤害（每层+1%），最多10层，持续10秒",s:"线性叠加",dlc:"合金"},
+  {n:"汽油",en:"Gasoline",q:"white",d:"击杀敌人点燃12米范围（每层+4米），造成150%基础伤害并附加150%燃烧伤害（每层+75%）",s:"线性叠加"},
+  {n:"登山靴",en:"Hiker's Boots",q:"white",d:"从高处发动攻击+1%暴击率及暴击伤害（每层+1%），最多10层，持续10秒",s:"线性叠加",dlc:"合金"},
   {n:"透镜制造者眼镜",en:"Lens-Maker's Glasses",q:"white",d:"攻击有10%几率暴击（每层+10%），造成双倍伤害",s:"线性叠加"},
-  {n:"医疗包",en:"Medkit",q:"white",d:"受伤害2秒后回复20+5%最大生命值（每层+5%）",s:"线性叠加"},
+  {n:"医疗包",en:"Medkit",q:"white",d:"受到伤害2秒后回复20+5%最大生命值（每层+5%）",s:"线性叠加"},
   {n:"摩卡",en:"Mocha",q:"white",d:"攻速+7.5%（每层+7.5%），移速+7%（每层+7%）",s:"线性叠加"},
   {n:"怪物牙齿",en:"Monster Tooth",q:"white",d:"击杀敌人生成治疗球，回复8+2%最大生命值（每层+2%）",s:"线性叠加"},
-  {n:"奇异蛋白石",en:"Oddly-shaped Opal",q:"white",d:"脱战状态下护甲+100（每层+100）",s:"线性叠加"},
+  {n:"奇异蛋白石",en:"Oddly-shaped Opal",q:"white",d:"脱战时护甲+100（每层+100）",s:"线性叠加"},
   {n:"保罗的羊蹄",en:"Paul's Goat Hoof",q:"white",d:"移动速度+14%（每层+14%）",s:"线性叠加"},
-  {n:"个人护盾发生器",en:"Personal Shield Generator",q:"white",d:"获得相当于最大生命值8%的护盾（每层+8%），脱战后充能",s:"线性叠加"},
+  {n:"个人护盾发生器",en:"Personal Shield Generator",q:"white",d:"获得8%最大生命值的护盾（每层+8%），脱战后自动充能",s:"线性叠加"},
   {n:"力量灵药",en:"Power Elixir",q:"white",d:"生命值低于25%时消耗此物品，回复75%最大生命值",s:"一次性触发"},
-  {n:"排斥护甲板",en:"Repulsion Armor Plate",q:"white",d:"减免所有受到的伤害5点（每层+5），最低不低于1点",s:"线性叠加"},
+  {n:"排斥护甲板",en:"Repulsion Armor Plate",q:"white",d:"减免所有受到的伤害5点（每层+5），最少承受1点伤害",s:"线性叠加"},
   {n:"幸运硬币",en:"Roll of Pennies",q:"white",d:"受到敌人伤害获得3金币（每层+3），随时间缩放",s:"线性叠加"},
-  {n:"生锈钥匙",en:"Rusted Key",q:"white",d:"每个关卡随机生成一个隐藏宝箱（80%/20%品质概率），打开消耗此物品",s:"-"},
+  {n:"生锈钥匙",en:"Rusted Key",q:"white",d:"每个关卡随机生成一个隐藏宝箱（80%/20%品质概率），打开后消耗此物品",s:"-"},
   {n:"士兵注射器",en:"Soldier's Syringe",q:"white",d:"攻击速度+15%（每层+15%）",s:"线性叠加"},
   {n:"粘性炸弹",en:"Sticky Bomb",q:"white",d:"命中时有5%几率（每层+5%）附着炸弹，爆炸造成180%总伤害",s:"线性叠加"},
   {n:"眩晕手雷",en:"Stun Grenade",q:"white",d:"命中时有5%几率（每层+5%）眩晕敌人2秒",s:"双曲线"},
   {n:"黄玉胸针",en:"Topaz Brooch",q:"white",d:"击杀敌人获得15点临时护盾（每层+15）",s:"线性叠加"},
-  {n:"坚韧时刻",en:"Tougher Times",q:"white",d:"15%几率阻挡受到的伤害（每层+15%），不受幸运值影响",s:"双曲线"},
-  {n:"三尖匕首",en:"Tri-Tip Dagger",q:"white",d:"10%几率造成流血，造成240%基础伤害（每层+10%）",s:"线性叠加"},
+  {n:"坚韧时刻",en:"Tougher Times",q:"white",d:"有15%几率格挡受到的伤害（每层+15%），不受幸运值影响",s:"双曲线"},
+  {n:"三尖匕首",en:"Tri-Tip Dagger",q:"white",d:"10%几率造成240%流血伤害（每层+10%）",s:"线性叠加"},
   {n:"战旗",en:"Warbanner",q:"white",d:"升级或启动传送器时掉落旗帜，强化16米内友军（每层+8米），攻速和移速+30%",s:"线性叠加"},
-  {n:"扭曲回响",en:"Warped Echo",q:"white",d:"下一次受伤害减少10%并分为3段（每层+1），除最后一段外不会致死，每15秒充能",s:"线性叠加",dlc:"风暴"},
+  {n:"扭曲回响",en:"Warped Echo",q:"white",d:"将下次受到伤害减少10%并拆分为3段（每层+1），除最后一段外无法致死，每15秒充能一次",s:"线性叠加",dlc:"风暴"},
   {n:"AtG导弹Mk.1",en:"AtG Missile Mk. 1",q:"green",d:"10%几率发射导弹，造成300%总伤害（每层+300%）",s:"线性叠加"},
   {n:"弹药带",en:"Bandolier",q:"green",d:"击杀时有18%几率（每层+10%）掉落弹药包，重置所有技能冷却",s:"特殊"},
   {n:"狂战士肩甲",en:"Berzerker's Pauldron",q:"green",d:"1秒内击杀4名敌人进入狂暴，持续6秒（每层+4秒），移速+50%，攻速+100%",s:"线性叠加"},
   {n:"炸药箱",en:"Box of Dynamite",q:"green",d:"获得Droneboy中尉。战斗中你的无人机投掷炸药，造成240%伤害（每层+85%），眩晕敌人。10秒充能",s:"线性叠加",dlc:"合金"},
   {n:"突破鳍",en:"Breaching Fin",q:"green",d:"地面敌人被任意技能命中会被击飞并眩晕。空中敌人被击中可再次击飞最多2次（每层+1）。被击飞敌人承受伤害+10%/次",s:"线性叠加",dlc:"风暴"},
   {n:"幸运娃娃",en:"Chance Doll",q:"green",d:"在机会祭坛成功时有40%几率（每层+10%）获得更高品质物品",s:"线性叠加",dlc:"风暴"},
-  {n:"时空球",en:"Chronobauble",q:"green",d:"命中敌人减速-60%移速，持续2秒（每层+2秒）",s:"线性叠加"},
-  {n:"收藏家强迫症",en:"Collector's Compulsion",q:"green",d:"拾取物品时全属性+3%持续20秒，最多3层（每层+2）。木桶会给予小型拾取物",s:"线性叠加",dlc:"合金"},
+  {n:"时空球",en:"Chronobauble",q:"green",d:"命中敌人使其移速降低60%，持续2秒（每层+2秒）",s:"线性叠加"},
+  {n:"收藏家强迫症",en:"Collector's Compulsion",q:"green",d:"拾取物品时全属性+3%持续20秒，最多3层（每层+2层）。木桶会掉落小型拾取物",s:"线性叠加",dlc:"合金"},
   {n:"死亡标记",en:"Death Mark",q:"green",d:"带有4种以上负面效果的敌人被标记，受到所有来源伤害+50%，持续7秒（每层+7秒）",s:"线性叠加"},
   {n:"法拉第刺",en:"Faraday Spur",q:"green",d:"移动积累电荷，满充能时+160%移速和+200%跳跃高度。25%充能以上跳跃触发爆炸，造成400%（每层+280%）伤害，范围5~32.3米（每层+7.5米）",s:"线性叠加",dlc:"合金"},
   {n:"燃料电池",en:"Fuel Cell",q:"green",d:"装备充能次数+1（每层+1），装备冷却减少15%（每层+15%）",s:"指数叠加"},
@@ -249,28 +283,28 @@ var ITEMS = [
   {n:"点燃坦克",en:"Ignition Tank",q:"green",d:"点燃效果造成的持续伤害+300%（每层+300%）",s:"线性叠加"},
   {n:"灌输",en:"Infusion",q:"green",d:"击杀敌人永久+1生命值（每层+1），上限100（每层+100）",s:"线性叠加"},
   {n:"动能阻尼器",en:"Kinetic Dampener",q:"green",d:"有护盾时护甲+30（每层+30）。护盾破碎时释放眩晕脉冲，造成100%伤害+100%最大护盾值（每层+10%）。获得最大生命值4%的护盾",s:"线性叠加",dlc:"合金"},
-  {n:"卡哈罗之戒",en:"Kjaro's Band",q:"green",d:"造成超过400%伤害的命中触发符文火焰龙卷风，造成300%总伤害持续伤害（每层+300%），10秒冷却",s:"线性叠加"},
+  {n:"卡哈罗之戒",en:"Kjaro's Band",q:"green",d:"单次命中造成高于400%伤害时触发符文火焰龙卷风，追加300%总伤害持续伤害（每层+300%），冷却10秒",s:"线性叠加"},
   {n:"吸取种子",en:"Leeching Seed",q:"green",d:"造成伤害时回复1点生命值（每层+1）",s:"线性叠加"},
   {n:"轻子雏菊",en:"Lepton Daisy",q:"green",d:"传送器事件期间释放治疗新星，回复附近友军50%最大生命值。触发1次（每层+1次）",s:"线性叠加"},
   {n:"光耀射击",en:"Luminous Shot",q:"green",d:"使用副技能存储最多5层充能（每层+1）。3次充能后主技能发射闪电，每发175%总伤害（每层+50%）。副技能冷却-20%",s:"线性叠加",dlc:"风暴"},
-  {n:"毒荆棘",en:"Noxious Thorn",q:"green",d:"+10%几率造成流血。击杀敌人时转移33%负面效果叠加到20米内1名敌人（每层+1，每层+5米范围）",s:"线性叠加",dlc:"风暴"},
+  {n:"毒荆棘",en:"Noxious Thorn",q:"green",d:"+10%几率造成流血。击杀敌人时将33%负面层数转移给20米内1名敌人（每层+1名，每层+5米范围）",s:"线性叠加",dlc:"风暴"},
   {n:"旧断头台",en:"Old Guillotine",q:"green",d:"精英怪物生命值低于13%（每层+13%）时立即处决",s:"双曲线"},
   {n:"旧战争隐形装置",en:"Old War Stealthkit",q:"green",d:"生命值低于25%时获得40%移速和隐身5秒。每30秒充能（每层-50%冷却）",s:"指数递减"},
-  {n:"念珠",en:"Prayer Beads",q:"green",d:"随你获得经验而成长，存储20%额外属性（生命/回复/伤害，每层+5%）。移除时获得所有存储属性",s:"线性叠加",dlc:"风暴"},
+  {n:"念珠",en:"Prayer Beads",q:"green",d:"随经验获取而成长，存储额外20%属性（生命/回复/伤害，每层+5%）。移除时获得全部累积属性",s:"线性叠加",dlc:"风暴"},
   {n:"掠食本能",en:"Predatory Instincts",q:"green",d:"暴击率+5%。暴击时攻速+12%，最大上限36%（每层+24%）",s:"线性叠加"},
   {n:"剃刀线",en:"Razorwire",q:"green",d:"受到伤害时爆发剃刀，造成160%伤害，命中最多5个目标（每层+2），范围25米（每层+10米）",s:"线性叠加"},
   {n:"红色鞭子",en:"Red Whip",q:"green",d:"脱战后移速+30%（每层+30%）",s:"线性叠加"},
   {n:"再生废料",en:"Regenerating Scrap",q:"green",d:"优先用于绿色3D打印机。每关开始时再生",s:"-"},
   {n:"玫瑰圆盾",en:"Rose Buckler",q:"green",d:"冲刺时护甲+30（每层+30）",s:"线性叠加"},
-  {n:"鲁纳德之戒",en:"Runald's Band",q:"green",d:"造成超过400%伤害的命中触发符文冰爆，减速80%持续3秒（每层+3秒），造成250%总伤害（每层+250%），10秒冷却",s:"线性叠加"},
+  {n:"鲁纳德之戒",en:"Runald's Band",q:"green",d:"单次命中造成高于400%伤害时触发符文冰爆，减速80%持续3秒（每层+3秒），追加250%总伤害（每层+250%），冷却10秒",s:"线性叠加"},
   {n:"促销星",en:"Sale Star",q:"green",d:"每关首次开箱获得额外物品。每层+5%概率获得更多物品",s:"线性叠加",dlc:"风暴"},
   {n:"运输请求单",en:"Shipping Request Form",q:"green",d:"每关随机生成一个包含2件物品的快递（79%/20%/1%品质概率，每层提高稀有度概率）",s:"特殊"},
   {n:"手里剑",en:"Shuriken",q:"green",d:"使用主技能时投掷手里剑造成400%基础伤害（每层+100%）。最多持有3发（每层+1），10秒装填",s:"线性叠加"},
   {n:"鱿鱼触手",en:"Squid Polyp",q:"green",d:"激活可互动物件时召唤鱿鱼炮塔，以100%攻速攻击附近敌人（每层+100%），持续30秒",s:"线性叠加"},
   {n:"尤克里里",en:"Ukulele",q:"green",d:"25%几率发射连锁闪电造成80%总伤害，弹射最多3个目标（每层+2），范围20米（每层+2米）",s:"线性叠加"},
-  {n:"不稳定传送器",en:"Unstable Transmitter",q:"green",d:"生命值低于25%时获得60%最大生命值临时护盾并释放维度光环8秒，流血并传送走敌人。被光环击杀的敌人延长1秒持续时间。每关再生",s:"一次性",dlc:"风暴"},
+  {n:"不稳定传送器",en:"Unstable Transmitter",q:"green",d:"生命值低于25%时获得60%最大生命值护盾并释放维度光环8秒，造成流血并传送走敌人。光环击杀敌人可延长1秒持续时间。每关再生",s:"一次性",dlc:"风暴"},
   {n:"战争号角",en:"War Horn",q:"green",d:"激活装备时攻速+70%，持续8秒（每层+4秒）",s:"线性叠加"},
-  {n:"蜡鹌鹑",en:"Wax Quail",q:"green",d:"冲刺中跳跃向前猛冲10米（每层+10米）",s:"线性叠加"},
+  {n:"蜡鹌鹑",en:"Wax Quail",q:"green",d:"冲刺时跳跃向前猛冲10米（每层+10米）",s:"线性叠加"},
   {n:"鬼火",en:"Will-o'-the-wisp",q:"green",d:"击杀敌人时在12米范围（每层+2.4米）内生成熔岩柱，造成350%基础伤害（每层+280%）",s:"线性叠加"},
   {n:"57叶草",en:"57 Leaf Clover",q:"red",d:"所有随机效果额外掷骰1次（每层+1），选择有利结果",s:"线性叠加"},
   {n:"神盾",en:"Aegis",q:"red",d:"过量治疗时获得临时护盾，为治疗量的50%（每层+50%）",s:"线性叠加"},
@@ -283,13 +317,13 @@ var ITEMS = [
   {n:"防御微型机器人",en:"Defensive Microbots",q:"red",d:"每0.5秒击落20米内1发投射物（每层+1）。充能速度受攻速影响",s:"线性叠加"},
   {n:"Dio的最好朋友",en:"Dio's Best Friend",q:"red",d:"死亡时消耗此物品，以3秒无敌状态复生",s:"一次性"},
   {n:"电击回旋镖",en:"Electric Boomerang",q:"red",d:"15%几率发射电击回旋镖，造成120%伤害（每层+120%），眩晕所有命中敌人，附加42%/秒（每层+42%）持续伤害",s:"线性叠加",dlc:"风暴"},
-  {n:"冰霜遗物",en:"Frost Relic",q:"red",d:"击杀敌人环绕冰风暴，每秒1200%伤害并减速80%持续1.5秒。风暴随击杀扩大半径2米，最大18米（每层+12米）",s:"线性叠加"},
+  {n:"冰霜遗物",en:"Frost Relic",q:"red",d:"击杀敌人后获得环绕冰风暴，每秒1200%伤害并80%减速持续1.5秒。风暴半径随击杀扩大2米，最大18米（每层+12米）",s:"线性叠加"},
   {n:"成长花蜜",en:"Growth Nectar",q:"red",d:"每个增益效果提供全属性+4%，最多4层（每层+4）",s:"线性叠加",dlc:"风暴"},
   {n:"H3AD-5T v2",en:"H3AD-5T v2",q:"red",d:"提高跳跃高度。落地时创造5-100米范围的动能爆炸，根据坠落距离造成1000%-10000%基础伤害。10秒充能（每层-50%）",s:"倒数叠加"},
   {n:"最快乐的面具",en:"Happiest Mask",q:"red",d:"击杀敌人有7%几率召唤其幽灵，拥有1500%伤害，持续30秒（每层+30秒）",s:"线性叠加"},
   {n:"强光加力燃烧室",en:"Hardlight Afterburner",q:"red",d:"功能技能（位移技能）充能次数+2（每层+2），冷却减少33%",s:"线性叠加"},
   {n:"星际办公桌植物",en:"Interstellar Desk Plant",q:"red",d:"击杀时种植治疗果实，5秒后成长为植物，每0.5秒回复5%最大生命值给10米内友军（每层+5米），持续10秒",s:"线性叠加"},
-  {n:"激光瞄准镜",en:"Laser Scope",q:"red",d:"暴击额外造成+100%伤害（每层+100%）",s:"线性叠加"},
+  {n:"激光瞄准镜",en:"Laser Scope",q:"red",d:"暴击额外造成100%伤害（每层+100%）",s:"线性叠加"},
   {n:"恩库哈纳的意见",en:"N'kuhana's Opinion",q:"red",d:"存储100%治疗量为灵魂能量（每层+100%）。灵魂能量达10%最大生命值时发射骷髅，造成250%灵魂能量伤害",s:"线性叠加"},
   {n:"联网苦难",en:"Networked Suffering",q:"red",d:"感染最多4名敌人（每层+2）植入计算机病毒，复制45%受伤并汇入全局伤害池。每3秒所有被感染敌人承受100%池内伤害",s:"线性叠加",dlc:"合金"},
   {n:"孤儿核心",en:"Orphaned Core",q:"red",d:"获得友好的Solus单位，冲向敌人造成400%伤害（每层+400%）。继承你的移速物品，移速越快伤害越高。可抚摸以清除负面效果，15秒充能",s:"线性叠加",dlc:"合金"},
@@ -301,9 +335,9 @@ var ITEMS = [
   {n:"粉碎正义",en:"Shattering Justice",q:"red",d:"命中敌人5次后降低其护甲60点，持续8秒（每层+8秒）",s:"线性叠加"},
   {n:"洪亮低语",en:"Sonorous Whispers",q:"red",d:"大型怪物死亡必定掉落物品。精英怪物有5%几率掉落物品（每层+1%）",s:"线性叠加",dlc:"风暴"},
   {n:"灵魂催化剂",en:"Soulbound Catalyst",q:"red",d:"击杀减少装备冷却4秒（每层+2秒）",s:"线性叠加"},
-  {n:"备用无人机零件",en:"Spare Drone Parts",q:"red",d:"获得Col. Droneman。无人机攻速和冷却+25%（每层+25%）。无人机命中时有10%几率发射导弹，造成150%总伤害。无人机获得自动链枪，造成6x50%伤害，弹射2名敌人",s:"指数/线性"},
+  {n:"备用无人机零件",en:"Spare Drone Parts",q:"red",d:"获得Col. Droneman。无人机攻速和冷却各+25%（每层+25%）。无人机命中时有10%几率发射导弹，造成150%总伤害。无人机获得自动链枪，造成6×50%伤害并弹射2名敌人",s:"指数/线性"},
   {n:"次级复制器",en:"Substandard Duplicator",q:"red",d:"拾取物品时获得该物品的临时复制品，临时物品持续时间+10秒（每层+10秒）",s:"线性叠加",dlc:"合金"},
-  {n:"共生蝎",en:"Symbiotic Scorpion",q:"red",d:"100%几率命中时永久降低敌人护甲2点（每层+2）",s:"线性叠加"},
+  {n:"共生蝎",en:"Symbiotic Scorpion",q:"red",d:"命中时永久降低敌人2点护甲（每层+2）",s:"线性叠加"},
   {n:"不稳定特斯拉线圈",en:"Unstable Tesla Coil",q:"red",d:"每0.5秒释放闪电命中3名敌人（每层+2），造成200%基础伤害。每10秒关闭一次",s:"线性叠加"},
   {n:"秃鹫之觉醒",en:"Wake of Vultures",q:"red",d:"击杀精英怪物获得其力量，持续8秒（每层+5秒）",s:"线性叠加"},
   {n:"战争债券",en:"War Bonds",q:"red",d:"Boss战期间5枚导弹轰击区域，每枚造成Boss最大生命值2.5%伤害（每层+2.5%）。Boss战前每获得50金币增加1枚导弹，最多20枚（每层+5），金币要求随时间增长",s:"线性叠加",dlc:"风暴"},
@@ -319,13 +353,13 @@ var ITEMS = [
   {n:"乳白蛹",en:"Milky Chrysalis",q:"orange",d:"获得飞行能力，移速+20%。15秒冷却",s:"-"},
   {n:"雷达扫描仪",en:"Radar Scanner",q:"orange",d:"揭示所有互动对象位置。45秒冷却",s:"-"},
   {n:"古怪花瓶",en:"Eccentric Vase",q:"orange",d:"创建连接两点的隧道持续30秒。60秒冷却",s:"-"},
-  {n:"瘤木精灵",en:"Gnarled Woodsprite",q:"orange",d:"伴生治疗生物，被动回复1.5%/秒最大生命值。主动使用立即回复10%。15秒冷却",s:"-"},
+  {n:"瘤木精灵",en:"Gnarled Woodsprite",q:"orange",d:"伴生治疗精灵，被动每秒回复1.5%最大生命值。主动使用立即回复10%最大生命值。15秒冷却",s:"-"},
   {n:"戈拉格的杰作",en:"Gorag's Opus",q:"orange",d:"附近所有友军进入狂暴7秒，攻速移速+50%。45秒冷却",s:"-"},
   {n:"请原谅我",en:"Forgive Me Please",q:"orange",d:"投掷玩偶，每1秒触发一次击杀时效果共8次。45秒冷却",s:"-"},
   {n:"锯回旋镖",en:"Sawmerang",q:"orange",d:"投掷锯片回旋镖，命中敌人造成流血。30秒冷却",s:"-"},
   {n:"回收器",en:"Recycler",q:"orange",d:"将一件物品转化为同品质的随机另一件。仅限使用一次",s:"一次性"},
-  {n:"燃料阵列",en:"Fuel Array",q:"orange",d:"受到伤害时消耗此物品产生巨大爆炸。用于获取机器人角色",s:"特殊"},
-  {n:"尖晶石补药",en:"Spinel Tonic",q:"orange",d:"全属性+100%持续20秒。使用后有20%几率全属性-5%（永久）。60秒冷却",s:"-"},
+  {n:"燃料阵列",en:"Fuel Array",q:"orange",d:"受到伤害时消耗此物品，产生巨大爆炸。可用于解锁REX角色",s:"特殊"},
+  {n:"尖晶石补药",en:"Spinel Tonic",q:"orange",d:"全属性+100%持续20秒。使用后有20%几率产生副作用：全属性永久-5%。60秒冷却",s:"-"},
   {n:"地狱火酊剂",en:"Hellfire Tincture",q:"orange",d:"点燃自身和8米内所有敌人。45秒冷却",s:"-"},
   {n:"发光陨石",en:"Glowing Meteorite",q:"orange",d:"在玩家位置召唤陨石雨造成巨大伤害。45秒冷却",s:"-"},
   {n:"玉象",en:"Jade Elephant",q:"orange",d:"获得+500护甲持续5秒。45秒冷却",s:"-"},
@@ -336,26 +370,26 @@ var ITEMS = [
   {n:"燃烧弹(6联装)",en:"Molotov (6-Pack)",q:"orange",d:"投掷6枚燃烧弹点燃地面造成持续伤害。45秒冷却",s:"-"},
   {n:"超级水蛭",en:"Super Massive Leech",q:"orange",d:"释放超级水蛭附着在敌人身上，持续偷取生命回复自身。60秒冷却",s:"-"},
   {n:"众筹者",en:"The Crowdfunder",q:"orange",d:"消耗金币发射子弹对敌人造成伤害。5秒冷却",s:"-"},
-  {n:"效忠念珠",en:"Beads of Fealty",q:"blue",d:"似乎什么都没做...但在传送器完成时会产生不同的结果",s:"-"},
-  {n:"易碎冠冕",en:"Brittle Crown",q:"blue",d:"命中时30%几率获得2金币（每层+2），随时间缩放。受到伤害时失去金币，失去量为最大生命值损失百分比x100%（每层+100%）",s:"线性叠加"},
+  {n:"效忠念珠",en:"Beads of Fealty",q:"blue",d:"似乎毫无作用...但在传送器充能完成后，你将迎来不同的命运",s:"-"},
+  {n:"易碎冠冕",en:"Brittle Crown",q:"blue",d:"命中时有30%几率获得2金币（每层+2），金币随时间缩放。受到伤害时失去金币，失去量为损失生命值百分比×100%（每层+100%）",s:"线性叠加"},
   {n:"尸花",en:"Corpsebloom",q:"blue",d:"治疗量+100%（每层+100%）。所有治疗转为持续治疗，每秒最多恢复10%最大生命值（每层-50%）",s:"线性/倒数"},
-  {n:"挑衅者凿子",en:"Defiant Gouge",q:"blue",d:"使用祭坛时召唤敌人（每层增强）出现在附近，随时间缩放",s:"线性叠加"},
+  {n:"挑衅者凿子",en:"Defiant Gouge",q:"blue",d:"使用祭坛时召唤敌人（每层增强）出现在附近，强度随游戏时间增长",s:"线性叠加"},
   {n:"自我中心",en:"Egocentrism",q:"blue",d:"每3秒（每层-50%）获得一颗轨道炸弹，碰撞爆炸造成360%伤害，最多3颗（每层+1）。每60秒将一件随机物品转化为此物品",s:"倒数/线性"},
-  {n:"异端精华",en:"Essence of Heresy",q:"blue",d:"将你的特殊技能替换为：造成伤害叠加Ruin印记（每层+10秒持续）。激活技能引爆所有印记造成300%+每层120%伤害。8秒充能（每层+8）",s:"线性叠加"},
+  {n:"异端精华",en:"Essence of Heresy",q:"blue",d:"替换特殊技能：造成伤害叠加Ruin印记（每层+10秒持续）。激活技能引爆所有印记，造成300%+每层120%伤害。8秒充能（每层+8）",s:"线性叠加"},
   {n:"颂赞归零",en:"Eulogy Zero",q:"blue",d:"物品有5%几率（每层+5%）变为月球装备",s:"线性叠加"},
   {n:"聚焦汇聚",en:"Focused Convergence",q:"blue",d:"传送器充能加速30%（每层+30%），但传送器区域缩小50%（每层-50%）",s:"线性/倒数"},
   {n:"溺水者手势",en:"Gesture of the Drowned",q:"blue",d:"装备冷却减少50%（每层+15%）。强制装备在冷却完毕时自动激活",s:"指数叠加"},
-  {n:"异端钩子",en:"Hooks of Heresy",q:"blue",d:"将副技能替换为：充能发射切割风暴，每秒875%伤害，3秒后爆炸造成700%伤害并定身敌人3秒（每层+3秒），5秒充能（每层+5）",s:"线性叠加"},
+  {n:"异端钩子",en:"Hooks of Heresy",q:"blue",d:"替换副技能：充能后发射切割风暴，每秒875%伤害，3秒后爆炸700%伤害并定身敌人3秒（每层+3秒），5秒充能（每层+5）",s:"线性叠加"},
   {n:"光通量肩甲",en:"Light Flux Pauldron",q:"blue",d:"技能冷却-50%（每层+50%），攻速-50%（每层+50%）",s:"指数/倒数"},
-  {n:"长久孤独",en:"Longstanding Solitude",q:"blue",d:"升级时获得下次购买的免费解锁（每层+1），但所有金币转化为经验。任何使用金币的购买费用+50%（每层+50%）",s:"线性叠加",dlc:"风暴"},
+  {n:"长久孤独",en:"Longstanding Solitude",q:"blue",d:"升级时获得下次购买的免费解锁（每层+1），但所有金币转为经验。任何使用金币的购买费用+50%（每层+50%）",s:"线性叠加",dlc:"风暴"},
   {n:"水银轴",en:"Mercurial Rachis",q:"blue",d:"在随机位置创造力量结界，16米内（每层+50%）敌我双方+50%伤害",s:"指数叠加"},
   {n:"中子星重量",en:"Neutronium Weight",q:"blue",d:"战斗中降低属性，命中时将物品传给敌人。死亡时传给击杀者。伤害-30%（每层+10%），攻速-30%（每层+10%），移速-30%（每层+10%），护甲-35（每层+15）",s:"指数/线性",dlc:"合金"},
-  {n:"纯净",en:"Purity",q:"blue",d:"所有技能冷却-2秒（每层+1）。所有随机效果额外掷骰1次（每层+1）选择不利结果",s:"线性叠加"},
+  {n:"纯净",en:"Purity",q:"blue",d:"所有技能冷却-2秒（每层+1秒）。所有随机效果额外掷骰1次（每层+1），强制选择不利结果",s:"线性叠加"},
   {n:"塑形玻璃",en:"Shaped Glass",q:"blue",d:"基础伤害+100%（每层+100%）。最大生命值-50%（每层+50%）",s:"指数叠加"},
   {n:"石通量肩甲",en:"Stone Flux Pauldron",q:"blue",d:"最大生命值+100%（每层+100%）。移速-50%（每层+50%）",s:"线性/倒数"},
-  {n:"异端步态",en:"Strides of Heresy",q:"blue",d:"将功能技能替换为：虚无化并+30%移速，回复18.2%最大生命值（每层+18.2%），持续3秒（每层+3）",s:"线性叠加"},
+  {n:"异端步态",en:"Strides of Heresy",q:"blue",d:"替换功能技能：进入虚无状态+30%移速，回复18.2%最大生命值（每层+18.2%），持续3秒（每层+3）",s:"线性叠加"},
   {n:"超越",en:"Transcendence",q:"blue",d:"将除1点外的所有生命值转化为可再生护盾。获得+50%最大生命值（每层+25%）",s:"线性叠加"},
-  {n:"异端幻象",en:"Visions of Heresy",q:"blue",d:"将主技能替换为：发射追踪碎片延迟爆炸造成120%基础伤害。最多12发充能（每层+12），2秒装填（每层+2）",s:"线性叠加"},
+  {n:"异端幻象",en:"Visions of Heresy",q:"blue",d:"替换主技能：发射追踪碎片延迟爆炸造成120%基础伤害。最多12发充能（每层+12），2秒装填（每层+2）",s:"线性叠加"},
   {n:"底栖绽放",en:"Benthic Bloom",q:"void",d:"每关开始时将3件随机物品（每层+3）升级为下一级品质。腐化所有57叶草",s:"线性叠加"},
   {n:"包壳钥匙",en:"Encrusted Key",q:"void",d:"每关随机生成隐藏宝箱含虚空物品（60%/30%/10%品质）。消耗此物品。腐化所有生锈钥匙",s:"-"},
   {n:"失落的预言者镜片",en:"Lost Seer's Lenses",q:"void",d:"攻击有0.5%几率（每层+0.5%）立即处决非Boss敌人。腐化所有透镜制造者眼镜",s:"线性叠加"},
@@ -363,12 +397,12 @@ var ITEMS = [
   {n:"新生的佐伊亚",en:"Newly Hatched Zoea",q:"void",d:"每60秒（每层-50%）召唤随机虚空盟友，最多1名（每层+1）。腐化所有黄色/Boss物品",s:"倒数"},
   {n:"等离子虾",en:"Plasma Shrimp",q:"void",d:"获得护盾时发射一枚导弹造成200%总伤害（每层+100%）。腐化所有AtG导弹Mk.1",s:"线性叠加"},
   {n:"多形性护符",en:"Polylute",q:"void",d:"25%几率发射闪电弹射造成80%总伤害，额外对每名敌人造成80%伤害。腐化所有尤克里里",s:"线性叠加"},
-  {n:"虚空之焰",en:"Safer Spaces",q:"void",d:"阻挡下一次伤害并提供一个临时无敌帧。每15秒充能一次（每层-25%冷却）。腐化所有坚韧时刻",s:"倒数"},
-  {n:"奇点带",en:"Singularity Band",q:"void",d:"造成超过400%伤害的命中触发引力奇点，将10米内（每层+5米）的敌人拉入并造成400%总伤害（每层+400%）。腐化所有符文之戒",s:"线性叠加"},
+  {n:"虚空之焰",en:"Safer Spaces",q:"void",d:"格挡下次伤害并获得短暂无敌帧。每15秒充能一次（每层-25%冷却）。腐化所有坚韧时刻",s:"倒数"},
+  {n:"奇点带",en:"Singularity Band",q:"void",d:"单次命中造成高于400%伤害时触发引力奇点，将10米内（每层+5米）敌人吸入并造成400%总伤害（每层+400%）。腐化所有符文之戒",s:"线性叠加"},
   {n:"虚空熊",en:"Voidsent Flame",q:"void",d:"击杀点燃敌方单位，但伤害类型改为虚空伤害。腐化所有汽油",s:"线性叠加"},
   {n:"哭泣真菌",en:"Weeping Fungus",q:"void",d:"冲刺时产生治疗区，每秒回复7.5%最大生命值（每层+7.5%），范围4米（每层+2米）。腐化所有生菌蘑菇",s:"线性叠加"},
   {n:"虚空伴侣",en:"Void Fiend's Grasp",q:"void",d:"获得1个虚空搭档为你作战。腐化所有鱿鱼触手",s:"线性叠加"},
-  {n:"微型黑洞",en:"Void Devastator",q:"void",d:"击杀敌人在其位置创造一个小型黑洞。腐化所有鬼火",s:"线性叠加"},
+  {n:"微型黑洞",en:"Void Devastator",q:"void",d:"击杀敌人时在其位置创造小型黑洞。腐化所有鬼火",s:"线性叠加"},
   {n:"虚空之诱",en:"Tentabauble",q:"void",d:"命中时有5%几率定身敌人2秒。腐化所有时空球",s:"线性叠加"},
   {n:"神器钥匙",en:"Artifact Key",q:"boss",d:"一块蕴含着巨大力量的石碎片",s:"-",src:"堡垒的神器挑战"},
   {n:"充能穿孔器",en:"Charged Perforator",q:"boss",d:"10%几率命中时落下闪电打击，造成500%伤害（每层+500%）",s:"线性叠加",src:"超载蠕虫"},
@@ -378,85 +412,85 @@ var ITEMS = [
   {n:"暴露小脑",en:"Exposed Cerebellum",q:"boss",d:"代表集体网络的蜂群数据核心。可交给强大实体",s:"-",dlc:"合金"},
   {n:"故障导体",en:"Faulty Conductor",q:"boss",d:"每15秒（每层-20%）释放电波激励友军7秒。被激励友军获得+30%攻速和移速，电击物品和攻击必定暴击",s:"双曲线叠加",src:"合金猎人",dlc:"合金"},
   {n:"功能耦合器",en:"Functional Coupler",q:"boss",d:"额外持有1件装备（每层+1）。按互动和装备键循环切换持有的装备",s:"线性叠加",src:"Solus融合器",dlc:"合金"},
-  {n:"起源循环",en:"Genesis Loop",q:"boss",d:"生命值低于25%时爆炸，造成6000%基础伤害。每30/(2+每层1)秒充能",s:"倒数",src:"流浪巨人"},
+  {n:"起源循环",en:"Genesis Loop",q:"boss",d:"生命值低于25%时引发爆炸，造成6000%基础伤害。每30/(2+每层1)秒充能",s:"倒数",src:"流浪巨人"},
   {n:"金色种子",en:"Halcyon Seed",q:"boss",d:"传送器事件中召唤Aurelionite，拥有100%伤害（每层+50%）和100%生命值（每层+100%）",s:"线性叠加",src:"金色巨人"},
   {n:"辐光珍珠",en:"Irradiant Pearl",q:"boss",d:"全属性+10%（每层+10%）",s:"线性叠加",src:"净化池"},
   {n:"小门徒",en:"Little Disciple",q:"boss",d:"冲刺时每1.6秒发射追踪小精灵造成300%伤害（每层+300%），射击速度随移速增加",s:"线性叠加",src:"丛林守护者"},
   {n:"泥沼瓮",en:"Mired Urn",q:"boss",d:"战斗中13米内最近1名（每层+1）敌人被牵引，每秒100%伤害附加焦油，你回复100%造成的伤害",s:"线性叠加",src:"沙行者"},
   {n:"熔岩穿孔器",en:"Molten Perforator",q:"boss",d:"10%几率命中时召出3颗岩浆球，每颗造成300%伤害（每层+300%）",s:"线性叠加",src:"岩浆蠕虫"},
   {n:"珍珠",en:"Pearl",q:"boss",d:"最大生命值+10%（每层+10%）",s:"线性叠加",src:"净化池"},
-  {n:"海葵",en:"Planula",q:"boss",d:"接下来受到的伤害回复15点（每层+15）",s:"线性叠加",src:"爷爷"},
+  {n:"海葵",en:"Planula",q:"boss",d:"受到伤害时回复15点生命值（每层+15）",s:"线性叠加",src:"爷爷"},
   {n:"监狱矩阵",en:"Prison Matrix",q:"boss",d:"护甲+50%。可放置在矩阵终端",s:"-",dlc:"合金"},
   {n:"女王之腺",en:"Queen's Gland",q:"boss",d:"每30秒召唤甲虫守卫，拥有300%伤害和100%生命值。最多1名（每层+1）",s:"线性叠加",src:"甲虫女王"},
   {n:"哨兵钥匙",en:"Sentry Key",q:"boss",d:"移速+15%。可放置在哨兵终端或用于解密",s:"-",dlc:"合金"},
-  {n:"碎裂脾脏",en:"Shatterspleen",q:"boss",d:"暴击率+5%。暴击造成240%基础伤害流血。流血敌人死亡时爆炸造成400%（每层+400%）伤害+15%（每层+15%）最大生命值额外伤害",s:"线性叠加",src:"小鬼霸主"},
+  {n:"碎裂脾脏",en:"Shatterspleen",q:"boss",d:"暴击率+5%。暴击附加240%流血伤害。流血敌人死亡时爆炸，造成400%（每层+400%）伤害+15%（每层+15%）最大生命值额外伤害",s:"线性叠加",src:"小鬼霸主"},
   {n:"钛巨结",en:"Titanic Knurl",q:"boss",d:"最大生命值+40（每层+40），基础生命回复+1.6 hp/s（每层+1.6 hp/s）",s:"线性叠加",src:"石巨人"}
 ];
 
 // ===== SURVIVOR DATA =====
 var SURVIVORS = [
-  {"n":"指挥官","en":"Commando","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"默认解锁",
-    "sk":[{"t":"pri","n":"双发","e":"Double_Tap","d":"快速射击，每发造成100%伤害","pc":"1.0"},{"t":"sec","n":"相位弹","e":"Phase_Round","d":"发射穿透弹造成300%伤害","cd":"3s","pc":"1.0"},{"t":"sec","n":"相位冲击","e":"Phase_Blast","d":"近距离两发8x200%伤害","cd":"3s","pc":"0.5x8"},{"t":"uti","n":"战术翻滚","e":"Tactical_Dive","d":"向前翻滚躲避攻击","cd":"4s"},{"t":"uti","n":"战术滑铲","e":"Tactical_Slide","d":"滑铲移动可射击","cd":"4s"},{"t":"spe","n":"压制火力","e":"Suppressive_Fire","d":"连续射击眩晕","cd":"9s","pc":"1.0x6+"},{"t":"spe","n":"破片手雷","e":"Frag_Grenade","d":"手雷700%伤害,2发充能","cd":"5s","pc":"1.0"}]},
-  {"n":"女猎手","en":"Huntress","hp":90,"hl":27,"dg":12,"dl":2.4,"ar":0,"uk":"默认解锁",
-    "sk":[{"t":"pri","n":"速射","e":"Strafe","d":"追踪箭150%伤害可移动射击","pc":"1.0"},{"t":"pri","n":"箭雨","e":"Flurry","d":"3发追踪箭各100%伤害","pc":"0.7x3"},{"t":"sec","n":"激光战刃","e":"Laser_Glaive","d":"弹射6次250%伤害+10%/次","cd":"7s","pc":"0.8"},{"t":"uti","n":"闪现","e":"Blink","d":"向前传送","cd":"7s"},{"t":"uti","n":"相位闪现","e":"Phase_Blink","d":"短距传送3发充能","cd":"2s"},{"t":"spe","n":"箭雨","e":"Arrow_Rain","d":"传送空中区域330%/s伤害","cd":"12s","pc":"0.2"},{"t":"spe","n":"弩箭","e":"Ballista","d":"后退发射3发各900%伤害","cd":"12s","pc":"1.0x3"}]},
-  {"n":"亡命之徒","en":"Bandit","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"完成第一关",
-    "sk":[{"t":"pas","n":"背刺","e":"Backstab","d":"从背后攻击必定暴击"},{"t":"pri","n":"爆裂","e":"Burst","d":"霰弹5x100%,4发装填","pc":"0.5x5"},{"t":"pri","n":"步枪","e":"Blast","d":"步枪330%伤害,4发装填","pc":"1.0"},{"t":"sec","n":"锯齿匕首","e":"Serrated_Dagger","d":"冲刺360%伤害,暴击出血","cd":"4s","pc":"1.0"},{"t":"sec","n":"锯齿飞刀","e":"Serrated_Shiv","d":"飞刀240%伤害,暴击出血","cd":"4s","pc":"1.0"},{"t":"uti","n":"烟雾弹","e":"Smoke_Bomb","d":"200%+隐身+200%伤害","cd":"6s","pc":"1.0"},{"t":"spe","n":"致命一击","e":"Lights_Out","d":"左轮600%,击杀重置冷却","cd":"4s","pc":"1.0"},{"t":"spe","n":"亡命之徒","e":"Desperado","d":"左轮600%,击杀+10%伤害","cd":"4s","pc":"1.0"}]},
-  {"n":"MUL-T","en":"MUL-T","hp":200,"hl":60,"dg":11,"dl":2.2,"ar":12,"uk":"通关一次",
-    "sk":[{"t":"pri","n":"自动钉枪","e":"Auto-Nailgun","d":"每发70%伤害,12发齐射","pc":"0.6"},{"t":"pri","n":"钢筋枪","e":"Rebar_Puncher","d":"穿透600%伤害","cd":"1.8s","pc":"1.0"},{"t":"pri","n":"废料发射器","e":"Scrap_Launcher","d":"火箭爆炸360%伤害","cd":"1.5s","pc":"1.0"},{"t":"pri","n":"动力锯","e":"Power-Saw","d":"锯割1000%/s","pc":"1.0"},{"t":"sec","n":"爆裂罐","e":"Blast_Canister","d":"220%+眩晕炸弹","cd":"6s","pc":"1.0"},{"t":"uti","n":"运输模式","e":"Transport_Mode","d":"冲刺+200护甲","cd":"6s","pc":"1.0"},{"t":"spe","n":"切换武器","e":"Retool","d":"携带两件装备切换","cd":"0.5s"},{"t":"spe","n":"动力模式","e":"Power_Mode","d":"双持+100护甲-60%移速","cd":"5s"}]},
+  {"n":"指挥官","en":"Commando","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"默认角色，无需解锁",
+    "sk":[{"t":"pri","n":"双发","e":"Double_Tap","d":"快速射击，每发100%伤害","pc":"1.0"},{"t":"sec","n":"相位弹","e":"Phase_Round","d":"穿透弹300%伤害，每次穿透+40%伤害","cd":"3s","pc":"1.0"},{"t":"sec","n":"相位冲击","e":"Phase_Blast","d":"近距离两发8×200%伤害","cd":"3s","pc":"0.5x8"},{"t":"uti","n":"战术翻滚","e":"Tactical_Dive","d":"向前翻滚躲避攻击","cd":"4s"},{"t":"uti","n":"战术滑铲","e":"Tactical_Slide","d":"滑铲移动，可同时射击","cd":"4s"},{"t":"spe","n":"压制火力","e":"Suppressive_Fire","d":"连续射击，眩晕敌人","cd":"9s","pc":"1.0x6+"},{"t":"spe","n":"破片手雷","e":"Frag_Grenade","d":"手雷700%伤害，2发充能","cd":"5s","pc":"1.0"}]},
+  {"n":"女猎手","en":"Huntress","hp":90,"hl":27,"dg":12,"dl":2.4,"ar":0,"uk":"默认角色，无需解锁",
+    "sk":[{"t":"pri","n":"速射","e":"Strafe","d":"追踪箭150%伤害，可移动射击","pc":"1.0"},{"t":"pri","n":"箭雨","e":"Flurry","d":"三发追踪箭，各100%伤害","pc":"0.7x3"},{"t":"sec","n":"激光战刃","e":"Laser_Glaive","d":"弹射6次250%伤害，每次弹射+10%伤害","cd":"7s","pc":"0.8"},{"t":"uti","n":"闪现","e":"Blink","d":"向前传送","cd":"7s"},{"t":"uti","n":"相位闪现","e":"Phase_Blink","d":"短距离传送，3发充能","cd":"2s"},{"t":"spe","n":"箭雨","e":"Arrow_Rain","d":"传送到空中，区域330%/s伤害","cd":"12s","pc":"0.2"},{"t":"spe","n":"弩箭","e":"Ballista","d":"后跃发射3发追踪弩箭，各900%伤害","cd":"12s","pc":"1.0x3"}]},
+  {"n":"亡命之徒","en":"Bandit","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"通关任意第一关",
+    "sk":[{"t":"pas","n":"背刺","e":"Backstab","d":"从背后攻击必定暴击"},{"t":"pri","n":"爆裂","e":"Burst","d":"霰弹5×100%，4发装填","pc":"0.5x5"},{"t":"pri","n":"步枪","e":"Blast","d":"步枪330%伤害，4发装填","pc":"1.0"},{"t":"sec","n":"锯齿匕首","e":"Serrated_Dagger","d":"冲刺360%伤害，暴击附加流血","cd":"4s","pc":"1.0"},{"t":"sec","n":"锯齿飞刀","e":"Serrated_Shiv","d":"飞刀240%伤害，暴击附加流血","cd":"4s","pc":"1.0"},{"t":"uti","n":"烟雾弹","e":"Smoke_Bomb","d":"200%伤害+隐身，现身时再造成200%伤害","cd":"6s","pc":"1.0"},{"t":"spe","n":"致命一击","e":"Lights_Out","d":"左轮600%伤害，击杀重置冷却","cd":"4s","pc":"1.0"},{"t":"spe","n":"亡命之徒","e":"Desperado","d":"左轮600%伤害，击杀后永久+10%伤害","cd":"4s","pc":"1.0"}]},
+  {"n":"MUL-T","en":"MUL-T","hp":200,"hl":60,"dg":11,"dl":2.2,"ar":12,"uk":"完成一轮完整游戏",
+    "sk":[{"t":"pri","n":"自动钉枪","e":"Auto-Nailgun","d":"每发70%伤害，12发齐射","pc":"0.6"},{"t":"pri","n":"钢筋枪","e":"Rebar_Puncher","d":"穿透600%伤害","cd":"1.8s","pc":"1.0"},{"t":"pri","n":"废料发射器","e":"Scrap_Launcher","d":"火箭爆炸360%伤害","cd":"1.5s","pc":"1.0"},{"t":"pri","n":"动力锯","e":"Power-Saw","d":"锯割1000%/s伤害","pc":"1.0"},{"t":"sec","n":"爆裂罐","e":"Blast_Canister","d":"220%伤害+眩晕炸弹","cd":"6s","pc":"1.0"},{"t":"uti","n":"运输模式","e":"Transport_Mode","d":"冲刺+200护甲","cd":"6s","pc":"1.0"},{"t":"spe","n":"切换武器","e":"Retool","d":"携带两件装备切换使用","cd":"0.5s"},{"t":"spe","n":"动力模式","e":"Power_Mode","d":"双持武器+100护甲，移速-60%","cd":"5s"}]},
   {"n":"工程师","en":"Engineer","hp":130,"hl":39,"dg":14,"dl":2.8,"ar":0,"uk":"累计完成30关",
-    "sk":[{"t":"pri","n":"弹跳手雷","e":"Bouncing_Grenades","d":"充能最多8颗各100%","pc":"1.0x8"},{"t":"sec","n":"热能地雷","e":"Pressure_Mines","d":"两段地雷充能900%","cd":"8s","pc":"1.0"},{"t":"sec","n":"蜘蛛地雷","e":"Spider_Mines","d":"自动追击600%伤害","cd":"8s","pc":"1.0"},{"t":"uti","n":"泡沫护盾","e":"Bubble_Shield","d":"阻挡投射物15s","cd":"25s"},{"t":"uti","n":"热导鱼叉","e":"Thermal_Harpoons","d":"追踪鱼叉各500%","cd":"2.5s","pc":"1.0"},{"t":"spe","n":"高斯加农炮台","e":"TR12_Gauss_Auto-Turret","d":"炮塔继承物品100%伤害","cd":"30s","pc":"1.0"},{"t":"spe","n":"碳化移动炮塔","e":"TR58_Carbonizer_Turret","d":"移动炮塔激光200%/s","cd":"30s","pc":"0.6"}]},
-  {"n":"工匠","en":"Artificer","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"月球币10个购买",
-    "sk":[{"t":"pas","n":"ENV战衣","e":"ENV_Suit","d":"按住跳跃空中悬浮"},{"t":"pri","n":"火焰箭","e":"Flame_Bolt","d":"280%点燃储存4发","cd":"1.3s","pc":"1.0"},{"t":"pri","n":"等离子箭","e":"Plasma_Bolt","d":"280%爆炸储存4发","cd":"1.3s","pc":"1.0"},{"t":"sec","n":"充能纳米炸弹","e":"Charged_Nano-Bomb","d":"充能400%-2000%","cd":"5s","pc":"1.0"},{"t":"sec","n":"纳米矛","e":"Cast_Nano-Spear","d":"充能穿透400%-1200%冰冻","cd":"5s","pc":"1.0"},{"t":"uti","n":"冰封","e":"Snapfreeze","d":"冰柱屏障100%冰冻","cd":"12s","pc":"1.0"},{"t":"spe","n":"火焰喷射器","e":"Flamethrower","d":"持续喷火2000%点燃","cd":"5s","pc":"1.0"},{"t":"spe","n":"离子浪涌","e":"Ion_Surge","d":"向上冲刺爆炸800%","cd":"8s","pc":"1.0"}]},
-  {"n":"雇佣兵","en":"Mercenary","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":20,"uk":"通过第7关",
-    "sk":[{"t":"pas","n":"二段跳","e":"Cybernetic_Enhancements","d":"可以二段跳"},{"t":"pri","n":"激光剑","e":"Laser_Sword","d":"3连斩130%,第3击暴露","pc":"1.0"},{"t":"sec","n":"旋风斩","e":"Whirlwind","d":"水平双斩2x200%","cd":"2.5s","pc":"1.0"},{"t":"sec","n":"升龙斩","e":"Rising_Thunder","d":"上挑550%跃空","cd":"2.5s","pc":"1.0"},{"t":"uti","n":"致盲冲刺","e":"Blinding_Assault","d":"冲刺300%,命中再冲","cd":"8s","pc":"1.0"},{"t":"uti","n":"集中攻击","e":"Focused_Assault","d":"冲刺700%+暴露","cd":"8s","pc":"1.0"},{"t":"spe","n":"剔骨","e":"Eviscerate","d":"多次攻击无敌","cd":"6s","pc":"1.0x7+"},{"t":"spe","n":"切割风暴","e":"Slicing_Winds","d":"剑气3敌人8x100%","cd":"6s","pc":"1.0"}]},
-  {"n":"REX","en":"REX","hp":130,"hl":39,"dg":12,"dl":2.4,"ar":20,"uk":"将燃料阵列带到深渊",
-    "sk":[{"t":"pas","n":"自然毒素","e":"Natural_Toxins","d":"攻击削弱-40%移速伤害-30护甲"},{"t":"pri","n":"注射指令","e":"DIRECTIVE_Inject","d":"三连射3x80%削弱+回复","pc":"0.5x3"},{"t":"sec","n":"钻探指令","e":"DIRECTIVE_Drill","d":"种子弹幕450%/s","cd":"6s","pc":"0.5"},{"t":"sec","n":"种子弹幕","e":"Seed_Barrage","d":"消耗15%HP迫击炮450%","cd":"0.5s","pc":"1.0"},{"t":"uti","n":"驱散指令","e":"DIRECTIVE_Disperse","d":"音爆推开+削弱","cd":"5.5s"},{"t":"uti","n":"荆棘弹幕","e":"Bramble_Volley","d":"消耗20%HP音爆550%+回复","cd":"5.5s","pc":"0.5"},{"t":"spe","n":"收割指令","e":"DIRECTIVE_Harvest","d":"弩箭330%掉落治疗","cd":"6s","pc":"1.0"},{"t":"spe","n":"缠绕生长","e":"Tangling_Growth","d":"HP25%植物缠绕200%+回复","cd":"12s","pc":"1.0"}]},
-  {"n":"装载机","en":"Loader","hp":160,"hl":48,"dg":12,"dl":2.4,"ar":20,"uk":"在Siren's Call打爆蛋",
-    "sk":[{"t":"pas","n":"废料护盾","e":"Scrap_Barrier","d":"免疫坠落拳击得护盾"},{"t":"pri","n":"铁拳","e":"Knuckleboom","d":"重拳320%","pc":"1.0"},{"t":"sec","n":"抓钩","e":"Grapple_Fist","d":"抓钩拉向目标80m","cd":"5s"},{"t":"sec","n":"尖刺抓钩","e":"Spiked_Fist","d":"抓钩320%拉回目标","cd":"5s","pc":"1.0"},{"t":"uti","n":"充能拳","e":"Charged_Gauntlet","d":"穿透600%-2700%","cd":"5s","pc":"1.0"},{"t":"uti","n":"雷电拳","e":"Thunder_Gauntlet","d":"单体2100%+锥形1000%","cd":"5s","pc":"1.0"},{"t":"spe","n":"M551电塔","e":"M551_Pylon","d":"浮空电塔100%/s","cd":"20s","pc":"0.5"},{"t":"spe","n":"雷霆震击","e":"Thunderslam","d":"砸地2000%范围","cd":"8s","pc":"1.0"}]},
-  {"n":"吐酸狗","en":"Acrid","hp":160,"hl":48,"dg":15,"dl":3,"ar":20,"uk":"通关9个不同地图",
-    "sk":[{"t":"pas","n":"毒素","e":"Poison","d":"中毒1%最大HP/s或100%基础/s10秒"},{"t":"pas","n":"枯萎","e":"Blight","d":"可叠加枯萎60%/s5秒"},{"t":"pri","n":"撕裂","e":"Vicious_Wounds","d":"撕咬200%第3击400%+回复","pc":"1.0"},{"t":"sec","n":"神经毒剂","e":"Neurotoxin","d":"毒液240%中毒","cd":"2s","pc":"1.0"},{"t":"sec","n":"贪噬咬","e":"Ravenous_Bite","d":"撕咬320%损血越高越痛+回复","cd":"2s","pc":"1.0"},{"t":"uti","n":"腐蚀跳跃","e":"Caustic_Leap","d":"落地320%+酸液池","cd":"6s","pc":"1.0"},{"t":"uti","n":"狂暴跳跃","e":"Frenzied_Leap","d":"落地550%每中-2s冷却","cd":"10s","pc":"1.0"},{"t":"spe","n":"瘟疫","e":"Epidemic","d":"疾病100%弹射20目标","cd":"10s","pc":"1.0"}]},
-  {"n":"队长","en":"Captain","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"通关最终Boss",
-    "sk":[{"t":"pas","n":"防御微型机器人","e":"Defensive_Microbots","d":"被动击落投射物"},{"t":"pri","n":"火神散弹枪","e":"Vulcan_Shotgun","d":"蓄力8x120%散射","pc":"0.75x8"},{"t":"sec","n":"电击器","e":"Power_Tazer","d":"100%+震击5s","cd":"6s","pc":"1.0"},{"t":"uti","n":"轨道探测器","e":"Orbital_Probe","d":"1-3次轨道1000%打击","cd":"11s","pc":"1.0"},{"t":"uti","n":"DIABLO打击","e":"DIABLO_Strike","d":"20s后40000%动能打击","cd":"40s","pc":"1.0"},{"t":"spe","n":"补给信标","e":"Orbital_Supply_Beacon","d":"每阶段2次:治疗/震击/补给/骇入"}]},
-  {"n":"狙击手","en":"Railgunner","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"拥有虚空DLC","dc":"虚空",
-    "sk":[{"t":"pas","n":"磁力加速","e":"Magnetic_Accelerator","d":"暴击率转暴击伤害加成"},{"t":"pri","n":"智能弹","e":"XQR_Smart_Round_System","d":"追踪弹100%,4发/秒","pc":"1.0"},{"t":"sec","n":"M99狙击镜","e":"M99_Sniper","d":"远程镜磁轨炮1000%穿透"},{"t":"sec","n":"HH44精确镜","e":"HH44_Marksman","d":"短程镜快速磁轨炮400%"},{"t":"uti","n":"震荡装置","e":"Concussion_Device","d":"推开自身+敌人2发","cd":"6s"},{"t":"uti","n":"极地力场","e":"Polar_Field_Device","d":"减速敌人和投射物","cd":"12s"},{"t":"spe","n":"超充能","e":"Supercharge","d":"穿透4000%+150%弱点","cd":"15s","pc":"3.0"},{"t":"spe","n":"冰充能","e":"Cryocharge","d":"穿透2000%+冰冻","cd":"15s","pc":"1.5"}]},
+    "sk":[{"t":"pri","n":"弹跳手雷","e":"Bouncing_Grenades","d":"充能最多8颗，各100%伤害","pc":"1.0x8"},{"t":"sec","n":"热能地雷","e":"Pressure_Mines","d":"两段地雷充能，900%伤害","cd":"8s","pc":"1.0"},{"t":"sec","n":"蜘蛛地雷","e":"Spider_Mines","d":"自动追击，600%伤害","cd":"8s","pc":"1.0"},{"t":"uti","n":"泡沫护盾","e":"Bubble_Shield","d":"阻挡投射物，持续15秒","cd":"25s"},{"t":"uti","n":"热导鱼叉","e":"Thermal_Harpoons","d":"追踪鱼叉，各500%伤害","cd":"2.5s","pc":"1.0"},{"t":"spe","n":"高斯加农炮台","e":"TR12_Gauss_Auto-Turret","d":"部署炮塔继承物品，100%伤害","cd":"30s","pc":"1.0"},{"t":"spe","n":"碳化移动炮塔","e":"TR58_Carbonizer_Turret","d":"移动炮塔，激光200%/s伤害","cd":"30s","pc":"0.6"}]},
+  {"n":"工匠","en":"Artificer","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"在月球市集用10枚月球币购买",
+    "sk":[{"t":"pas","n":"ENV战衣","e":"ENV_Suit","d":"按住跳跃键可空中悬浮"},{"t":"pri","n":"火焰箭","e":"Flame_Bolt","d":"280%伤害附加点燃，储存4发","cd":"1.3s","pc":"1.0"},{"t":"pri","n":"等离子箭","e":"Plasma_Bolt","d":"280%爆炸伤害，储存4发","cd":"1.3s","pc":"1.0"},{"t":"sec","n":"充能纳米炸弹","e":"Charged_Nano-Bomb","d":"充能400%-2000%伤害","cd":"5s","pc":"1.0"},{"t":"sec","n":"纳米矛","e":"Cast_Nano-Spear","d":"充能穿透400%-1200%伤害+冻结","cd":"5s","pc":"1.0"},{"t":"uti","n":"冰封","e":"Snapfreeze","d":"冰柱屏障，100%冻结","cd":"12s","pc":"1.0"},{"t":"spe","n":"火焰喷射器","e":"Flamethrower","d":"持续喷火2000%伤害附加点燃","cd":"5s","pc":"1.0"},{"t":"spe","n":"离子浪涌","e":"Ion_Surge","d":"向上冲刺并引发800%爆炸伤害","cd":"8s","pc":"1.0"}]},
+  {"n":"雇佣兵","en":"Mercenary","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":20,"uk":"通关至第7关",
+    "sk":[{"t":"pas","n":"二段跳","e":"Cybernetic_Enhancements","d":"可以进行二段跳"},{"t":"pri","n":"激光剑","e":"Laser_Sword","d":"三连斩130%伤害，第3击附加暴露","pc":"1.0"},{"t":"sec","n":"旋风斩","e":"Whirlwind","d":"水平双斩2×200%伤害","cd":"2.5s","pc":"1.0"},{"t":"sec","n":"升龙斩","e":"Rising_Thunder","d":"上挑550%伤害，击飞敌人","cd":"2.5s","pc":"1.0"},{"t":"uti","n":"致盲冲刺","e":"Blinding_Assault","d":"冲刺300%伤害，命中可再冲一次","cd":"8s","pc":"1.0"},{"t":"uti","n":"集中攻击","e":"Focused_Assault","d":"冲刺700%伤害+暴露","cd":"8s","pc":"1.0"},{"t":"spe","n":"剔骨","e":"Eviscerate","d":"多次攻击，期间无敌","cd":"6s","pc":"1.0x7+"},{"t":"spe","n":"切割风暴","e":"Slicing_Winds","d":"剑气，命中3名敌人各8×100%伤害","cd":"6s","pc":"1.0"}]},
+  {"n":"REX","en":"REX","hp":130,"hl":39,"dg":12,"dl":2.4,"ar":20,"uk":"将燃料阵列带到深渊洞穴的机器人处",
+    "sk":[{"t":"pas","n":"自然毒素","e":"Natural_Toxins","d":"攻击削弱：移速-40%，伤害-30%，护甲-30"},{"t":"pri","n":"注射指令","e":"DIRECTIVE_Inject","d":"三连射3×80%伤害+削弱+回复","pc":"0.5x3"},{"t":"sec","n":"钻探指令","e":"DIRECTIVE_Drill","d":"种子弹幕450%/s伤害","cd":"6s","pc":"0.5"},{"t":"sec","n":"种子弹幕","e":"Seed_Barrage","d":"消耗15%HP发射迫击炮450%伤害","cd":"0.5s","pc":"1.0"},{"t":"uti","n":"驱散指令","e":"DIRECTIVE_Disperse","d":"音爆推开敌人+削弱","cd":"5.5s"},{"t":"uti","n":"荆棘弹幕","e":"Bramble_Volley","d":"消耗20%HP音爆550%伤害+回复","cd":"5.5s","pc":"0.5"},{"t":"spe","n":"收割指令","e":"DIRECTIVE_Harvest","d":"弩箭330%伤害，掉落治疗果","cd":"6s","pc":"1.0"},{"t":"spe","n":"缠绕生长","e":"Tangling_Growth","d":"消耗25%HP植物缠绕200%伤害+回复","cd":"12s","pc":"1.0"}]},
+  {"n":"装载机","en":"Loader","hp":160,"hl":48,"dg":12,"dl":2.4,"ar":20,"uk":"在Siren's Call击碎Loader蛋",
+    "sk":[{"t":"pas","n":"废料护盾","e":"Scrap_Barrier","d":"免疫坠落伤害，拳击获得护盾"},{"t":"pri","n":"铁拳","e":"Knuckleboom","d":"重拳320%伤害","pc":"1.0"},{"t":"sec","n":"抓钩","e":"Grapple_Fist","d":"抓钩将自己拉向目标，最大80m","cd":"5s"},{"t":"sec","n":"尖刺抓钩","e":"Spiked_Fist","d":"抓钩320%伤害，将目标拉回","cd":"5s","pc":"1.0"},{"t":"uti","n":"充能拳","e":"Charged_Gauntlet","d":"穿透600%-2700%伤害","cd":"5s","pc":"1.0"},{"t":"uti","n":"雷电拳","e":"Thunder_Gauntlet","d":"单体2100%+锥形1000%伤害","cd":"5s","pc":"1.0"},{"t":"spe","n":"M551电塔","e":"M551_Pylon","d":"部署浮空电塔，100%/s伤害","cd":"20s","pc":"0.5"},{"t":"spe","n":"雷霆震击","e":"Thunderslam","d":"砸地2000%范围伤害","cd":"8s","pc":"1.0"}]},
+  {"n":"吐酸狗","en":"Acrid","hp":160,"hl":48,"dg":15,"dl":3,"ar":20,"uk":"通关9张不同地图",
+    "sk":[{"t":"pas","n":"毒素","e":"Poison","d":"中毒效果：每秒1%最大HP或100%基础伤害，持续10秒"},{"t":"pas","n":"枯萎","e":"Blight","d":"可叠加枯萎效果，每秒60%伤害，持续5秒"},{"t":"pri","n":"撕裂","e":"Vicious_Wounds","d":"撕咬200%伤害，第3击400%+回复","pc":"1.0"},{"t":"sec","n":"神经毒剂","e":"Neurotoxin","d":"毒液240%伤害+中毒","cd":"2s","pc":"1.0"},{"t":"sec","n":"贪噬咬","e":"Ravenous_Bite","d":"撕咬320%伤害，损血越高越痛+回复","cd":"2s","pc":"1.0"},{"t":"uti","n":"腐蚀跳跃","e":"Caustic_Leap","d":"落地320%伤害+酸液池","cd":"6s","pc":"1.0"},{"t":"uti","n":"狂暴跳跃","e":"Frenzied_Leap","d":"落地550%伤害，每命中一名敌人冷却-2s","cd":"10s","pc":"1.0"},{"t":"spe","n":"瘟疫","e":"Epidemic","d":"疾病100%伤害，弹射20个目标","cd":"10s","pc":"1.0"}]},
+  {"n":"队长","en":"Captain","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"击败最终Boss Mithrix",
+    "sk":[{"t":"pas","n":"防御微型机器人","e":"Defensive_Microbots","d":"被动击落敌方投射物"},{"t":"pri","n":"火神散弹枪","e":"Vulcan_Shotgun","d":"蓄力8×120%散射伤害","pc":"0.75x8"},{"t":"sec","n":"电击器","e":"Power_Tazer","d":"100%伤害+震击5秒","cd":"6s","pc":"1.0"},{"t":"uti","n":"轨道探测器","e":"Orbital_Probe","d":"1-3次轨道打击，各1000%伤害","cd":"11s","pc":"1.0"},{"t":"uti","n":"DIABLO打击","e":"DIABLO_Strike","d":"20秒后落下40000%动能打击","cd":"40s","pc":"1.0"},{"t":"spe","n":"补给信标","e":"Orbital_Supply_Beacon","d":"每阶段使用2次，可选：治疗/震击/补给/骇入"}]},
+  {"n":"狙击手","en":"Railgunner","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"拥有虚空幸存者DLC","dc":"虚空",
+    "sk":[{"t":"pas","n":"磁力加速","e":"Magnetic_Accelerator","d":"暴击率转为暴击伤害加成"},{"t":"pri","n":"智能弹","e":"XQR_Smart_Round_System","d":"追踪弹100%伤害，4发/秒","pc":"1.0"},{"t":"sec","n":"M99狙击镜","e":"M99_Sniper","d":"远程狙击镜，磁轨炮1000%穿透伤害"},{"t":"sec","n":"HH44精确镜","e":"HH44_Marksman","d":"短程镜，快速磁轨炮400%伤害"},{"t":"uti","n":"震荡装置","e":"Concussion_Device","d":"推开自身及敌人，2发充能","cd":"6s"},{"t":"uti","n":"极地力场","e":"Polar_Field_Device","d":"减速区域内敌人和投射物","cd":"12s"},{"t":"spe","n":"超充能","e":"Supercharge","d":"穿透4000%伤害+150%弱点加成","cd":"15s","pc":"3.0"},{"t":"spe","n":"冰充能","e":"Cryocharge","d":"穿透2000%伤害+冰冻","cd":"15s","pc":"1.5"}]},
   {"n":"虚空魔","en":"Void Fiend","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"通关The Planetarium","dl":"虚空",
-    "sk":[{"t":"pas","n":"虚空腐败","e":"Void_Corruption","d":"腐败满技能变激进形态"},{"t":"pri","n":"淹没","e":"Drown","d":"减速光束300%","pc":"1.0"},{"t":"pri","n":"腐败淹没","e":"Corrupted_Drown","d":"短程光束2000%/s","pc":"0.625"},{"t":"sec","n":"洪水","e":"Flood","d":"等离子导弹600%可充1100%","cd":"4s","pc":"1.0"},{"t":"sec","n":"腐败洪水","e":"Corrupted_Flood","d":"弧形炸弹1100%","cd":"4s","pc":"1.0"},{"t":"uti","n":"穿越","e":"Trespass","d":"消失清除减益弧形移动","cd":"5s"},{"t":"uti","n":"腐败穿越","e":"Corrupted_Trespass","d":"消失清除减益快移","cd":"5s"},{"t":"spe","n":"压制","e":"Suppress","d":"25%腐败换25%HP"},{"t":"spe","n":"腐败压制","e":"Corrupted_Suppress","d":"25%HP换25%腐败"}]},
-  {"n":"追寻者","en":"Seeker","hp":115,"hl":34,"dg":12,"dl":2.4,"ar":20,"uk":"拥有风暴DLC","dc":"风暴",
-    "sk":[{"t":"pas","n":"内在力量","e":"Inner_Strength","d":"宁静层数增强技能最多7层"},{"t":"pri","n":"灵气冲击","e":"Spirit_Punch","d":"穿透250%第3击350%+减速","pc":"1.0"},{"t":"sec","n":"无形之手","e":"Unseen_Hand","d":"穿透灵手600%+治疗","cd":"6s","pc":"1.0"},{"t":"sec","n":"灵魂螺旋","e":"Soul_Spiral","d":"螺旋150%+屏障","cd":"7s","pc":"1.0"},{"t":"uti","n":"飞升","e":"Sojourn","d":"飞行+爆炸500%","cd":"8s","pc":"1.0"},{"t":"uti","n":"缓刑","e":"Reprieve","d":"屏障+飞行旋风","cd":"9s","pc":"1.0"},{"t":"spe","n":"冥想","e":"Meditate","d":"专注爆射300%+治疗+宁静","cd":"14s","pc":"0.8"},{"t":"spe","n":"掌爆","e":"Palm_Blast","d":"充能400%-700%+治疗","cd":"12s","pc":"1.0"}]},
-  {"n":"伪子","en":"False Son","hp":180,"hl":54,"dg":12,"dl":2.4,"ar":0,"uk":"击败False Son","dl":"风暴",
-    "sk":[{"t":"pas","n":"月蚀篡改","e":"Lunar_Tampering","d":"未用月刺+5%攻速护甲,已用+5%移速回复"},{"t":"pri","n":"遗弃者之棒","e":"Club_of_the_Forsaken","d":"挥击450%充能重击1000%","pc":"1.0"},{"t":"sec","n":"月刺","e":"Lunar_Spikes","d":"200%伤害月蚀印记增伤","cd":"4s","pc":"1.0"},{"t":"sec","n":"月之桩","e":"Lunar_Stakes","d":"穿透300%延迟闪电","cd":"11s","pc":"1.0"},{"t":"uti","n":"兄弟之步","e":"Step_of_the_Brothers","d":"冲刺爆炸200%2次充能","cd":"8s","pc":"1.0"},{"t":"uti","n":"子午线意志","e":"Meridians_Will","d":"传送爆炸150%牵引3倍被动","cd":"10s"},{"t":"spe","n":"圣父激光","e":"Laser_of_the_Father","d":"充能240%-1400%4秒","cd":"15s","pc":"0.45"},{"t":"spe","n":"激光爆裂","e":"Laser_Burst","d":"穿透1250%+回复月刺","cd":"8s","pc":"1.0"}]},
-  {"n":"厨师","en":"CHEF","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"拥有风暴DLC","dc":"风暴",
-    "sk":[{"t":"pas","n":"厨师之吻","e":"CHEFs_Kiss","d":"2种技能击杀烹饪掉落食物"},{"t":"pri","n":"切丁","e":"Dice","d":"菜刀200%悬空持续伤害","pc":"1.0"},{"t":"sec","n":"炙烤","e":"Sear","d":"喷射火焰600%点燃","cd":"6s","pc":"1.0"},{"t":"sec","n":"冷冻盒","e":"Ice_Box","d":"冰块3x150%6层冰冻","cd":"5s","pc":"1.0"},{"t":"uti","n":"翻滚","e":"Roll","d":"擀面杖冲刺300%-600%","cd":"8s","pc":"1.0"},{"t":"uti","n":"油溅","e":"Oil_Spill","d":"旋转上跃砸下200%连4次","cd":"10s","pc":"1.0"},{"t":"spe","n":"上油","e":"Glaze","d":"油团7x250%油渍虚弱","cd":"12s","pc":"1.0"},{"t":"spe","n":"是的,厨师!","e":"Yes_CHEF","d":"400%点燃/霜冻强化技能","cd":"10s","pc":"1.0"}]},
-  {"n":"操作员","en":"Operator","hp":90,"hl":27,"dg":12,"dl":2.4,"ar":0,"uk":"拥有合金DLC","dc":"合金",
-    "sk":[{"t":"pas","n":"无人机技术","e":"Drone_Tech","d":"每阶段2架无人机跟随"},{"t":"pri","n":"H3-11手枪","e":"H3-11_OCR_Custom","d":"手枪150%-600%弹跳充能","pc":"1.0"},{"t":"sec","n":"管理覆盖","e":"ADMIN-OVERRIDE","d":"指挥无人机特殊技能","cd":"4s","pc":"1.0"},{"t":"sec","n":"集群指令","e":"CMD-SWARM","d":"无人机撞击450%","cd":"3s","pc":"1.0"},{"t":"uti","n":"升空协议","e":"Ascent_Protocol","d":"无人机升空滑翔","cd":"7s"},{"t":"uti","n":"火墙","e":"FIREWALL","d":"护盾释放200%-600%","cd":"8s","pc":"1.0"},{"t":"spe","n":"弹射核心","e":"Ejection_Core","d":"无人机击飞300%+纳米虫","cd":"8s","pc":"1.0"},{"t":"spe","n":"增幅核心","e":"Amp_Core","d":"吸收充能爆炸300-2000%","cd":"8s","pc":"1.0"}]},
-  {"n":"漂流者","en":"Drifter","hp":170,"hl":52,"dg":12,"dl":2.4,"ar":20,"uk":"拥有合金DLC","dc":"合金",
-    "sk":[{"t":"pas","n":"变废为宝","e":"Trash_to_Treasure","d":"废料增益:白+移速绿+回复红+攻速黄-冷却"},{"t":"pri","n":"钝击","e":"Blunt_Force","d":"猛击170%第3击350%眩晕掉落废品","pc":"1.0"},{"t":"sec","n":"清理","e":"Cleanup","d":"碎片4x100%+随机物品","cd":"6s","pc":"1.0"},{"t":"sec","n":"废品方块","e":"Junk_Cube","d":"方块400%击打发射爆炸800%","cd":"8s","pc":"1.0"},{"t":"uti","n":"回收","e":"Repossess","d":"装袋怪物/物品投出","cd":"7s","pc":"1.0"},{"t":"uti","n":"龙卷重击","e":"Tornado_Slam","d":"旋转每击220%重击600%","cd":"8s","pc":"1.0"},{"t":"spe","n":"废料利用","e":"Salvage","d":"8废品生成4临时物品","cd":"30s"},{"t":"spe","n":"修补","e":"Tinker","d":"8废品冲击波100%+修补物品","cd":"30s","pc":"1.0"}]},
+    "sk":[{"t":"pas","n":"虚空腐败","e":"Void_Corruption","d":"腐败值满后技能变为激进形态"},{"t":"pri","n":"淹没","e":"Drown","d":"减速光束300%伤害","pc":"1.0"},{"t":"pri","n":"腐败淹没","e":"Corrupted_Drown","d":"短程光束2000%/s伤害","pc":"0.625"},{"t":"sec","n":"洪水","e":"Flood","d":"等离子导弹600%伤害，可充能至1100%","cd":"4s","pc":"1.0"},{"t":"sec","n":"腐败洪水","e":"Corrupted_Flood","d":"弧形炸弹1100%伤害","cd":"4s","pc":"1.0"},{"t":"uti","n":"穿越","e":"Trespass","d":"消失并清除减益，弧形移动","cd":"5s"},{"t":"uti","n":"腐败穿越","e":"Corrupted_Trespass","d":"消失并清除减益，快速移动","cd":"5s"},{"t":"spe","n":"压制","e":"Suppress","d":"以25%腐败值换取25%HP"},{"t":"spe","n":"腐败压制","e":"Corrupted_Suppress","d":"以25%HP换取25%腐败值"}]},
+  {"n":"追寻者","en":"Seeker","hp":115,"hl":34,"dg":12,"dl":2.4,"ar":20,"uk":"需要风暴DLC","dc":"风暴",
+    "sk":[{"t":"pas","n":"内在力量","e":"Inner_Strength","d":"宁静层数增强技能效果，最多7层"},{"t":"pri","n":"灵气冲击","e":"Spirit_Punch","d":"穿透250%伤害，第3击350%+减速","pc":"1.0"},{"t":"sec","n":"无形之手","e":"Unseen_Hand","d":"穿透灵手600%伤害+治疗","cd":"6s","pc":"1.0"},{"t":"sec","n":"灵魂螺旋","e":"Soul_Spiral","d":"螺旋150%伤害+屏障","cd":"7s","pc":"1.0"},{"t":"uti","n":"飞升","e":"Sojourn","d":"飞行+爆炸500%伤害","cd":"8s","pc":"1.0"},{"t":"uti","n":"缓刑","e":"Reprieve","d":"屏障+飞行旋风","cd":"9s","pc":"1.0"},{"t":"spe","n":"冥想","e":"Meditate","d":"专注爆发300%伤害+治疗+宁静","cd":"14s","pc":"0.8"},{"t":"spe","n":"掌爆","e":"Palm_Blast","d":"蓄能400%-700%伤害+治疗","cd":"12s","pc":"1.0"}]},
+  {"n":"伪子","en":"False Son","hp":180,"hl":54,"dg":12,"dl":2.4,"ar":0,"uk":"在风暴DLC中击败最终Boss伪子","dl":"风暴",
+    "sk":[{"t":"pas","n":"月蚀篡改","e":"Lunar_Tampering","d":"未使用月刺时+5%攻速/护甲；使用后+5%移速/回复"},{"t":"pri","n":"遗弃者之棒","e":"Club_of_the_Forsaken","d":"挥击450%伤害，充能重击1000%","pc":"1.0"},{"t":"sec","n":"月刺","e":"Lunar_Spikes","d":"200%伤害，月蚀印记增伤","cd":"4s","pc":"1.0"},{"t":"sec","n":"月之桩","e":"Lunar_Stakes","d":"穿透300%伤害+延迟闪电","cd":"11s","pc":"1.0"},{"t":"uti","n":"兄弟之步","e":"Step_of_the_Brothers","d":"冲刺爆炸200%伤害，2次充能","cd":"8s","pc":"1.0"},{"t":"uti","n":"子午线意志","e":"Meridians_Will","d":"传送爆炸150%伤害，牵引3倍被动","cd":"10s"},{"t":"spe","n":"圣父激光","e":"Laser_of_the_Father","d":"充能240%-1400%伤害，持续4秒","cd":"15s","pc":"0.45"},{"t":"spe","n":"激光爆裂","e":"Laser_Burst","d":"穿透1250%伤害+回复月刺","cd":"8s","pc":"1.0"}]},
+  {"n":"厨师","en":"CHEF","hp":110,"hl":33,"dg":12,"dl":2.4,"ar":0,"uk":"需要风暴DLC","dc":"风暴",
+    "sk":[{"t":"pas","n":"厨师之吻","e":"CHEFs_Kiss","d":"使用2种不同技能击杀敌人时烹饪食物"},{"t":"pri","n":"切丁","e":"Dice","d":"菜刀200%伤害，悬空持续伤害","pc":"1.0"},{"t":"sec","n":"炙烤","e":"Sear","d":"喷射火焰600%伤害+点燃","cd":"6s","pc":"1.0"},{"t":"sec","n":"冷冻盒","e":"Ice_Box","d":"冰块3×150%伤害，叠加6层冰冻","cd":"5s","pc":"1.0"},{"t":"uti","n":"翻滚","e":"Roll","d":"擀面杖冲刺300%-600%伤害","cd":"8s","pc":"1.0"},{"t":"uti","n":"油溅","e":"Oil_Spill","d":"旋转上跃后砸下200%伤害，连续4次","cd":"10s","pc":"1.0"},{"t":"spe","n":"上油","e":"Glaze","d":"油团7×250%伤害+油渍虚弱","cd":"12s","pc":"1.0"},{"t":"spe","n":"是的,厨师!","e":"Yes_CHEF","d":"400%伤害附加点燃/霜冻，强化技能","cd":"10s","pc":"1.0"}]},
+  {"n":"操作员","en":"Operator","hp":90,"hl":27,"dg":12,"dl":2.4,"ar":0,"uk":"需要合金DLC","dc":"合金",
+    "sk":[{"t":"pas","n":"无人机技术","e":"Drone_Tech","d":"每阶段2架无人机跟随"},{"t":"pri","n":"H3-11手枪","e":"H3-11_OCR_Custom","d":"手枪150%-600%弹跳充能伤害","pc":"1.0"},{"t":"sec","n":"管理覆盖","e":"ADMIN-OVERRIDE","d":"指挥无人机释放特殊技能","cd":"4s","pc":"1.0"},{"t":"sec","n":"集群指令","e":"CMD-SWARM","d":"无人机撞击450%伤害","cd":"3s","pc":"1.0"},{"t":"uti","n":"升空协议","e":"Ascent_Protocol","d":"无人机升空，进行滑翔","cd":"7s"},{"t":"uti","n":"火墙","e":"FIREWALL","d":"护盾释放200%-600%伤害","cd":"8s","pc":"1.0"},{"t":"spe","n":"弹射核心","e":"Ejection_Core","d":"无人机击飞300%伤害+纳米虫","cd":"8s","pc":"1.0"},{"t":"spe","n":"增幅核心","e":"Amp_Core","d":"吸收充能后爆炸300%-2000%伤害","cd":"8s","pc":"1.0"}]},
+  {"n":"漂流者","en":"Drifter","hp":170,"hl":52,"dg":12,"dl":2.4,"ar":20,"uk":"需要合金DLC","dc":"合金",
+    "sk":[{"t":"pas","n":"变废为宝","e":"Trash_to_Treasure","d":"废料增益：白+移速，绿+回复，红+攻速，黄-冷却"},{"t":"pri","n":"钝击","e":"Blunt_Force","d":"猛击170%伤害，第3击350%+眩晕+掉落废品","pc":"1.0"},{"t":"sec","n":"清理","e":"Cleanup","d":"碎片4×100%伤害+随机物品","cd":"6s","pc":"1.0"},{"t":"sec","n":"废品方块","e":"Junk_Cube","d":"方块400%伤害，击打后发射爆炸800%","cd":"8s","pc":"1.0"},{"t":"uti","n":"回收","e":"Repossess","d":"装袋怪物/物品再投出","cd":"7s","pc":"1.0"},{"t":"uti","n":"龙卷重击","e":"Tornado_Slam","d":"旋转每击220%伤害，重击600%","cd":"8s","pc":"1.0"},{"t":"spe","n":"废料利用","e":"Salvage","d":"消耗8废品生成4件临时物品","cd":"30s"},{"t":"spe","n":"修补","e":"Tinker","d":"消耗8废品释放冲击波100%伤害+修补物品","cd":"30s","pc":"1.0"}]},
   {"n":"异端","en":"Heretic","hp":440,"hl":132,"dg":18,"dl":3.6,"ar":0,"uk":"同时持有4件异端物品","dc":"特殊",
-    "sk":[{"t":"pri","n":"渴望凝视","e":"Hungering_Gaze","d":"追踪碎片爆炸120%,12发","cd":"2s装填","pc":"0.1"},{"t":"sec","n":"切割风暴","e":"Slicing_Maelstrom","d":"风暴875%/s,3s后爆炸700%+束缚","cd":"5s","pc":"0.2"},{"t":"uti","n":"暗影步","e":"Shadowfade","d":"无形+30%移速回复18.2%HP3秒","cd":"6s"},{"t":"spe","n":"毁灭","e":"Ruin","d":"叠加标记引爆300%+120%/层","cd":"8s","pc":"1.0"}]}
+    "sk":[{"t":"pri","n":"渴望凝视","e":"Hungering_Gaze","d":"追踪碎片延迟爆炸120%伤害，12发装填","cd":"2s装填","pc":"0.1"},{"t":"sec","n":"切割风暴","e":"Slicing_Maelstrom","d":"风暴875%/s伤害，3秒后爆炸700%+定身","cd":"5s","pc":"0.2"},{"t":"uti","n":"暗影步","e":"Shadowfade","d":"无形状态+30%移速，回复18.2%HP持续3秒","cd":"6s"},{"t":"spe","n":"毁灭","e":"Ruin","d":"叠加印记，引爆300%+每层120%伤害","cd":"8s","pc":"1.0"}]}
 ];
 
 // ===== ARTIFACT DATA =====
 var ARTIFACTS = [
-  {name:"混沌",nameEn:"Chaos",code:"●▲●●▲●●▲●",desc:"友军伤害开启，你可以伤害和击杀队友"},
-  {name:"命令",nameEn:"Command",code:"■■■■■■▲▲▲",desc:"物品改为自选，每次拾取时从同品质物品中选择"},
-  {name:"死亡",nameEn:"Death",code:"●●●■▲■●▲●",desc:"一人死亡全队死亡，任意队友阵亡则游戏结束"},
-  {name:"幻觉",nameEn:"Delusion",code:"■●■●●●■▲■",desc:"传送器充能完成后重新生成所有打开的箱子"},
-  {name:"奉献",nameEn:"Devotion",code:"▲♦▲■♦■♦▲♦",desc:"替换损坏的无人机为Lemurian蛋"},
-  {name:"不谐",nameEn:"Dissonance",code:"●■■■■■■■●",desc:"怪物可出现在任何环境，无视生态限制"},
-  {name:"谜团",nameEn:"Enigma",code:"♦■■▲■▲●♦♦",desc:"随机装备，每次使用后变更为另一个随机装备"},
-  {name:"进化",nameEn:"Evolution",code:"♦♦♦■■■●●●",desc:"怪物每关获得物品，随时间增强"},
+  {name:"混沌",nameEn:"Chaos",code:"●▲●●▲●●▲●",desc:"开启友军伤害，你可以伤害和击杀队友"},
+  {name:"命令",nameEn:"Command",code:"■■■■■■▲▲▲",desc:"物品改为自选：拾取时从同品质物品中自由选择"},
+  {name:"死亡",nameEn:"Death",code:"●●●■▲■●▲●",desc:"一人阵亡，全队覆灭——任意队友死亡则游戏结束"},
+  {name:"幻觉",nameEn:"Delusion",code:"■●■●●●■▲■",desc:"传送器充能完毕后，所有打开的宝箱重新生成"},
+  {name:"奉献",nameEn:"Devotion",code:"▲♦▲■♦■♦▲♦",desc:"将损坏的无人机替换为Lemurian蛋"},
+  {name:"不谐",nameEn:"Dissonance",code:"●■■■■■■■●",desc:"怪物可出现在任何环境中，无视生态限制"},
+  {name:"谜团",nameEn:"Enigma",code:"♦■■▲■▲●♦♦",desc:"随机装备：每次使用后变更为另一件随机装备"},
+  {name:"进化",nameEn:"Evolution",code:"♦♦♦■■■●●●",desc:"怪物每关获得一件物品，随时间不断增强"},
   {name:"脆弱",nameEn:"Frailty",code:"●●●▲●▲▲▲▲",desc:"坠落伤害翻倍且可致死"},
-  {name:"玻璃",nameEn:"Glass",code:"♦♦♦♦♦♦♦♦♦",desc:"友军造成500%伤害但生命值减为10%"},
-  {name:"荣誉",nameEn:"Honor",code:"■■■■▲■■■■",desc:"敌人只能作为精英生成，无普通敌人"},
+  {name:"玻璃",nameEn:"Glass",code:"♦♦♦♦♦♦♦♦♦",desc:"友军造成500%伤害，但生命值降至10%"},
+  {name:"荣誉",nameEn:"Honor",code:"■■■■▲■■■■",desc:"敌人全部以精英形态出现，无普通敌人"},
   {name:"亲族",nameEn:"Kin",code:"●▲▲♦●▲♦♦●",desc:"每关只有一种怪物类型"},
-  {name:"蜕变",nameEn:"Metamorphosis",code:"♦■●♦■●♦■●",desc:"每次复活随机变成另一个角色"},
-  {name:"声望",nameEn:"Prestige",code:"▲●●■●▲●●■",desc:"每阶段至少一个山之祭坛且效果永久",dlc:"合金"},
-  {name:"重生",nameEn:"Rebirth",code:"",desc:"带着上一世的礼物降世，经验值继承",dlc:"风暴",unlock:"通过经历重生事件解锁"},
-  {name:"牺牲",nameEn:"Sacrifice",code:"▲▲▲▲▲▲▲♦▲",desc:"怪物死亡掉落物品，但无宝箱生成"},
-  {name:"灵魂",nameEn:"Soul",code:"●■●●♦●■♦■",desc:"击败怪物生成鬼火，攻击附近的敌人"},
-  {name:"怨恨",nameEn:"Spite",code:"▲●▲●●●▲●▲",desc:"敌人死亡掉落多个爆炸炸弹"},
-  {name:"蜂群",nameEn:"Swarms",code:"●●▲▲♦▲▲●●",desc:"怪物数量翻倍但生命值减半"},
-  {name:"复仇",nameEn:"Vengeance",code:"♦■■♦●■♦■■",desc:"每10分钟出现一个你的镜像分身来追杀你"}
+  {name:"蜕变",nameEn:"Metamorphosis",code:"♦■●♦■●♦■●",desc:"每次复活随机变成另一名角色"},
+  {name:"声望",nameEn:"Prestige",code:"▲●●■●▲●●■",desc:"每阶段至少一个山之祭坛，且效果永久生效",dlc:"合金"},
+  {name:"重生",nameEn:"Rebirth",code:"",desc:"带着上一世的礼物降世，经验值可继承",dlc:"风暴",unlock:"通过经历重生事件解锁"},
+  {name:"牺牲",nameEn:"Sacrifice",code:"▲▲▲▲▲▲▲♦▲",desc:"怪物死亡掉落物品，但地图中不再生成宝箱"},
+  {name:"灵魂",nameEn:"Soul",code:"●■●●♦●■♦■",desc:"击败怪物后生成鬼火，自动攻击附近敌人"},
+  {name:"怨恨",nameEn:"Spite",code:"▲●▲●●●▲●▲",desc:"敌人死亡后掉落多个爆炸炸弹"},
+  {name:"蜂群",nameEn:"Swarms",code:"●●▲▲♦▲▲●●",desc:"怪物数量翻倍，但生命值减半"},
+  {name:"复仇",nameEn:"Vengeance",code:"♦■■♦●■♦■■",desc:"每10分钟出现你的镜像分身，来追杀你"}
 ];
 
 // ===== QUALITY CONFIG =====
@@ -565,75 +599,75 @@ function renderItems() {
 // ===== SKILL UNLOCK CHALLENGES (from wiki) =====
 var SKILL_UNLOCKS = {
   // Commando
-  'Phase_Blast':'Commando: Rolling Thunder — 完成一场3个玩家的多人游戏',
-  'Tactical_Slide':'Commando: Godspeed — 25分钟内通关第一关',
-  'Frag_Grenade':'Commando: Incorruptible — 无伤通关',
+  'Phase_Blast':'指挥官·雷霆轰鸣 — 完成一场3人多人游戏',
+  'Tactical_Slide':'指挥官·神速 — 25分钟内通关第一关',
+  'Frag_Grenade':'指挥官·铁壁 — 不受任何伤害通关',
   // Huntress
-  'Flurry':'Huntress: Finishing Touch — 使用弩箭一次性击杀3个敌人',
-  'Phase_Blink':'Huntress: One Shot, One Kill — 一箭造成超过5000伤害',
-  'Ballista':'Huntress: Piercing Wind — 通关或抹除(25步)',
+  'Flurry':'女猎手·终结一击 — 用弩箭一次性击杀3个敌人',
+  'Phase_Blink':'女猎手·一发入魂 — 单箭造成超过5000伤害',
+  'Ballista':'女猎手·破风 — 通关或在25步内抹除',
   // Bandit
-  'Blast':'Bandit: Classic Man — 使用致命一击击杀10个敌人不给它们治疗',
-  'Serrated_Shiv':'Bandit: Sadist — 使用锯齿匕首一次造成500%伤害',
-  'Desperado':'Bandit: B&E — 一局游戏中用致命一击击杀10个敌人',
+  'Blast':'亡命之徒·经典风范 — 用致命一击击杀10个敌人，不给他们治疗',
+  'Serrated_Shiv':'亡命之徒·虐待狂 — 单次锯齿匕首造成500%伤害',
+  'Desperado':'亡命之徒·破门而入 — 一局中用致命一击击杀10个敌人',
   // MUL-T
-  'Scrap_Launcher':'MUL-T: Pest Control — 用运输模式一次性击杀3个敌人',
-  'Power-Saw':'MUL-T: Gotcha! — 用钢筋枪一发击杀2个敌人',
-  'Power_Mode':'MUL-T: Seventh Day — 一局中激活动力模式并维持20秒',
+  'Scrap_Launcher':'MUL-T·害虫防治 — 用运输模式一次性击杀3个敌人',
+  'Power-Saw':'MUL-T·抓到你了！ — 用钢筋枪一发击杀2个敌人',
+  'Power_Mode':'MUL-T·第七日 — 一局中激活动力模式并维持20秒',
   // Engineer
-  'Spider_Mines':'Engineer: 100% Calculated — 普通难度下不使用炮塔通关',
-  'Thermal_Harpoons':'Engineer: Zero Sum — 使用热导鱼叉在15秒内击杀5个敌人',
-  'TR58_Carbonizer_Turret':'Engineer: Better With Friends — 招募12个无人机',
+  'Spider_Mines':'工程师·精密计算 — 普通难度下不使用炮塔通关',
+  'Thermal_Harpoons':'工程师·零和 — 使用热导鱼叉在15秒内击杀5个敌人',
+  'TR58_Carbonizer_Turret':'工程师·朋友多多 — 招募12个无人机',
   // Artificer
-  'Plasma_Bolt':'Artificer: Massacre — 普通难度下用火焰喷射器一次击杀10个敌人',
-  'Cast_Nano-Spear':'Artificer: Orbital Bombardment — 充能纳米炸弹一次性击杀3个敌人',
-  'Ion_Surge':'Artificer: Chunked! — 使用离子浪涌一次性击杀3个敌人',
+  'Plasma_Bolt':'工匠·屠杀 — 普通难度下用火焰喷射器一次击杀10个敌人',
+  'Cast_Nano-Spear':'工匠·轨道轰炸 — 充能纳米炸弹一次性击杀3个敌人',
+  'Ion_Surge':'工匠·粉碎！ — 使用离子浪涌一次性击杀3个敌人',
   // Mercenary
-  'Rising_Thunder':'Mercenary: Demon of the Skies — 不落地使用剔骨击杀3个敌人',
-  'Focused_Assault':'Mercenary: Ethereal — 闪避15次攻击',
-  'Slicing_Winds':'Mercenary: Flash of Blades — 一局中累计造成5000伤害',
+  'Rising_Thunder':'雇佣兵·天空恶魔 — 不落地状态下使用剔骨击杀3个敌人',
+  'Focused_Assault':'雇佣兵·虚无之舞 — 闪避15次攻击',
+  'Slicing_Winds':'雇佣兵·剑刃闪光 — 一局中累计造成5000伤害',
   // REX
-  'Seed_Barrage':'REX: Bushwhacked — 不治疗完成一关',
-  'Bramble_Volley':'REX: Full of Life — 普通难度下单次缠绕生长治疗1000HP',
-  'Tangling_Growth':'REX: Dunked — 用注射指令击杀Boss',
+  'Seed_Barrage':'REX·荒野生存 — 不进行治疗完成一关',
+  'Bramble_Volley':'REX·生机勃勃 — 普通难度下单次缠绕生长治疗1000HP',
+  'Tangling_Growth':'REX·灌篮 — 使用注射指令击杀Boss',
   // Loader
-  'Spiked_Fist':'Loader: Swing By — 用抓钩连续摆动30秒',
-  'Thunder_Gauntlet':'Loader: Earthshatter — 速度达到300mph后用充能拳击杀敌人',
-  'Thunderslam':'Loader: The Thunderdome — 用雷霆震击一次性击杀3个Boss',
+  'Spiked_Fist':'装载机·摆荡者 — 用抓钩连续摆荡30秒',
+  'Thunder_Gauntlet':'装载机·震地者 — 速度达到300mph后用充能拳击杀敌人',
+  'Thunderslam':'装载机·雷霆角斗场 — 用雷霆震击一次性击杀3个Boss',
   // Acrid
-  'Blight':'Acrid: Bad Medicine — 在Siren\'s Call击败Alloy Worship Unit',
-  'Ravenous_Bite':'Acrid: Bite — 一次性中毒100个敌人',
-  'Frenzied_Leap':'Acrid: Easy Prey — 一局中用瘟疫技能击杀30个敌人',
+  'Blight':'吐酸狗·猛药 — 在Siren\'s Call击败Alloy Worship Unit',
+  'Ravenous_Bite':'吐酸狗·撕咬 — 一次性使100个敌人中毒',
+  'Frenzied_Leap':'吐酸狗·轻松猎物 — 一局中用瘟疫技能击杀30个敌人',
   // Captain
-  'DIABLO_Strike':'Captain: Smushed — 用DIABLO打击击杀Mithrix',
+  'DIABLO_Strike':'队长·碾碎 — 用DIABLO打击击杀Mithrix',
   // Railgunner (虚空DLC)
-  'HH44_Marksman':'Railgunner: Annihilator — 一局中造成1000000总伤害',
-  'Polar_Field_Device':'Railgunner: Trickshot — 使用磁轨炮一击击杀3个敌人',
-  'Cryocharge':'Railgunner: Calculated — 不使用武器主动技能通关3关',
+  'HH44_Marksman':'狙击手·歼灭者 — 一局中造成1,000,000总伤害',
+  'Polar_Field_Device':'狙击手·花式射击 — 使用磁轨炮一发击杀3个敌人',
+  'Cryocharge':'狙击手·精算师 — 不使用武器主动技能通关3关',
   // Void Fiend (虚空DLC)
-  'Corrupted_Flood':'Void Fiend: Dragged Below — 水中躲避15次',
-  'Corrupted_Trespass':'Void Fiend: Corrupted "Purified" — 在腐败形态下通关',
-  'Corrupted_Suppress':'Void Fiend: Corrupted "Purified"',
+  'Corrupted_Flood':'虚空魔·拖入深渊 — 在水中闪避15次',
+  'Corrupted_Trespass':'虚空魔·腐化"净化" — 在腐败形态下通关',
+  'Corrupted_Suppress':'虚空魔·腐化"净化"',
   // Seeker (风暴DLC)
-  'Soul_Spiral':'Seeker: Meditation — 一局中治疗自己或友军1000HP',
-  'Reprieve':'Seeker: Sanctuary — 使用缓刑格挡一次伤害',
-  'Palm_Blast':'Seeker: Purified — 用冥想一次性击杀3个敌人',
+  'Soul_Spiral':'追寻者·冥想 — 一局中治疗自己或友军1000HP',
+  'Reprieve':'追寻者·庇护所 — 使用缓刑格挡一次伤害',
+  'Palm_Blast':'追寻者·净化 — 用冥想一次性击杀3个敌人',
   // False Son (风暴DLC)
-  'Lunar_Stakes':'False Son: Moon Worshipper — 用月刺累计击杀15个敌人',
-  'Meridians_Will':'False Son: Ascension — 用激光击杀Boss',
-  'Laser_Burst':'False Son: Eye of the Storm — 一局中维持月蚀被动20分钟',
+  'Lunar_Stakes':'伪子·月之信徒 — 用月刺累计击杀15个敌人',
+  'Meridians_Will':'伪子·升华 — 用激光击杀Boss',
+  'Laser_Burst':'伪子·风暴之眼 — 一局中维持月蚀被动20分钟',
   // CHEF (风暴DLC)
-  'Ice_Box':'CHEF: Sous Chef — 使用冷冻盒一次性击杀3个敌人',
-  'Oil_Spill':'CHEF: Slip and Slide — 用炙烤累计击杀30个敌人',
-  'Yes_CHEF':'CHEF: Yes, CHEF! — 用第2道菜技能一次性击杀5个敌人',
+  'Ice_Box':'厨师·副厨 — 使用冷冻盒一次性击杀3个敌人',
+  'Oil_Spill':'厨师·滑铲 — 用炙烤累计击杀30个敌人',
+  'Yes_CHEF':'厨师·遵命,主厨！ — 用第2道菜技能一次性击杀5个敌人',
   // Operator (合金DLC)
-  'CMD-SWARM':'Operator: Droning On — 无人机击杀10个敌人',
-  'FIREWALL':'Operator: High Priority — 使用弹射核心一次性击杀3个敌人',
-  'Amp_Core':'Operator: Best In Class — 一局中增幅核心造成5000伤害',
+  'CMD-SWARM':'操作员·喋喋不休 — 无人机击杀10个敌人',
+  'FIREWALL':'操作员·高优先级 — 使用弹射核心一次性击杀3个敌人',
+  'Amp_Core':'操作员·优等生 — 一局中增幅核心造成5000伤害',
   // Drifter (合金DLC)
-  'Junk_Cube':'Drifter: Hoarder — 一局中收集100个废品',
-  'Tornado_Slam':'Drifter: Twister — 使用龙卷重击一次性击杀4个敌人',
-  'Tinker':'Drifter: Fixer Upper — 使用修补重投物品5次',
+  'Junk_Cube':'漂流者·囤积者 — 一局中收集100个废品',
+  'Tornado_Slam':'漂流者·龙卷风 — 使用龙卷重击一次性击杀4个敌人',
+  'Tinker':'漂流者·维修工 — 使用修补重投物品5次',
 };
 
 // ===== RENDER SURVIVORS =====
