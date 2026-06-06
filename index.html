@@ -192,17 +192,21 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
 .boss-card .boss-icon img{width:100%;height:100%;object-fit:contain}
 
 /* ===== Mechanics Grid ===== */
-.mechanics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
-.mechanic-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;transition:all .2s}
+.mechanics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.mechanic-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;transition:all .2s;display:flex;flex-direction:column}
 .mechanic-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
-.mechanic-card .mc-name{font-weight:700;font-size:0.9rem;color:#e6edf3}
-.mechanic-card .mc-name-en{font-size:0.66rem;color:#484f58;margin-top:1px}
-.mechanic-card .mc-desc{font-size:0.76rem;color:#8b949e;margin-top:6px;line-height:1.5}
-.mechanic-card .mc-cost{display:inline-block;margin-top:6px;font-size:0.62rem;padding:2px 8px;border-radius:8px;background:rgba(210,153,34,0.08);color:#d29922;font-weight:600}
-.mechanic-card .mc-icon{width:36px;height:36px;border-radius:6px;margin-bottom:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04)}
+.mechanic-card .mc-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mechanic-card .mc-icon{width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04)}
 .mechanic-card .mc-icon img{width:100%;height:100%;object-fit:contain}
-.mechanics-cat{margin-bottom:16px}
-.mechanics-cat-title{font-weight:700;font-size:0.85rem;color:#6e7681;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px}
+.mechanic-card .mc-title{flex:1;min-width:0}
+.mechanic-card .mc-name{font-weight:700;font-size:0.9rem;color:#e6edf3}
+.mechanic-card .mc-name-en{font-size:0.66rem;color:#484f58;margin-top:2px}
+.mechanic-card .mc-badge{font-size:0.58rem;padding:2px 7px;border-radius:6px;font-weight:600;letter-spacing:0.3px}
+.mechanic-card .mc-desc{font-size:0.76rem;color:#8b949e;line-height:1.5;flex:1}
+.mechanic-card .mc-cost{display:inline-block;margin-top:8px;font-size:0.62rem;padding:3px 9px;border-radius:8px;background:rgba(210,153,34,0.08);color:#d29922;font-weight:600;align-self:flex-start}
+.mc-badge.c-shrine{background:rgba(34,211,238,0.1);color:#22d3ee}
+.mc-badge.c-printer{background:rgba(68,147,248,0.1);color:#4493f8}
+.mc-badge.c-special{background:rgba(163,113,247,0.1);color:#a371f7}
 .section-tab.s-sec4.active{color:#fbbf24}
 .section-tab.s-sec5.active{color:#34d399}
 
@@ -569,7 +573,7 @@ var BOSSES = [
 
 // ===== MAP MECHANICS DATA =====
 var MECHANICS = [
-  {cat:"祭坛 / Shrines",items:[
+  {cat:"祭坛 / Shrines",catLabel:"祭坛",items:[
     {n:"血之祭坛",en:"Shrine of Blood",cost:"消耗50%HP",d:"消耗当前生命值的50%，换取大量金币。金币数量随关卡进度缩放"},
     {n:"战斗祭坛",en:"Shrine of Combat",cost:"免费激活",d:"激活后在附近召唤大量敌人。击败所有敌人后获得金币奖励"},
     {n:"山之祭坛",en:"Shrine of the Mountain",cost:"免费/可多次",d:"激活后传送器Boss数量+1。每激活一次，Boss数量和奖励加倍，难度翻倍"},
@@ -578,11 +582,11 @@ var MECHANICS = [
     {n:"秩序祭坛",en:"Shrine of Order",cost:"1个月球币",d:"消耗1个月球币，将背包中所有物品按品质重新排列为同品质的随机物品"},
     {n:"净化池",en:"Cleansing Pool",cost:"投入月球物品",d:"投入一件月球物品，换取珍珠(HP+10%/层)或光耀珍珠(全属性+10%/层)"}
   ]},
-  {cat:"打印机 / Printers",items:[
+  {cat:"打印机 / Printers",catLabel:"打印机",items:[
     {n:"3D打印机",en:"3D Printer",cost:"同品质物品×1",d:"使用一件同品质物品换取打印机显示的目标物品。每台打印机只能使用一次"},
     {n:"回收机",en:"Scrapper",cost:"物品×1",d:"将一件物品转换为同品质的废料。废料可在3D打印机中作为交换物使用"}
   ]},
-  {cat:"特殊 / Special",items:[
+  {cat:"特殊 / Special",catLabel:"特殊",items:[
     {n:"Newt祭坛",en:"Newt Altar",cost:"1月球币",d:"消耗1个月球币激活。传送器充能完成后出现蓝色传送门，可进入月球集市"},
     {n:"时间集市",en:"Bazaar Between Time",cost:"月球币",d:"月球集市可购买月球物品、解锁角色(工匠)、选择下一关地图。通过蓝色传送门进入"}
   ]}
@@ -953,39 +957,42 @@ function renderBosses() {
 // ===== RENDER MECHANICS =====
 function renderMechanics() {
   var container = document.getElementById("mechanics");
-  var filteredGroups = MECHANICS.slice();
+  // Flatten all categories into a single array with cat info
+  var allItems = [];
+  MECHANICS.forEach(function(group){
+    group.items.forEach(function(m){
+      m._cat = group.cat;
+      m._catLabel = group.catLabel || group.cat;
+      allItems.push(m);
+    });
+  });
+  var filtered = allItems;
   if (searchTerm) {
     var s = searchTerm.toLowerCase();
-    filteredGroups = MECHANICS.map(function(group){
-      return {
-        cat: group.cat,
-        items: group.items.filter(function(m){
-          return m.n.toLowerCase().indexOf(s) !== -1 ||
-            m.en.toLowerCase().indexOf(s) !== -1 ||
-            m.d.toLowerCase().indexOf(s) !== -1;
-        })
-      };
-    }).filter(function(g){ return g.items.length > 0; });
+    filtered = allItems.filter(function(m){
+      return m.n.toLowerCase().indexOf(s) !== -1 ||
+        m.en.toLowerCase().indexOf(s) !== -1 ||
+        m.d.toLowerCase().indexOf(s) !== -1;
+    });
   }
-  var total = filteredGroups.reduce(function(sum,g){ return sum + g.items.length; }, 0);
-  document.getElementById("count").textContent = "共 " + total + " 个机关";
-  if (total === 0) {
+  document.getElementById("count").textContent = "共 " + filtered.length + " 个机关";
+  if (filtered.length === 0) {
     container.innerHTML = '<div class="no-results">没有找到匹配的机关</div>';
     return;
   }
-  container.innerHTML = filteredGroups.map(function(group){
-    var cards = group.items.map(function(m){
-      var iconFile = 'icons/ext_' + m.en.replace(/ /g,'_').replace(/'/g,'') + '.webp';
-      return '<div class="mechanic-card">' +
+  container.innerHTML = filtered.map(function(m){
+    var catCls = m._cat.indexOf('祭坛')>=0 ? 'c-shrine' : m._cat.indexOf('打印机')>=0 ? 'c-printer' : 'c-special';
+    var iconFile = 'icons/ext_' + m.en.replace(/ /g,'_').replace(/'/g,'') + '.webp';
+    return '<div class="mechanic-card">' +
+      '<div class="mc-head">' +
         '<div class="mc-icon"><img src="' + iconFile + '" alt="" onerror="this.style.display=\'none\'"></div>' +
-        '<div class="mc-name">' + m.n + ' <span class="mc-name-en">' + m.en + '</span></div>' +
-        '<div class="mc-desc">' + m.d + '</div>' +
-        '<span class="mc-cost">' + m.cost + '</span>' +
-      '</div>';
-    }).join("");
-    return '<div class="mechanics-cat">' +
-      '<div class="mechanics-cat-title">' + group.cat + '</div>' +
-      '<div class="mechanics-grid">' + cards + '</div>' +
+        '<div class="mc-title">' +
+          '<div class="mc-name">' + m.n + ' <span class="mc-name-en">' + m.en + '</span></div>' +
+          '<span class="mc-badge ' + catCls + '">' + m._catLabel + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mc-desc">' + m.d + '</div>' +
+      '<span class="mc-cost">' + m.cost + '</span>' +
     '</div>';
   }).join("");
 }
