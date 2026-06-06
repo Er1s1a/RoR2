@@ -8,186 +8,172 @@
 /* ===== Reset & Base ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh;line-height:1.5}
-a{color:inherit;text-decoration:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',Roboto,sans-serif;background:#06080a;color:#c9d1d9;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
 
-/* ===== Header ===== */
-.header{position:sticky;top:0;z-index:100;background:#161b22;border-bottom:1px solid #30363d;padding:12px 16px 0}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
-.logo{font-size:1.3rem;font-weight:700;color:#58a6ff;white-space:nowrap}
-.count{font-size:0.8rem;color:#8b949e;white-space:nowrap}
-.search-box{position:relative;flex:1;min-width:180px;max-width:360px}
-.search-box input{width:100%;padding:8px 12px 8px 36px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:0.9rem;outline:none;transition:border-color .2s}
-.search-box input:focus{border-color:#58a6ff}
-.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:#8b949e}
+/* ===== Header (glassmorphism) ===== */
+.header{position:sticky;top:0;z-index:100;background:rgba(8,10,14,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 16px 0}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.logo{font-size:1.2rem;font-weight:700;color:#f0f6fc;white-space:nowrap;letter-spacing:-0.3px}
+.logo i{font-style:normal;margin-right:2px}
+.count{font-size:0.76rem;color:#6e7681;white-space:nowrap;font-variant-numeric:tabular-nums}
+.search-box{position:relative;flex:1;min-width:160px;max-width:300px}
+.search-box input{width:100%;padding:8px 12px 8px 34px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;color:#c9d1d9;font-size:0.85rem;outline:none;transition:all .2s}
+.search-box input::placeholder{color:#484f58}
+.search-box input:focus{border-color:rgba(68,147,248,0.4);background:rgba(255,255,255,0.06);box-shadow:0 0 0 3px rgba(68,147,248,0.1)}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;fill:#484f58}
 
 /* ===== Section Nav ===== */
-.section-nav{display:flex;gap:0;padding:0 16px;background:#161b22;border-bottom:1px solid #30363d}
-.section-tab{flex:1;text-align:center;padding:12px 8px;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s;border-bottom:3px solid transparent;color:#8b949e;user-select:none;max-width:220px}
-.section-tab:hover{color:#c9d1d9;background:rgba(255,255,255,0.03)}
-.section-tab.active{color:#58a6ff;border-bottom-color:#58a6ff}
-.section-tab.s-sec2.active{color:#22d3ee;border-bottom-color:#22d3ee}
-.section-tab.s-sec3.active{color:#c084fc;border-bottom-color:#c084fc}
+.section-nav{display:flex;gap:6px;padding:0 0 4px}
+.section-tab{flex:1;text-align:center;padding:8px 12px;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;border-radius:8px 8px 0 0;color:#6e7681;user-select:none;max-width:220px;border:1px solid transparent;border-bottom:none;background:transparent}
+.section-tab:hover{color:#b0b8c1;background:rgba(255,255,255,0.03)}
+.section-tab.active{color:#f0f6fc;background:#090c10;border-color:rgba(255,255,255,0.06)}
+.section-tab.s-sec2.active{color:#93c5fd}
+.section-tab.s-sec3.active{color:#c084fc}
 
 /* ===== Quality Tabs ===== */
-.tabs-wrap{background:#161b22;padding:0 16px}
-.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;padding-top:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs-wrap{background:transparent;padding:4px 0}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex-shrink:0;padding:8px 16px;border-radius:8px 8px 0 0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid transparent;border-bottom:none;position:relative;white-space:nowrap;user-select:none;background:transparent;color:#8b949e}
-.tab:hover{background:rgba(255,255,255,0.04);color:#c9d1d9}
-.tab.active{border-color:#30363d;background:#0d1117;z-index:1;color:#c9d1d9}
-.tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.tab .badge{font-size:0.7rem;padding:1px 6px;border-radius:10px;margin-left:4px;background:rgba(255,255,255,0.1)}
+.tab{flex-shrink:0;padding:6px 14px;border-radius:16px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,0.06);white-space:nowrap;user-select:none;background:rgba(255,255,255,0.02);color:#6e7681;letter-spacing:0.2px}
+.tab:hover{background:rgba(255,255,255,0.05);color:#b0b8c1}
+.tab.active{background:rgba(68,147,248,0.15);border-color:rgba(68,147,248,0.3);color:#c9d1d9}
+.tab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;position:relative;top:-1px}
+.tab .badge{font-size:0.66rem;padding:1px 6px;border-radius:10px;margin-left:4px;background:rgba(255,255,255,0.08);color:#6e7681}
 
 /* ===== Main Content ===== */
-.main{padding:16px;max-width:1400px;margin:0 auto}
+.main{padding:12px 16px 30px;max-width:1320px;margin:0 auto}
 .content-section{display:none}
 .content-section.active{display:block}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:#8b949e;font-size:1.1rem}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.no-results{grid-column:1/-1;text-align:center;padding:80px 20px;color:#484f58;font-size:1rem}
 
 /* ===== Item Card ===== */
-.card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,border-color .15s,box-shadow .15s;cursor:default}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
-.card-header{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.card-icon{width:44px;height:44px;border-radius:8px;flex-shrink:0;overflow:hidden}
-.card-icon img{display:block;width:44px;height:44px}
+.card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;overflow:hidden;transition:all .2s;cursor:default}
+.card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.card-header{display:flex;align-items:center;gap:10px;padding:10px;position:relative}
+.card-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .2s}
+.q-white .card-header::before{background:#a0a0a0}
+.q-green .card-header::before{background:#3fb950}
+.q-red .card-header::before{background:#f85149}
+.q-orange .card-header::before{background:#d29922}
+.q-blue .card-header::before{background:#4493f8}
+.q-void .card-header::before{background:#a371f7}
+.q-boss .card-header::before{background:#d29922}
+.q-storm .card-header::before{background:#22d3ee}
+.card-icon{width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden}
+.card-icon img{display:block;width:40px;height:40px}
 .card-info{min-width:0}
-.card-name{font-weight:600;font-size:0.95rem;line-height:1.3}
-.card-name-en{font-size:0.75rem;color:#8b949e;margin-top:1px}
-.card-body{padding:10px 12px}
-.card-desc{font-size:0.82rem;color:#b0b8c1;line-height:1.5}
-.card-stack{font-size:0.72rem;color:#8b949e;margin-top:6px}
-.card-dlc{display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:10px;margin-top:6px;font-weight:600}
+.card-name{font-weight:600;font-size:0.9rem;line-height:1.3;color:#e6edf3}
+.card-name-en{font-size:0.7rem;color:#484f58;margin-top:1px}
+.card-body{padding:8px 10px 10px}
+.card-desc{font-size:0.78rem;color:#8b949e;line-height:1.5}
+.card-stack{font-size:0.68rem;color:#6e7681;margin-top:5px;display:inline-block;padding:1px 7px;background:rgba(255,255,255,0.03);border-radius:4px}
+.card-dlc{display:inline-block;font-size:0.62rem;padding:2px 7px;border-radius:10px;margin:4px 4px 0 0;font-weight:600;letter-spacing:0.3px}
 
-.q-white .card-header{border-left:3px solid #a0a0a0}
-.q-green .card-header{border-left:3px solid #4ade80}
-.q-red .card-header{border-left:3px solid #f87171}
-.q-orange .card-header{border-left:3px solid #fb923c}
-.q-blue .card-header{border-left:3px solid #60a5fa}
-.q-void .card-header{border-left:3px solid #c084fc}
-.q-boss .card-header{border-left:3px solid #facc15}
-.q-storm .card-header{border-left:3px solid #22d3ee}
-.q-white .card-icon{background:#3a3a3a}
-.q-green .card-icon{background:#14532d}
-.q-red .card-icon{background:#7f1d1d}
-.q-orange .card-icon{background:#7c2d12}
-.q-blue .card-icon{background:#1e3a5f}
-.q-void .card-icon{background:#3b0764}
-.q-boss .card-icon{background:#713f12}
-.q-storm .card-icon{background:#164e63}
+/* Quality icon backgrounds */
+.q-white .card-icon{background:#2a2a2a}
+.q-green .card-icon{background:#0d3320}
+.q-red .card-icon{background:#2d1111}
+.q-orange .card-icon{background:#2d1a08}
+.q-blue .card-icon{background:#0c1a2d}
+.q-void .card-icon{background:#1a0a2e}
+.q-boss .card-icon{background:#2d2008}
+.q-storm .card-icon{background:#0c2830}
 
-/* ===== Survivor Card ===== */
-.survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;align-items:start}
-.survivor-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s}
-.survivor-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
-.survivor-header{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)}
-.survivor-icon{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;overflow:hidden}
-.survivor-icon img{width:100%;height:100%;object-fit:contain}
-.survivor-info{min-width:0;flex:1}
-.survivor-name{font-weight:700;font-size:1rem;color:#f0f6fc}
-.survivor-name-en{font-size:0.73rem;color:#8b949e;margin-top:1px}
-.survivor-stats{font-size:0.7rem;color:#6e7681;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
-.survivor-stats span{padding:3px 10px;border-radius:12px;font-weight:600;font-size:0.68rem;white-space:nowrap;letter-spacing:0.3px}
-.survivor-stats span:nth-child(1){background:rgba(248,113,113,0.15);color:#fca5a5}
-.survivor-stats span:nth-child(2){background:rgba(251,146,60,0.15);color:#fdba74}
-.survivor-stats span:nth-child(3){background:rgba(96,165,250,0.15);color:#93c5fd}
-.survivor-stat-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-weight:600;font-size:0.68rem;white-space:nowrap;letter-spacing:0.3px}
-.survivor-dlc-badge{font-size:0.65rem;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:3px;display:inline-block}
-.survivor-expand{font-size:1rem;color:#484f58;transition:transform .25s;flex-shrink:0}
-.survivor-card.expanded .survivor-expand{transform:rotate(180deg)}
-.survivor-body{display:none;padding:14px;background:rgba(0,0,0,0.15)}
-.survivor-card.expanded .survivor-body{display:block}
-.survivor-unlock{font-size:0.73rem;color:#8b949e;margin-bottom:12px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:3px solid #facc15}
+/* ===== Survivor Portrait Grid ===== */
+.survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.survivor-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;cursor:pointer;transition:all .2s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.survivor-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.5);background:rgba(255,255,255,0.02)}
+.survivor-card .sv-portrait{width:64px;height:64px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.08);flex-shrink:0;margin-bottom:2px}
+.survivor-card .sv-portrait img{width:100%;height:100%;object-fit:contain}
+.survivor-card .sv-name{font-weight:700;font-size:0.9rem;color:#e6edf3;line-height:1.2}
+.survivor-card .sv-en{font-size:0.66rem;color:#484f58}
+.survivor-card .sv-stats{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.survivor-card .sv-stats span{padding:2px 8px;border-radius:10px;font-weight:600;font-size:0.62rem;letter-spacing:0.2px}
+.survivor-card .sv-stats .sv-hp{background:rgba(248,81,73,0.12);color:#fca5a5}
+.survivor-card .sv-stats .sv-dmg{background:rgba(210,153,34,0.12);color:#fdba74}
+.survivor-card .sv-stats .sv-arm{background:rgba(68,147,248,0.12);color:#93c5fd}
+.survivor-card .sv-unlock{font-size:0.6rem;color:#6e7681;margin-top:2px}
+.survivor-card .sv-dlc{font-size:0.58rem;padding:2px 7px;border-radius:8px;font-weight:600;letter-spacing:0.3px}
 
-/* Skills 4-column grid */
-.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+/* ===== Survivor Modal ===== */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;animation:modalIn .2s ease}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+.modal-dialog{background:#090c10;border:1px solid rgba(255,255,255,0.1);border-radius:16px;width:100%;max-width:720px;animation:modalSlideIn .25s ease;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+@keyframes modalSlideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
+.modal-header .mh-portrait{width:56px;height:56px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.1);flex-shrink:0}
+.modal-header .mh-portrait img{width:100%;height:100%;object-fit:contain}
+.modal-header .mh-info{min-width:0;flex:1}
+.modal-header .mh-name{font-weight:700;font-size:1.1rem;color:#f0f6fc}
+.modal-header .mh-en{font-size:0.73rem;color:#6e7681;margin-top:1px}
+.modal-header .mh-stats{display:flex;gap:8px;margin-top:6px}
+.modal-header .mh-stats span{padding:3px 10px;border-radius:10px;font-weight:600;font-size:0.68rem}
+.modal-close{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#8b949e;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .15s;flex-shrink:0}
+.modal-close:hover{background:rgba(255,255,255,0.1);color:#e6edf3}
+.modal-body{padding:16px 20px 20px;max-height:70vh;overflow-y:auto}
+.modal-body .mb-unlock{font-size:0.73rem;color:#6e7681;margin-bottom:14px;padding:8px 12px;background:rgba(210,153,34,0.06);border-radius:8px;border:1px solid rgba(210,153,34,0.15)}
+.modal-body .mb-dlc{font-size:0.62rem;padding:2px 8px;border-radius:8px;font-weight:600;margin-bottom:10px;display:inline-block}
 
-/* Slot-level color coding */
-.skill-slot{display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:8px;border-left:3px solid transparent;background:rgba(255,255,255,0.01);transition:background .2s}
-.skill-slot:has(.m1){border-left-color:rgba(248,113,113,0.35);background:rgba(248,113,113,0.04)}
-.skill-slot:has(.m2){border-left-color:rgba(74,222,128,0.35);background:rgba(74,222,128,0.04)}
-.skill-slot:has(.sf){border-left-color:rgba(96,165,250,0.35);background:rgba(96,165,250,0.04)}
-.skill-slot:has(.rr){border-left-color:rgba(251,146,60,0.35);background:rgba(251,146,60,0.04)}
+/* Modal Skills Grid */
+.modal-skills{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.modal-skills .ms-slot{display:flex;flex-direction:column;gap:8px}
+.modal-skills .ms-hd{text-align:center;font-size:0.73rem;font-weight:700;padding:8px 0;border-radius:6px;margin-bottom:2px}
+.modal-skills .ms-hd.m1{background:rgba(248,81,73,0.15);color:#fca5a5}
+.modal-skills .ms-hd.m2{background:rgba(63,185,80,0.15);color:#7ee787}
+.modal-skills .ms-hd.sf{background:rgba(68,147,248,0.15);color:#93c5fd}
+.modal-skills .ms-hd.rr{background:rgba(210,153,34,0.15);color:#fdba74}
+.modal-skills .ms-hd .ms-key{font-size:0.6rem;opacity:0.7;display:block;font-weight:400;margin-top:2px}
+.modal-skills .ms-card{border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px;text-align:center;transition:all .15s}
+.modal-skills .ms-card.def{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.1)}
+.modal-skills .ms-card.alt{background:rgba(0,0,0,0.15);border:1px dashed rgba(255,255,255,0.05);margin-top:2px}
+.modal-skills .ms-card .ms-icon{width:38px;height:38px;margin:0 auto 6px;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04)}
+.modal-skills .ms-card .ms-icon img{width:100%;height:100%;object-fit:contain}
+.modal-skills .ms-card .ms-name{font-size:0.8rem;font-weight:600;color:#e6edf3;margin-bottom:3px}
+.modal-skills .ms-card .ms-desc{font-size:0.68rem;color:#8b949e;line-height:1.4}
+.modal-skills .ms-card .ms-tag{display:inline-block;font-size:0.55rem;padding:2px 6px;border-radius:3px;background:rgba(255,255,255,0.06);color:#6e7681;margin:3px 2px 0}
+.modal-skills .ms-card .ms-alt{badge{font-size:0.58rem;color:#d29922;margin-bottom:4px;font-weight:700;display:block}
+.modal-skills .ms-card .ms-unlock{font-size:0.58rem;color:#8b949e;margin-top:4px;padding:3px 6px;background:rgba(210,153,34,0.05);border-radius:3px;line-height:1.3}
 
-/* Slot header */
-.skill-slot-hd{text-align:center;font-size:0.75rem;font-weight:700;padding:6px 0 8px;border-radius:4px 4px 0 0;color:#c9d1d9;letter-spacing:0.5px}
-.skill-slot-hd.m1{background:rgba(248,113,113,0.2);color:#fca5a5;border-bottom:1px solid rgba(248,113,113,0.3)}
-.skill-slot-hd.m2{background:rgba(74,222,128,0.2);color:#86efac;border-bottom:1px solid rgba(74,222,128,0.3)}
-.skill-slot-hd.sf{background:rgba(96,165,250,0.2);color:#93c5fd;border-bottom:1px solid rgba(96,165,250,0.3)}
-.skill-slot-hd.rr{background:rgba(251,146,60,0.2);color:#fdba74;border-bottom:1px solid rgba(251,146,60,0.3)}
-.skill-slot-hd .key{font-size:0.6rem;opacity:0.7;margin-top:2px;display:block;font-weight:400;letter-spacing:0}
-
-/* Skill cards base */
-.skill-card{border:1px solid #30363d;border-radius:8px;padding:8px;text-align:center;position:relative;transition:all .2s}
-
-/* Default skill — prominent */
-.skill-card.def{padding:12px 10px 14px;background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.1);box-shadow:0 0 12px rgba(255,255,255,0.015)}
-.skill-slot:has(.m1) .skill-card.def{border-left:3px solid rgba(248,113,113,0.55)}
-.skill-slot:has(.m2) .skill-card.def{border-left:3px solid rgba(74,222,128,0.55)}
-.skill-slot:has(.sf) .skill-card.def{border-left:3px solid rgba(96,165,250,0.55)}
-.skill-slot:has(.rr) .skill-card.def{border-left:3px solid rgba(251,146,60,0.55)}
-.skill-card.def:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);box-shadow:0 0 16px rgba(255,255,255,0.04);transform:translateY(-1px)}
-
-/* Alternate skill — compact secondary */
-.skill-card.alt{padding:6px 8px;background:rgba(0,0,0,0.12);border:1px dashed rgba(255,255,255,0.06);opacity:0.85;margin-top:2px}
-.skill-card.alt:hover{opacity:1;border-color:rgba(255,255,255,0.14);background:rgba(0,0,0,0.08);box-shadow:0 0 8px rgba(255,255,255,0.02)}
-
-/* Skill icon */
-.skill-card .sk-icon{width:36px;height:36px;margin:0 auto 5px;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.05)}
-.skill-card.alt .sk-icon{width:28px;height:28px;margin-bottom:3px}
-.skill-card .sk-icon img{width:100%;height:100%;object-fit:contain}
-.skill-card .sk-name{font-size:0.78rem;font-weight:600;color:#e6edf3;margin-bottom:3px}
-.skill-card.alt .sk-name{font-size:0.7rem}
-.skill-card .sk-desc{font-size:0.67rem;color:#8b949e;line-height:1.4}
-.skill-card.alt .sk-desc{font-size:0.6rem}
-.skill-card .sk-tag{display:inline-block;font-size:0.55rem;padding:2px 6px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:3px;margin-right:2px}
-
-/* Alternate badge */
-.skill-alt-badge{font-size:0.58rem;color:#facc15;margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 6px;background:rgba(250,204,21,0.1);border-radius:3px;display:inline-block}
-.skill-alt-badge::before{content:"\01F513  "}
-
-/* Unlock condition — more prominent */
-.sk-unlock{font-size:0.62rem;color:#e2b714;margin-top:5px;padding:5px 7px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.15);border-radius:4px;line-height:1.35}
-
-/* Passive section */
-.survivor-passive{padding:8px 12px;margin-bottom:12px;border-radius:6px;background:rgba(250,204,21,0.05);border:1px solid rgba(250,204,21,0.12);border-left:3px solid #facc15;display:flex;align-items:center;gap:10px}
-.survivor-passive .psv-tag{font-size:0.6rem;font-weight:700;padding:3px 7px;border-radius:4px;background:#713f12;color:#facc15;flex-shrink:0;letter-spacing:0.5px}
-.survivor-passive .psv-text{font-size:0.72rem;color:#b0b8c1}
-.survivor-passive .psv-name{font-weight:600;color:#e6edf3;margin-right:4px}
+/* Modal Passive */
+.modal-passive{padding:10px 14px;margin-bottom:14px;border-radius:8px;background:rgba(210,153,34,0.04);border:1px solid rgba(210,153,34,0.12);display:flex;align-items:center;gap:10px}
+.modal-passive .mp-tag{font-size:0.62rem;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(210,153,34,0.2);color:#d29922;flex-shrink:0}
+.modal-passive .mp-text{font-size:0.73rem;color:#b0b8c1}
+.modal-passive .mp-name{font-weight:600;color:#e6edf3;margin-right:4px}
 
 /* ===== Artifact Card ===== */
-.artifacts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.artifact-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s;padding:14px}
-.artifact-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
-.artifact-name{font-weight:700;font-size:1rem;color:#f0f6fc}
-.artifact-name-en{font-size:0.73rem;color:#8b949e;margin-top:2px}
-.artifact-code{display:flex;gap:6px;margin:10px 0;align-items:center}
-.artifact-code .cs{font-size:1.2rem;letter-spacing:2px}
+.artifacts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.artifact-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;transition:all .2s}
+.artifact-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.artifact-name{font-weight:700;font-size:0.95rem;color:#e6edf3}
+.artifact-name-en{font-size:0.68rem;color:#484f58;margin-top:1px}
+.artifact-code{display:flex;gap:5px;margin:10px 0;align-items:center;flex-wrap:wrap}
+.artifact-code .cs{font-size:1.15rem;letter-spacing:1.5px}
 .artifact-code .cs.circle{color:#c9d1d9}
-.artifact-code .cs.triangle{color:#4ade80}
-.artifact-code .cs.square{color:#fb923c}
-.artifact-code .cs.diamond{color:#c084fc}
-.artifact-code-special{font-size:0.75rem;color:#8b949e;font-style:italic}
-.artifact-desc{font-size:0.82rem;color:#b0b8c1;line-height:1.5;margin-top:4px}
-.artifact-dlc{display:inline-block;font-size:0.6rem;padding:2px 7px;border-radius:10px;margin-top:6px;font-weight:600}
+.artifact-code .cs.triangle{color:#3fb950}
+.artifact-code .cs.square{color:#d29922}
+.artifact-code .cs.diamond{color:#a371f7}
+.artifact-desc{font-size:0.8rem;color:#8b949e;line-height:1.5;margin-top:4px}
+.artifact-unlock{font-size:0.62rem;color:#484f58;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.04)}
+.artifact-dlc{display:inline-block;font-size:0.58rem;padding:2px 7px;border-radius:8px;margin-top:6px;font-weight:600;letter-spacing:0.3px}
 
 /* ===== Footer ===== */
-.footer{text-align:center;padding:30px;color:#484f58;font-size:0.75rem}
+.footer{text-align:center;padding:30px;color:#30363d;font-size:0.7rem;letter-spacing:0.3px}
 
 /* ===== Mobile ===== */
 @media(max-width:700px){
-  .skills-grid{grid-template-columns:repeat(2,1fr);gap:6px}
   .items{grid-template-columns:1fr;gap:8px}
-  .survivors{grid-template-columns:1fr;gap:8px}
+  .survivors{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
   .artifacts-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .modal-skills{grid-template-columns:repeat(2,1fr);gap:8px}
   .header{padding:8px 10px 0}
-  .section-tab{padding:10px 4px;font-size:0.8rem}
-  .tab{padding:6px 10px;font-size:0.78rem}
-  .card-header{padding:8px 10px}
-  .card-body{padding:8px 10px}
-  .survivor-header{padding:10px}
-  .survivor-body{padding:10px}
+  .section-tab{font-size:0.8rem;padding:8px 6px}
+  .main{padding:10px}
+  .card-header{padding:8px}
+  .card-body{padding:6px 8px 8px}
+  .modal-overlay{padding:16px 8px}
+  .modal-dialog{border-radius:12px}
+  .modal-body{padding:12px 14px 16px}
 }
 </style>
 </head>
@@ -226,6 +212,10 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <div class="footer">数据来源 Risk of Rain 2 Wiki · 仅供学习交流参考</div>
+
+<div class="modal-overlay" id="sv-modal" style="display:none" onclick="if(event.target===this)closeSurvivorModal()">
+  <div class="modal-dialog" id="sv-modal-dialog"></div>
+</div>
 
 <script>
 // ===== ITEM DATA =====
@@ -671,25 +661,12 @@ var SKILL_UNLOCKS = {
 };
 
 // ===== RENDER SURVIVORS =====
-var SKILL_TYPE_MAP = {
-  pri:  {cls:"s-pri",tagCls:"s-tag-pri",label:"主"},
-  sec:{cls:"s-sec",tagCls:"s-tag-sec",label:"副"},
-  uti:  {cls:"s-uti",tagCls:"s-tag-uti",label:"功能"},
-  spe:  {cls:"s-spe",tagCls:"s-tag-spe",label:"特殊"},
-  pas:  {cls:"s-pas",tagCls:"s-tag-pas",label:"被动"}
-};
 var SURVIVOR_DLC_COLORS = {
-  "虚空":{bg:"#3b0764",fg:"#c084fc"},
-  "风暴":{bg:"#164e63",fg:"#22d3ee"},
-  "合金":{bg:"#713f12",fg:"#facc15"},
-  "特殊":{bg:"#4a044e",fg:"#e879f9"}
+  "虚空":{bg:"rgba(163,113,247,0.15)",fg:"#a371f7"},
+  "风暴":{bg:"rgba(34,211,238,0.15)",fg:"#22d3ee"},
+  "合金":{bg:"rgba(210,153,34,0.15)",fg:"#d29922"},
+  "特殊":{bg:"rgba(232,121,249,0.15)",fg:"#e879f9"}
 };
-var SURVIVOR_BG_COLORS = [
-  "#1a3a5c","#1a3a2a","#3a1a1a","#3a2a1a","#1a2a3a",
-  "#2a1a3a","#3a3a1a","#1a3a3a","#2a2a3a","#3a1a2a",
-  "#2a3a1a","#1a1a3a","#3a2a2a","#2a1a2a","#1a2a2a",
-  "#2a2a1a","#1a1a2a","#3a1a3a","#2a3a3a"
-];
 
 function renderSurvivors() {
   var container = document.getElementById("survivors");
@@ -710,106 +687,86 @@ function renderSurvivors() {
     return;
   }
   container.innerHTML = filtered.map(function(sv,idx){
-    var bgCol = SURVIVOR_BG_COLORS[idx % SURVIVOR_BG_COLORS.length];
-    var dlcBadge = "";
-    if (sv.dc) {
-      var dc = SURVIVOR_DLC_COLORS[sv.dc] || {bg:"#333",fg:"#aaa"};
-      dlcBadge = '<span class="survivor-dlc-badge" style="background:' + dc.bg + ';color:' + dc.fg + '">' + sv.dc + ' DLC</span>';
-    }
-    
-    var statsHtml = '<span>HP ' + sv.hp + '(+' + sv.hl + ')</span><span>DMG ' + sv.dg + '(+' + sv.dl + ')</span><span>ARM ' + sv.ar + '</span>';
     var iconFile = 'icons/survivor_' + sv.en.replace(/'/g,'').replace(/ /g,'_').replace(/-/g,'-') + '.webp';
-    // Group skills by type: pri/sec/uti/spe/pas
-    var groups = {pri:[],sec:[],uti:[],spe:[],pas:[]};
-    sv.sk.forEach(function(sk){ if(groups[sk.t]) groups[sk.t].push(sk); });
-    
-    // Build skill icon helper
-    function skIcon(sk) {
-      var icn = 'icons/skill_' + sk.e.replace(/'/g,'').replace(/:/g,'').replace(/!/g,'').replace(/\(/g,'').replace(/\)/g,'') + '.webp';
-      return '<div class="sk-icon"><img src="' + icn + '" alt="" onerror="this.parentElement.textContent=\'' + sk.n.slice(0,2) + '\'"></div>';
-    }
-    
-    // Build one skill card
-    function skCard(sk, isAlt) {
-      var cls = isAlt ? 'alt' : 'def';
-      var unlockInfo = '';
-      if (isAlt && SKILL_UNLOCKS[sk.e]) {
-        unlockInfo = '<div class="sk-unlock">' + SKILL_UNLOCKS[sk.e] + '</div>';
-      }
-      var altBadge = isAlt ? '<div class="skill-alt-badge">解锁替换</div>' : '';
-      return '<div class="skill-card ' + cls + '">' + altBadge +
-        skIcon(sk) +
-        '<div class="sk-name">' + sk.n + '</div>' +
-        '<div class="sk-desc">' + sk.d + '</div>' +
-        (sk.cd ? '<span class="sk-tag">CD ' + sk.cd + '</span>' : '') +
-        (sk.pc ? '<span class="sk-tag">PC ' + sk.pc + '</span>' : '') +
-        unlockInfo +
-        '</div>';
-    }
-    
-    // Build one skill slot column (M1/M2/Shift/R)
-    function skSlot(skills, label, cls) {
-      if (!skills.length) return '<div class="skill-slot"><div class="skill-slot-hd ' + cls + '">' + label + '</div><div class="skill-card alt"><div class="sk-desc" style="color:#484f58">无</div></div></div>';
-      var h = '<div class="skill-slot"><div class="skill-slot-hd ' + cls + '">' + label + '</div>';
-      h += skCard(skills[0], false);
-      for (var j = 1; j < skills.length; j++) { h += skCard(skills[j], true); }
-      h += '</div>';
-      return h;
-    }
-    
-    // Passive banner
-    var passiveHtml = '';
-    if (groups.pas.length) {
-      passiveHtml = groups.pas.map(function(ps){
-        return '<div class="survivor-passive"><span class="psv-tag">被动</span><div><span class="psv-name">' + ps.n + '</span> <span class="psv-text">' + ps.d + '</span></div></div>';
-      }).join('');
-    }
-    
-    // 4-column skills grid
-    var gridHtml = '<div class="skills-grid">' +
-      skSlot(groups.pri, 'M1<div class="key">左键·主要技能</div>', 'm1') +
-      skSlot(groups.sec, 'M2<div class="key">右键·次要技能</div>', 'm2') +
-      skSlot(groups.uti, 'Shift<div class="key">辅助技能</div>', 'sf') +
-      skSlot(groups.spe, 'R<div class="key">特殊技能</div>', 'rr') +
-      '</div>';
-    return '<div class="survivor-card" onclick="this.classList.toggle(\'expanded\')">' +
-      '<div class="survivor-header">' +
-        '<div class="survivor-icon" style="background:' + bgCol + ';color:#e6edf3">' +
-          '<img src="' + iconFile + '" alt="" style="width:48px;height:48px;object-fit:contain" onerror="this.style.display=\'none\';this.parentElement.textContent=\'' + sv.n.slice(0,2) + '\'">' +
-        '</div>' +
-        '<div class="survivor-info">' +
-          '<div class="survivor-name">' + sv.n + '</div>' +
-          '<div class="survivor-name-en">' + sv.en + '</div>' +
-          '<div class="survivor-stats">' + statsHtml + '</div>' +
-          dlcBadge +
-        '</div>' +
-        '<div class="survivor-expand">&#9660;</div>' +
-      '</div>' +
-      '<div class="survivor-body">' +
-        '<div class="survivor-unlock">解锁条件：' + sv.uk + '</div>' +
-        passiveHtml +
-        gridHtml +
-      '</div></div>';
+    return '<div class="survivor-card" onclick="openSurvivorModal(' + idx + ')">' +
+      '<div class="sv-portrait"><img src="' + iconFile + '" alt="" onerror="this.parentElement.innerHTML=\'<span style=font-size:1.2rem;font-weight:700;color:#e6edf3>' + sv.n.slice(0,2) + '<\/span>\'"></div>' +
+      '<div class="sv-name">' + sv.n + '</div>' +
+      '<div class="sv-en">' + sv.en + '</div>' +
+      '<div class="sv-stats"><span class="sv-hp">HP ' + sv.hp + '</span><span class="sv-dmg">DMG ' + sv.dg + '</span><span class="sv-arm">ARM ' + sv.ar + '</span></div>' +
+      (sv.dc ? '<div class="sv-dlc" style="background:' + (SURVIVOR_DLC_COLORS[sv.dc]||{bg:"#333"}).bg + ';color:' + (SURVIVOR_DLC_COLORS[sv.dc]||{fg:"#aaa"}).fg + '">' + sv.dc + ' DLC</div>' : '') +
+      '<div class="sv-unlock">' + sv.uk + '</div>' +
+    '</div>';
   }).join("");
 }
 
-// ===== RENDER ARTIFACTS =====
-var CODE_SYM_MAP = {
-  "●":"circle",
-  "▲":"triangle",
-  "■":"square",
-  "♦":"diamond"
-};
-
-function renderCode(code) {
-  if (!code) return '<span class="artifact-code-special">特殊获取</span>';
-  var result = '';
-  for (var i = 0; i < code.length; i++) {
-    var ch = code.charAt(i);
-    var cls = CODE_SYM_MAP[ch] || "";
-    result += '<span class="cs ' + cls + '">' + ch + '</span>';
+function openSurvivorModal(idx) {
+  var sv = SURVIVORS[idx];
+  if (!sv) return;
+  var iconFile = 'icons/survivor_' + sv.en.replace(/'/g,'').replace(/ /g,'_').replace(/-/g,'-') + '.webp';
+  
+  var groups = {pri:[],sec:[],uti:[],spe:[],pas:[]};
+  sv.sk.forEach(function(sk){ if(groups[sk.t]) groups[sk.t].push(sk); });
+  
+  function msCard(sk, isAlt) {
+    var icn = 'icons/skill_' + sk.e.replace(/'/g,'').replace(/:/g,'').replace(/!/g,'').replace(/\(/g,'').replace(/\)/g,'') + '.webp';
+    var altBadge = isAlt ? '<div class="ms-alt-badge">解锁替换</div>' : '';
+    var unlockInfo = (isAlt && SKILL_UNLOCKS[sk.e]) ? '<div class="ms-unlock">' + SKILL_UNLOCKS[sk.e] + '</div>' : '';
+    return '<div class="ms-card ' + (isAlt?'alt':'def') + '">' +
+      altBadge +
+      '<div class="ms-icon"><img src="' + icn + '" alt="" onerror="this.parentElement.textContent=\''+sk.n.slice(0,2)+'\'"></div>' +
+      '<div class="ms-name">' + sk.n + '</div>' +
+      '<div class="ms-desc">' + sk.d + '</div>' +
+      (sk.cd ? '<span class="ms-tag">CD ' + sk.cd + '</span>' : '') +
+      (sk.pc ? '<span class="ms-tag">PC ' + sk.pc + '</span>' : '') +
+      unlockInfo +
+    '</div>';
   }
-  return result;
+  
+  function msSlot(skills, label, cls) {
+    if (!skills.length) return '<div class="ms-slot"><div class="ms-hd ' + cls + '">' + label + '</div><div class="ms-card alt"><div class="ms-desc" style="color:#30363d">-</div></div></div>';
+    var h = '<div class="ms-slot"><div class="ms-hd ' + cls + '">' + label + '</div>';
+    h += msCard(skills[0], false);
+    for (var j = 1; j < skills.length; j++) h += msCard(skills[j], true);
+    return h + '</div>';
+  }
+  
+  var passiveHtml = groups.pas.length ? '<div class="modal-passive">' + groups.pas.map(function(p){
+    return '<span class="mp-tag">被动</span><span class="mp-name">' + p.n + '</span><span class="mp-text">' + p.d + '</span>';
+  }).join('') + '</div>' : '';
+  
+  var dialog = document.getElementById("sv-modal-dialog");
+  dialog.innerHTML = 
+    '<div class="modal-header">' +
+      '<div class="mh-portrait"><img src="' + iconFile + '" alt="" onerror="this.parentElement.innerHTML=\'<span style=font-size:1.3rem;font-weight:700;color:#e6edf3>' + sv.n.slice(0,2) + '<\/span>\'"></div>' +
+      '<div class="mh-info">' +
+        '<div class="mh-name">' + sv.n + '</div>' +
+        '<div class="mh-en">' + sv.en + '</div>' +
+        '<div class="mh-stats">' +
+          '<span style="background:rgba(248,81,73,0.12);color:#fca5a5">HP ' + sv.hp + '(+' + sv.hl + ')</span>' +
+          '<span style="background:rgba(210,153,34,0.12);color:#fdba74">DMG ' + sv.dg + '(+' + sv.dl + ')</span>' +
+          '<span style="background:rgba(68,147,248,0.12);color:#93c5fd">ARM ' + sv.ar + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<button class="modal-close" onclick="closeSurvivorModal()">&#10005;</button>' +
+    '</div>' +
+    '<div class="modal-body">' +
+      '<div class="mb-unlock">解锁条件：' + sv.uk + '</div>' +
+      (sv.dc ? '<div class="mb-dlc" style="background:' + (SURVIVOR_DLC_COLORS[sv.dc]||{bg:"#333"}).bg + ';color:' + (SURVIVOR_DLC_COLORS[sv.dc]||{fg:"#aaa"}).fg + '">' + sv.dc + ' DLC</div>' : '') +
+      passiveHtml +
+      '<div class="modal-skills">' +
+        msSlot(groups.pri, 'M1<span class="ms-key">左键·主要技能</span>', 'm1') +
+        msSlot(groups.sec, 'M2<span class="ms-key">右键·次要技能</span>', 'm2') +
+        msSlot(groups.uti, 'Shift<span class="ms-key">辅助技能</span>', 'sf') +
+        msSlot(groups.spe, 'R<span class="ms-key">特殊技能</span>', 'rr') +
+      '</div>' +
+    '</div>';
+  document.getElementById("sv-modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeSurvivorModal() {
+  document.getElementById("sv-modal").style.display = "none";
+  document.body.style.overflow = "";
 }
 
 function renderArtifacts() {
