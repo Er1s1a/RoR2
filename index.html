@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>雨中冒险2 · 物品图鉴</title>
+<title>雨中冒险2 · 全要素图鉴</title>
 <style>
 /* ===== Reset & Base ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -21,17 +21,28 @@ a{color:inherit;text-decoration:none}
 .search-box input:focus{border-color:#58a6ff}
 .search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:#8b949e}
 
-/* ===== Tabs ===== */
-.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+/* ===== Section Nav ===== */
+.section-nav{display:flex;gap:0;padding:0 16px;background:#161b22;border-bottom:1px solid #30363d}
+.section-tab{flex:1;text-align:center;padding:12px 8px;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s;border-bottom:3px solid transparent;color:#8b949e;user-select:none;max-width:220px}
+.section-tab:hover{color:#c9d1d9;background:rgba(255,255,255,0.03)}
+.section-tab.active{color:#58a6ff;border-bottom-color:#58a6ff}
+.section-tab.s-sec2.active{color:#22d3ee;border-bottom-color:#22d3ee}
+.section-tab.s-sec3.active{color:#c084fc;border-bottom-color:#c084fc}
+
+/* ===== Quality Tabs ===== */
+.tabs-wrap{background:#161b22;padding:0 16px}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;padding-top:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex-shrink:0;padding:8px 16px;border-radius:8px 8px 0 0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid transparent;border-bottom:none;position:relative;white-space:nowrap;user-select:none}
-.tab:hover{background:rgba(255,255,255,0.04)}
-.tab.active{border-color:#30363d;background:#0d1117;z-index:1}
+.tab{flex-shrink:0;padding:8px 16px;border-radius:8px 8px 0 0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid transparent;border-bottom:none;position:relative;white-space:nowrap;user-select:none;background:transparent;color:#8b949e}
+.tab:hover{background:rgba(255,255,255,0.04);color:#c9d1d9}
+.tab.active{border-color:#30363d;background:#0d1117;z-index:1;color:#c9d1d9}
 .tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .tab .badge{font-size:0.7rem;padding:1px 6px;border-radius:10px;margin-left:4px;background:rgba(255,255,255,0.1)}
 
 /* ===== Main Content ===== */
 .main{padding:16px;max-width:1400px;margin:0 auto}
+.content-section{display:none}
+.content-section.active{display:block}
 .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
 .no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:#8b949e;font-size:1.1rem}
 
@@ -49,7 +60,6 @@ a{color:inherit;text-decoration:none}
 .card-stack{font-size:0.72rem;color:#8b949e;margin-top:6px}
 .card-dlc{display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:10px;margin-top:6px;font-weight:600}
 
-/* Quality border colors */
 .q-white .card-header{border-left:3px solid #a0a0a0}
 .q-green .card-header{border-left:3px solid #4ade80}
 .q-red .card-header{border-left:3px solid #f87171}
@@ -58,7 +68,6 @@ a{color:inherit;text-decoration:none}
 .q-void .card-header{border-left:3px solid #c084fc}
 .q-boss .card-header{border-left:3px solid #facc15}
 .q-storm .card-header{border-left:3px solid #22d3ee}
-
 .q-white .card-icon{background:#3a3a3a}
 .q-green .card-icon{background:#14532d}
 .q-red .card-icon{background:#7f1d1d}
@@ -68,16 +77,73 @@ a{color:inherit;text-decoration:none}
 .q-boss .card-icon{background:#713f12}
 .q-storm .card-icon{background:#164e63}
 
+/* ===== Survivor Card ===== */
+.survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.survivor-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s;cursor:pointer}
+.survivor-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
+.survivor-header{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.survivor-icon{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700}
+.survivor-info{min-width:0;flex:1}
+.survivor-name{font-weight:700;font-size:1rem;color:#f0f6fc}
+.survivor-name-en{font-size:0.73rem;color:#8b949e;margin-top:1px}
+.survivor-stats{font-size:0.7rem;color:#6e7681;margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.survivor-stats span{padding:1px 6px;border-radius:4px;background:rgba(255,255,255,0.05);white-space:nowrap}
+.survivor-dlc-badge{font-size:0.65rem;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:3px;display:inline-block}
+.survivor-expand{font-size:1rem;color:#484f58;transition:transform .25s;flex-shrink:0}
+.survivor-card.expanded .survivor-expand{transform:rotate(180deg)}
+.survivor-body{display:none;padding:12px 14px;background:rgba(0,0,0,0.15)}
+.survivor-card.expanded .survivor-body{display:block}
+.survivor-unlock{font-size:0.75rem;color:#8b949e;margin-bottom:12px;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:2px solid #facc15}
+.survivor-skills{display:flex;flex-direction:column;gap:8px}
+.skill-item{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:6px;border-left:2px solid transparent}
+.skill-item.s-pri{border-left-color:#f87171}
+.skill-item.s-sec{border-left-color:#4ade80}
+.skill-item.s-uti{border-left-color:#60a5fa}
+.skill-item.s-spe{border-left-color:#fb923c}
+.skill-item.s-pas{border-left-color:#facc15}
+.skill-tag{flex-shrink:0;font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;line-height:1.4}
+.s-tag-pri{background:#7f1d1d;color:#f87171}
+.s-tag-sec{background:#14532d;color:#4ade80}
+.s-tag-uti{background:#1e3a5f;color:#60a5fa}
+.s-tag-spe{background:#7c2d12;color:#fb923c}
+.s-tag-pas{background:#713f12;color:#facc15}
+.skill-info{min-width:0;flex:1}
+.skill-name{font-size:0.82rem;font-weight:600;color:#e6edf3}
+.skill-name-en{font-size:0.68rem;color:#6e7681;margin-left:6px}
+.skill-desc{font-size:0.73rem;color:#8b949e;margin-top:2px;line-height:1.4}
+.skill-cd{display:inline-block;font-size:0.6rem;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:2px}
+
+/* ===== Artifact Card ===== */
+.artifacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.artifact-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s;padding:14px}
+.artifact-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
+.artifact-name{font-weight:700;font-size:1rem;color:#f0f6fc}
+.artifact-name-en{font-size:0.73rem;color:#8b949e;margin-top:2px}
+.artifact-code{display:flex;gap:6px;margin:10px 0;align-items:center}
+.artifact-code .cs{font-size:1.2rem;letter-spacing:2px}
+.artifact-code .cs.circle{color:#c9d1d9}
+.artifact-code .cs.triangle{color:#4ade80}
+.artifact-code .cs.square{color:#fb923c}
+.artifact-code .cs.diamond{color:#c084fc}
+.artifact-code-special{font-size:0.75rem;color:#8b949e;font-style:italic}
+.artifact-desc{font-size:0.82rem;color:#b0b8c1;line-height:1.5;margin-top:4px}
+.artifact-dlc{display:inline-block;font-size:0.6rem;padding:2px 7px;border-radius:10px;margin-top:6px;font-weight:600}
+
 /* ===== Footer ===== */
 .footer{text-align:center;padding:30px;color:#484f58;font-size:0.75rem}
 
 /* ===== Mobile ===== */
 @media(max-width:600px){
   .items{grid-template-columns:1fr;gap:8px}
+  .survivors{grid-template-columns:1fr;gap:8px}
+  .artifacts-grid{grid-template-columns:1fr;gap:8px}
   .header{padding:8px 10px 0}
+  .section-tab{padding:10px 4px;font-size:0.8rem}
   .tab{padding:6px 10px;font-size:0.78rem}
   .card-header{padding:8px 10px}
   .card-body{padding:8px 10px}
+  .survivor-header{padding:10px}
+  .survivor-body{padding:10px}
 }
 </style>
 </head>
@@ -85,26 +151,41 @@ a{color:inherit;text-decoration:none}
 
 <div class="header">
   <div class="header-top">
-    <span class="logo">🌧 雨中冒险2 · 物品图鉴</span>
+    <span class="logo">🌧 雨中冒险2 · 全要素图鉴</span>
     <div class="search-box">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="search" placeholder="搜索物品名..." autocomplete="off">
+      <input type="text" id="search" placeholder="搜索..." autocomplete="off">
     </div>
     <span class="count" id="count">---</span>
   </div>
+  <div class="section-nav" id="section-nav">
+    <div class="section-tab active s-sec1" data-section="items" onclick="setSection('items')">物品图鉴</div>
+    <div class="section-tab s-sec2" data-section="survivors" onclick="setSection('survivors')">人物技能</div>
+    <div class="section-tab s-sec3" data-section="artifacts" onclick="setSection('artifacts')">神器解锁</div>
+  </div>
+</div>
+
+<div class="tabs-wrap" id="tabs-wrap">
   <div class="tabs" id="tabs"></div>
 </div>
 
 <div class="main">
-  <div class="items" id="items"></div>
+  <div class="content-section active" id="sec-items">
+    <div class="items" id="items"></div>
+  </div>
+  <div class="content-section" id="sec-survivors">
+    <div class="survivors" id="survivors"></div>
+  </div>
+  <div class="content-section" id="sec-artifacts">
+    <div class="artifacts-grid" id="artifacts"></div>
+  </div>
 </div>
 
 <div class="footer">数据来源 Risk of Rain 2 Wiki · 仅供学习参考</div>
 
 <script>
 // ===== ITEM DATA =====
-const ITEMS = [
-  // ========== 白色 / Common ==========
+var ITEMS = [
   {n:"穿甲弹",en:"Armor-Piercing Rounds",q:"white",d:"对Boss造成额外20%伤害（每层+20%）",s:"线性叠加"},
   {n:"备用弹匣",en:"Backup Magazine",q:"white",d:"副技能充能次数+1（每层+1）",s:"线性叠加"},
   {n:"野牛牛排",en:"Bison Steak",q:"white",d:"最大生命值+25（每层+25）",s:"线性叠加"},
@@ -115,7 +196,7 @@ const ITEMS = [
   {n:"慢性膨胀",en:"Chronic Expansion",q:"white",d:"击杀敌人时+3.5%伤害（每层+1%），最多10层（每层+5），持续7秒，造成伤害刷新计时",s:"线性叠加",dlc:"风暴"},
   {n:"撬棍",en:"Crowbar",q:"white",d:"对生命值高于90%的敌人造成+75%伤害（每层+75%）",s:"线性叠加"},
   {n:"精致手表",en:"Delicate Watch",q:"white",d:"伤害+20%（每层+20%）。受到伤害使生命值低于25%时该物品破碎",s:"线性叠加"},
-  {n:"日蚀光",en:"Eclipse Lite",q:"white",d:"技能冷却完毕时获得临时护盾，数值为最大生命值的1%（每层+0.25%）×技能基础冷却秒数",s:"线性叠加",dlc:"合金"},
+  {n:"日蚀光",en:"Eclipse Lite",q:"white",d:"技能冷却完毕时获得临时护盾，数值为最大生命值的1%（每层+0.25%）x技能基础冷却秒数",s:"线性叠加",dlc:"合金"},
   {n:"灵巧鹿角",en:"Elusive Antlers",q:"white",d:"每10秒（每层-10%）生成能量球，每颗提供+12%移速，最多3层（每层+3），持续12秒",s:"线性叠加",dlc:"风暴"},
   {n:"能量饮料",en:"Energy Drink",q:"white",d:"冲刺速度+25%（每层+25%）",s:"线性叠加"},
   {n:"聚焦水晶",en:"Focus Crystal",q:"white",d:"对13米内敌人伤害+20%（每层+20%）",s:"线性叠加"},
@@ -140,8 +221,6 @@ const ITEMS = [
   {n:"三尖匕首",en:"Tri-Tip Dagger",q:"white",d:"10%几率造成流血，造成240%基础伤害（每层+10%）",s:"线性叠加"},
   {n:"战旗",en:"Warbanner",q:"white",d:"升级或启动传送器时掉落旗帜，强化16米内友军（每层+8米），攻速和移速+30%",s:"线性叠加"},
   {n:"扭曲回响",en:"Warped Echo",q:"white",d:"下一次受伤害减少10%并分为3段（每层+1），除最后一段外不会致死，每15秒充能",s:"线性叠加",dlc:"风暴"},
-
-  // ========== 绿色 / Uncommon ==========
   {n:"AtG导弹Mk.1",en:"AtG Missile Mk. 1",q:"green",d:"10%几率发射导弹，造成300%总伤害（每层+300%）",s:"线性叠加"},
   {n:"弹药带",en:"Bandolier",q:"green",d:"击杀时有18%几率（每层+10%）掉落弹药包，重置所有技能冷却",s:"特殊"},
   {n:"狂战士肩甲",en:"Berzerker's Pauldron",q:"green",d:"1秒内击杀4名敌人进入狂暴，持续6秒（每层+4秒），移速+50%，攻速+100%",s:"线性叠加"},
@@ -183,8 +262,6 @@ const ITEMS = [
   {n:"战争号角",en:"War Horn",q:"green",d:"激活装备时攻速+70%，持续8秒（每层+4秒）",s:"线性叠加"},
   {n:"蜡鹌鹑",en:"Wax Quail",q:"green",d:"冲刺中跳跃向前猛冲10米（每层+10米）",s:"线性叠加"},
   {n:"鬼火",en:"Will-o'-the-wisp",q:"green",d:"击杀敌人时在12米范围（每层+2.4米）内生成熔岩柱，造成350%基础伤害（每层+280%）",s:"线性叠加"},
-
-  // ========== 红色 / Legendary ==========
   {n:"57叶草",en:"57 Leaf Clover",q:"red",d:"所有随机效果额外掷骰1次（每层+1），选择有利结果",s:"线性叠加"},
   {n:"神盾",en:"Aegis",q:"red",d:"过量治疗时获得临时护盾，为治疗量的50%（每层+50%）",s:"线性叠加"},
   {n:"外星人头",en:"Alien Head",q:"red",d:"技能冷却时间减少25%（每层+25%）",s:"指数叠加"},
@@ -214,14 +291,12 @@ const ITEMS = [
   {n:"粉碎正义",en:"Shattering Justice",q:"red",d:"命中敌人5次后降低其护甲60点，持续8秒（每层+8秒）",s:"线性叠加"},
   {n:"洪亮低语",en:"Sonorous Whispers",q:"red",d:"大型怪物死亡必定掉落物品。精英怪物有5%几率掉落物品（每层+1%）",s:"线性叠加",dlc:"风暴"},
   {n:"灵魂催化剂",en:"Soulbound Catalyst",q:"red",d:"击杀减少装备冷却4秒（每层+2秒）",s:"线性叠加"},
-  {n:"备用无人机零件",en:"Spare Drone Parts",q:"red",d:"获得Col. Droneman。无人机攻速和冷却+25%（每层+25%）。无人机命中时有10%几率发射导弹，造成150%总伤害。无人机获得自动链枪，造成6×50%伤害，弹射2名敌人",s:"指数/线性"},
+  {n:"备用无人机零件",en:"Spare Drone Parts",q:"red",d:"获得Col. Droneman。无人机攻速和冷却+25%（每层+25%）。无人机命中时有10%几率发射导弹，造成150%总伤害。无人机获得自动链枪，造成6x50%伤害，弹射2名敌人",s:"指数/线性"},
   {n:"次级复制器",en:"Substandard Duplicator",q:"red",d:"拾取物品时获得该物品的临时复制品，临时物品持续时间+10秒（每层+10秒）",s:"线性叠加",dlc:"合金"},
   {n:"共生蝎",en:"Symbiotic Scorpion",q:"red",d:"100%几率命中时永久降低敌人护甲2点（每层+2）",s:"线性叠加"},
   {n:"不稳定特斯拉线圈",en:"Unstable Tesla Coil",q:"red",d:"每0.5秒释放闪电命中3名敌人（每层+2），造成200%基础伤害。每10秒关闭一次",s:"线性叠加"},
   {n:"秃鹫之觉醒",en:"Wake of Vultures",q:"red",d:"击杀精英怪物获得其力量，持续8秒（每层+5秒）",s:"线性叠加"},
   {n:"战争债券",en:"War Bonds",q:"red",d:"Boss战期间5枚导弹轰击区域，每枚造成Boss最大生命值2.5%伤害（每层+2.5%）。Boss战前每获得50金币增加1枚导弹，最多20枚（每层+5），金币要求随时间增长",s:"线性叠加",dlc:"风暴"},
-
-  // ========== 橙色 / Equipment (主动装备) ==========
   {n:"一次性导弹发射器",en:"Disposable Missile Launcher",q:"orange",d:"发射12枚导弹，每枚造成300%伤害。45秒冷却",s:"-"},
   {n:"外来水果",en:"Foreign Fruit",q:"orange",d:"立即回复25%最大生命值。45秒冷却",s:"-"},
   {n:"原始立方体",en:"Primordial Cube",q:"orange",d:"发射黑洞将10米内敌人拉向中心。60秒冷却",s:"-"},
@@ -236,7 +311,7 @@ const ITEMS = [
   {n:"古怪花瓶",en:"Eccentric Vase",q:"orange",d:"创建连接两点的隧道持续30秒。60秒冷却",s:"-"},
   {n:"瘤木精灵",en:"Gnarled Woodsprite",q:"orange",d:"伴生治疗生物，被动回复1.5%/秒最大生命值。主动使用立即回复10%。15秒冷却",s:"-"},
   {n:"戈拉格的杰作",en:"Gorag's Opus",q:"orange",d:"附近所有友军进入狂暴7秒，攻速移速+50%。45秒冷却",s:"-"},
-  {n:"请原谅我",en:"Forgive Me Please",q:"orange",d:"投掷玩偶，每1秒触发一次'击杀时效果'共8次。45秒冷却",s:"-"},
+  {n:"请原谅我",en:"Forgive Me Please",q:"orange",d:"投掷玩偶，每1秒触发一次击杀时效果共8次。45秒冷却",s:"-"},
   {n:"锯回旋镖",en:"Sawmerang",q:"orange",d:"投掷锯片回旋镖，命中敌人造成流血。30秒冷却",s:"-"},
   {n:"回收器",en:"Recycler",q:"orange",d:"将一件物品转化为同品质的随机另一件。仅限使用一次",s:"一次性"},
   {n:"燃料阵列",en:"Fuel Array",q:"orange",d:"受到伤害时消耗此物品产生巨大爆炸。用于获取机器人角色",s:"特殊"},
@@ -251,10 +326,8 @@ const ITEMS = [
   {n:"燃烧弹(6联装)",en:"Molotov (6-Pack)",q:"orange",d:"投掷6枚燃烧弹点燃地面造成持续伤害。45秒冷却",s:"-"},
   {n:"超级水蛭",en:"Super Massive Leech",q:"orange",d:"释放超级水蛭附着在敌人身上，持续偷取生命回复自身。60秒冷却",s:"-"},
   {n:"众筹者",en:"The Crowdfunder",q:"orange",d:"消耗金币发射子弹对敌人造成伤害。5秒冷却",s:"-"},
-
-  // ========== 蓝色 / Lunar (月球装备) ==========
   {n:"效忠念珠",en:"Beads of Fealty",q:"blue",d:"似乎什么都没做...但在传送器完成时会产生不同的结果",s:"-"},
-  {n:"易碎冠冕",en:"Brittle Crown",q:"blue",d:"命中时30%几率获得2金币（每层+2），随时间缩放。受到伤害时失去金币，失去量为最大生命值损失百分比×100%（每层+100%）",s:"线性叠加"},
+  {n:"易碎冠冕",en:"Brittle Crown",q:"blue",d:"命中时30%几率获得2金币（每层+2），随时间缩放。受到伤害时失去金币，失去量为最大生命值损失百分比x100%（每层+100%）",s:"线性叠加"},
   {n:"尸花",en:"Corpsebloom",q:"blue",d:"治疗量+100%（每层+100%）。所有治疗转为持续治疗，每秒最多恢复10%最大生命值（每层-50%）",s:"线性/倒数"},
   {n:"挑衅者凿子",en:"Defiant Gouge",q:"blue",d:"使用祭坛时召唤敌人（每层增强）出现在附近，随时间缩放",s:"线性叠加"},
   {n:"自我中心",en:"Egocentrism",q:"blue",d:"每3秒（每层-50%）获得一颗轨道炸弹，碰撞爆炸造成360%伤害，最多3颗（每层+1）。每60秒将一件随机物品转化为此物品",s:"倒数/线性"},
@@ -273,8 +346,6 @@ const ITEMS = [
   {n:"异端步态",en:"Strides of Heresy",q:"blue",d:"将功能技能替换为：虚无化并+30%移速，回复18.2%最大生命值（每层+18.2%），持续3秒（每层+3）",s:"线性叠加"},
   {n:"超越",en:"Transcendence",q:"blue",d:"将除1点外的所有生命值转化为可再生护盾。获得+50%最大生命值（每层+25%）",s:"线性叠加"},
   {n:"异端幻象",en:"Visions of Heresy",q:"blue",d:"将主技能替换为：发射追踪碎片延迟爆炸造成120%基础伤害。最多12发充能（每层+12），2秒装填（每层+2）",s:"线性叠加"},
-
-  // ========== 虚空 / Void (紫色) ==========
   {n:"底栖绽放",en:"Benthic Bloom",q:"void",d:"每关开始时将3件随机物品（每层+3）升级为下一级品质。腐化所有57叶草",s:"线性叠加"},
   {n:"包壳钥匙",en:"Encrusted Key",q:"void",d:"每关随机生成隐藏宝箱含虚空物品（60%/30%/10%品质）。消耗此物品。腐化所有生锈钥匙",s:"-"},
   {n:"失落的预言者镜片",en:"Lost Seer's Lenses",q:"void",d:"攻击有0.5%几率（每层+0.5%）立即处决非Boss敌人。腐化所有透镜制造者眼镜",s:"线性叠加"},
@@ -289,8 +360,6 @@ const ITEMS = [
   {n:"虚空伴侣",en:"Void Fiend's Grasp",q:"void",d:"获得1个虚空搭档为你作战。腐化所有鱿鱼触手",s:"线性叠加"},
   {n:"微型黑洞",en:"Void Devastator",q:"void",d:"击杀敌人在其位置创造一个小型黑洞。腐化所有鬼火",s:"线性叠加"},
   {n:"虚空之诱",en:"Tentabauble",q:"void",d:"命中时有5%几率定身敌人2秒。腐化所有时空球",s:"线性叠加"},
-
-  // ========== 合金 / Boss (黄色 = Boss掉落) ==========
   {n:"神器钥匙",en:"Artifact Key",q:"boss",d:"一块蕴含着巨大力量的石碎片",s:"-",src:"堡垒的神器挑战"},
   {n:"充能穿孔器",en:"Charged Perforator",q:"boss",d:"10%几率命中时落下闪电打击，造成500%伤害（每层+500%）",s:"线性叠加",src:"超载蠕虫"},
   {n:"防御核心",en:"Defense Nucleus",q:"boss",d:"击杀精英怪物生成Alpha构造体，拥有300%伤害和300%生命值。最多4个（每层+4）",s:"线性叠加",src:"Xi构造体"},
@@ -311,14 +380,209 @@ const ITEMS = [
   {n:"女王之腺",en:"Queen's Gland",q:"boss",d:"每30秒召唤甲虫守卫，拥有300%伤害和100%生命值。最多1名（每层+1）",s:"线性叠加",src:"甲虫女王"},
   {n:"哨兵钥匙",en:"Sentry Key",q:"boss",d:"移速+15%。可放置在哨兵终端或用于解密",s:"-",dlc:"合金"},
   {n:"碎裂脾脏",en:"Shatterspleen",q:"boss",d:"暴击率+5%。暴击造成240%基础伤害流血。流血敌人死亡时爆炸造成400%（每层+400%）伤害+15%（每层+15%）最大生命值额外伤害",s:"线性叠加",src:"小鬼霸主"},
-  {n:"钛巨结",en:"Titanic Knurl",q:"boss",d:"最大生命值+40（每层+40），基础生命回复+1.6 hp/s（每层+1.6 hp/s）",s:"线性叠加",src:"石巨人"},
+  {n:"钛巨结",en:"Titanic Knurl",q:"boss",d:"最大生命值+40（每层+40），基础生命回复+1.6 hp/s（每层+1.6 hp/s）",s:"线性叠加",src:"石巨人"}
+];
 
-  // ========== 风暴 / Seekers of the Storm DLC items ==========
-  // (这些物品同时出现在对应品质中，这里独立列出DLC专属物品)
+// ===== SURVIVOR DATA =====
+var SURVIVORS = [
+  {name:"指挥官",nameEn:"Commando",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"默认解锁",dlc:null,
+    skills:[
+      {t:"primary",n:"双发",en:"Double Tap",d:"快速连射，每发造成100%伤害"},
+      {t:"secondary",n:"相位弹",en:"Phase Round",d:"发射穿透弹造成300%伤害",cd:"3s"},
+      {t:"secondary",n:"相位冲击",en:"Phase Blast",d:"近距离两发，每发造成8x200%伤害",cd:"3s"},
+      {t:"utility",n:"战术翻滚",en:"Tactical Dive",d:"向前翻滚躲避攻击",cd:"4s"},
+      {t:"utility",n:"战术滑铲",en:"Tactical Slide",d:"滑铲移动并可以射击",cd:"4s"},
+      {t:"special",n:"压制火力",en:"Suppressive Fire",d:"连续射击并眩晕敌人",cd:"9s"},
+      {t:"special",n:"破片手雷",en:"Frag Grenade",d:"投掷手雷造成700%伤害，2发充能",cd:"5s/发"}
+    ]},
+  {name:"女猎手",nameEn:"Huntress",hp:90,hpLvl:27,dmg:12,dmgLvl:2.4,armor:0,unlock:"默认解锁",dlc:null,
+    skills:[
+      {t:"primary",n:"速射",en:"Strafe",d:"发射追踪箭造成150%伤害，可移动射击"},
+      {t:"primary",n:"箭雨",en:"Flurry",d:"3发追踪箭各100%伤害，暴击时发射6发"},
+      {t:"secondary",n:"激光战刃",en:"Laser Glaive",d:"弹射6次造成250%伤害，每次弹射+10%",cd:"7s"},
+      {t:"utility",n:"闪现",en:"Blink",d:"向前传送一段距离",cd:"7s"},
+      {t:"utility",n:"相位闪现",en:"Phase Blink",d:"短距离传送，3发充能",cd:"2s/发"},
+      {t:"special",n:"箭雨",en:"Arrow Rain",d:"传送至空中对目标区域持续伤害",cd:"12s"},
+      {t:"special",n:"弩箭",en:"Ballista",d:"后退至空中发射3发能量箭各900%伤害",cd:"12s"}
+    ]},
+  {name:"亡命之徒",nameEn:"Bandit",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"完成第一关 (Wanderer成就)",dlc:null,
+    skills:[
+      {t:"passive",n:"背刺",en:"Backstab",d:"从背后攻击必定暴击"},
+      {t:"primary",n:"爆裂",en:"Burst",d:"霰弹5x100%伤害，4发装填"},
+      {t:"primary",n:"步枪",en:"Blast",d:"步枪单发330%伤害，4发装填"},
+      {t:"secondary",n:"锯齿匕首",en:"Serrated Dagger",d:"冲刺斩击360%伤害，暴击造成出血",cd:"4s"},
+      {t:"secondary",n:"锯齿飞刀",en:"Serrated Shiv",d:"投掷飞刀240%伤害，暴击造成出血",cd:"4s"},
+      {t:"utility",n:"烟雾弹",en:"Smoke Bomb",d:"造成200%伤害进入隐身，再造成200%伤害",cd:"6s"},
+      {t:"special",n:"致命一击",en:"Lights Out",d:"左轮600%伤害，击杀重置全部冷却",cd:"4s"},
+      {t:"special",n:"亡命之徒",en:"Desperado",d:"左轮600%伤害，击杀永久+10%此技能伤害",cd:"4s"}
+    ]},
+  {name:"MUL-T",nameEn:"MUL-T",hp:200,hpLvl:60,dmg:11,dmgLvl:2.2,armor:12,unlock:"通关一次 (Verified成就)",dlc:null,
+    skills:[
+      {t:"primary",n:"自动钉枪",en:"Auto-Nailgun",d:"快速射击每发60%伤害"},
+      {t:"primary",n:"榴弹发射器",en:"Rebar Puncher",d:"单发600%伤害穿透"},
+      {t:"secondary",n:"爆裂弹",en:"Blast Canister",d:"眩晕爆炸造成320%伤害",cd:"6s"},
+      {t:"secondary",n:"锯片",en:"Sawblade Launcher",d:"发射锯片持续切割1000%/s伤害"},
+      {t:"utility",n:"运输模式",en:"Transport Mode",d:"加速冲刺并击退沿途敌人"},
+      {t:"special",n:"切换武器",en:"Retool",d:"切换两种主武器和装备",cd:"2s"},
+      {t:"special",n:"动力模式",en:"Power Mode",d:"双持两种主武器同时射击，但移速-60%"}
+    ]},
+  {name:"工程师",nameEn:"Engineer",hp:130,hpLvl:39,dmg:14,dmgLvl:2.8,armor:0,unlock:"累计完成30关",dlc:null,
+    skills:[
+      {t:"primary",n:"弹跳手雷",en:"Bouncing Grenades",d:"弹跳爆炸8x100%伤害"},
+      {t:"secondary",n:"热能鱼雷",en:"Pressure Mines",d:"放置2个热能地雷各300%伤害",cd:"8s"},
+      {t:"secondary",n:"蜘蛛地雷",en:"Spider Mines",d:"放置自动追击蜘蛛地雷"},
+      {t:"utility",n:"泡沫护盾",en:"Bubble Shield",d:"放置阻挡投射物的泡沫护盾",cd:"15s"},
+      {t:"special",n:"自动炮塔",en:"TR12 Gauss Auto-Turret",d:"放置炮塔继承所有物品，2个储存"},
+      {t:"special",n:"移动炮塔",en:"TR58 Carbonizer Turret",d:"放置可移动的漫步炮塔"}
+    ]},
+  {name:"工匠",nameEn:"Artificer",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"用月球币在时间集市买出 (约10月球币)",dlc:null,
+    skills:[
+      {t:"primary",n:"火焰箭",en:"Flame Bolt",d:"发射4发火焰箭200%伤害并点燃"},
+      {t:"primary",n:"等离子箭",en:"Plasma Bolt",d:"发射爆炸等离子箭"},
+      {t:"secondary",n:"充能纳米炸弹",en:"Charged Nano-Bomb",d:"充能投掷造成400%-2000%伤害",cd:"5s"},
+      {t:"secondary",n:"充能纳米矛",en:"Cast Nano-Spear",d:"冰冻穿透长矛"},
+      {t:"utility",n:"冰墙",en:"Snapfreeze",d:"冰冻前方扇形区域"},
+      {t:"special",n:"火焰喷射器",en:"Flamethrower",d:"持续喷火造成2000%伤害"},
+      {t:"special",n:"离子浪涌",en:"Ion Surge",d:"向上冲刺并造成伤害"}
+    ]},
+  {name:"雇佣兵",nameEn:"Mercenary",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:20,unlock:"通过第7关 (True Respite成就)",dlc:null,
+    skills:[
+      {t:"primary",n:"双刃斩",en:"Cybernetic Enhancements",d:"快速三连斩"},
+      {t:"primary",n:"旋风斩",en:"-",d:"旋转攻击"},
+      {t:"secondary",n:"旋风斩",en:"Whirlwind",d:"旋转斩击造成250%伤害",cd:"2.5s"},
+      {t:"secondary",n:"升龙斩",en:"Rising Thunder",d:"上挑斩击"},
+      {t:"utility",n:"冲刺斩",en:"Blinding Assault",d:"冲刺斩击可储存3次",cd:"2s"},
+      {t:"utility",n:"集中攻击",en:"Focused Assault",d:"冲刺斩击可储存2次"},
+      {t:"special",n:"幻影打击",en:"Eviscerate",d:"连斩期间无敌"},
+      {t:"special",n:"剑刃风暴",en:"Slicing Winds",d:"发射追踪剑气"}
+    ]},
+  {name:"REX",nameEn:"REX",hp:130,hpLvl:39,dmg:12,dmgLvl:2.4,armor:20,unlock:"将燃料阵列带到Abyssal Depths的机器人 (REX成就)",dlc:null,
+    skills:[
+      {t:"primary",n:"种子射击",en:"DIRECTIVE: Inject",d:"三连射种子"},
+      {t:"primary",n:"种子散射",en:"-",d:"散射种子"},
+      {t:"secondary",n:"种子迫击炮",en:"DIRECTIVE: Drill",d:"消耗HP发射迫击炮450%伤害"},
+      {t:"secondary",n:"触手",en:"DIRECTIVE: Harvest",d:"消耗HP发射触手牵引"},
+      {t:"utility",n:"弹射果实",en:"DIRECTIVE: Disperse",d:"发射减速果实"},
+      {t:"special",n:"荆棘之拥",en:"Tangling Growth",d:"定身区域内的敌人并治疗"},
+      {t:"special",n:"水果爆发",en:"-",d:"发射爆炸果实"}
+    ]},
+  {name:"装载机",nameEn:"Loader",hp:160,hpLvl:48,dmg:12,dmgLvl:2.4,armor:20,unlock:"通关一次 或 在Siren's Call打爆一个蛋",dlc:null,
+    skills:[
+      {t:"passive",n:"拳击",en:"Scrap Barrier",d:"攻击敌人获得临时护盾"},
+      {t:"primary",n:"铁拳",en:"Knuckleboom",d:"重型拳击造成320%伤害"},
+      {t:"secondary",n:"抓钩",en:"Grapple Fist",d:"发射抓钩弹射或拉取敌人",cd:"3.5s"},
+      {t:"secondary",n:"尖刺抓钩",en:"Spiked Fist",d:"抓住敌人并将其拉回"},
+      {t:"utility",n:"充能拳",en:"Charged Gauntlet",d:"充能重拳获得超高速度",cd:"2.5s"},
+      {t:"utility",n:"雷电拳",en:"Thunder Gauntlet",d:"四方向冲击"},
+      {t:"special",n:"M551重型拳击",en:"M551 Pylon",d:"放置雷电塔进行电弧攻击"},
+      {t:"special",n:"环绕雷",en:"Thunderslam",d:"砸地造成范围雷击"}
+    ]},
+  {name:"吐酸狗",nameEn:"Acrid",hp:160,hpLvl:48,dmg:15,dmgLvl:3,armor:20,unlock:"通关9个不同地图 (Field Testing成就)",dlc:null,
+    skills:[
+      {t:"primary",n:"毒液",en:"Vicious Wounds",d:"近战攻击造成中毒"},
+      {t:"primary",n:"毒液弹",en:"-",d:"远程毒液弹"},
+      {t:"secondary",n:"神经毒剂",en:"Neurotoxin",d:"吐毒物造成中毒200%伤害",cd:"5s"},
+      {t:"secondary",n:"腐蚀唾沫",en:"-",d:"腐蚀唾沫"},
+      {t:"utility",n:"腐蚀跳跃",en:"Caustic Leap",d:"跳跃落地造成中毒",cd:"6.5s"},
+      {t:"utility",n:"狂暴跳跃",en:"Frenzied Leap",d:"短距离跳跃"},
+      {t:"special",n:"疫病",en:"Epidemic",d:"发射弹射毒弹造成200%伤害",cd:"8s"},
+      {t:"special",n:"致死毒液",en:"-",d:"强力毒液攻击"}
+    ]},
+  {name:"队长",nameEn:"Captain",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"通关最终Boss (Washed Away成就)",dlc:null,
+    skills:[
+      {t:"primary",n:"火神散弹枪",en:"Vulcan Shotgun",d:"蓄力8x120%散射弹"},
+      {t:"secondary",n:"能源环",en:"Power Taser",d:"眩晕敌人造成600%伤害",cd:"6s"},
+      {t:"utility",n:"轨道探测器",en:"Orbital Probe",d:"请求轨道打击1000%伤害，最多3发",cd:"12s"},
+      {t:"utility",n:"DIABLO打击",en:"OGM-72 DIABLO Strike",d:"大面积40000%伤害，20秒后打击"},
+      {t:"special",n:"信标补给",en:"Orbital Supply Beacon",d:"每阶段可用2次信标(治疗/装备/补给)"},
+      {t:"special",n:"轨道轰炸",en:"-",d:"轨道轰炸打击"}
+    ]},
+  {name:"狙击手",nameEn:"Railgunner",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"拥有DLC Survivors of the Void",dlc:"虚空",
+    skills:[
+      {t:"primary",n:"磁轨狙击",en:"M99 Sniper",d:"狙击高伤害"},
+      {t:"primary",n:"精确射击",en:"HH44 Marksman",d:"精确快速射击"},
+      {t:"secondary",n:"感应地雷",en:"Concussion Device",d:"推开附近敌人"},
+      {t:"utility",n:"极化弹",en:"Polar Field Device",d:"减速范围内敌人"},
+      {t:"special",n:"超充能",en:"Supercharge",d:"穿透射击造成3000%伤害"},
+      {t:"special",n:"冰充能",en:"Cyrocharge",d:"冰冻穿透射击"}
+    ]},
+  {name:"虚空魔",nameEn:"Void Fiend",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"通关The Planetarium",dlc:"虚空",
+    skills:[
+      {t:"primary",n:"虚空弹",en:"Drown",d:"发射虚空弹"},
+      {t:"secondary",n:"虚空吸取",en:"Suppress",d:"吸取敌人的生命并治疗"},
+      {t:"utility",n:"虚空穿越",en:"Trespass",d:"短暂无敌穿越"},
+      {t:"special",n:"虚空爆发",en:"Corrupted Discharge",d:"大范围虚空伤害"}
+    ]},
+  {name:"追寻者",nameEn:"Seeker",hp:115,hpLvl:34,dmg:12,dmgLvl:2.4,armor:20,unlock:"拥有DLC Seekers of the Storm",dlc:"风暴",
+    skills:[
+      {t:"primary",n:"灵气冲击",en:"-",d:"灵气冲击攻击"},
+      {t:"secondary",n:"冥想",en:"Meditate",d:"蓄力治疗自身和附近友军"},
+      {t:"utility",n:"飞升",en:"Sojourn",d:"短暂飞行飘浮"},
+      {t:"special",n:"灵气爆发",en:"Spirit Punch",d:"中等距离灵气爆发伤害"}
+    ]},
+  {name:"伪子",nameEn:"False Son",hp:180,hpLvl:54,dmg:12,dmgLvl:2.4,armor:0,unlock:"击败False Son",dlc:"风暴",
+    skills:[
+      {t:"primary",n:"激光脊刺",en:"Laser Spike",d:"发射激光攻击"},
+      {t:"secondary",n:"激光爆发",en:"Laser Burst",d:"爆发激光伤害"},
+      {t:"utility",n:"传送冲刺",en:"-",d:"传送冲刺移动"},
+      {t:"special",n:"星雨",en:"Starfall",d:"陨石轰击区域"}
+    ]},
+  {name:"厨师",nameEn:"CHEF",hp:110,hpLvl:33,dmg:12,dmgLvl:2.4,armor:0,unlock:"拥有DLC Seekers of the Storm",dlc:"风暴",
+    skills:[
+      {t:"primary",n:"切丁",en:"Dice",d:"快速切砍攻击"},
+      {t:"secondary",n:"炙烤",en:"Sear",d:"火焰喷射灼烧敌人"},
+      {t:"utility",n:"翻炒",en:"Minced",d:"旋转造成范围伤害"},
+      {t:"special",n:"第二道菜",en:"Second Helping",d:"复制上一道技能效果"}
+    ]},
+  {name:"操作员",nameEn:"Operator",hp:90,hpLvl:27,dmg:12,dmgLvl:2.4,armor:0,unlock:"拥有DLC Alloyed Collective",dlc:"合金",
+    skills:[
+      {t:"primary",n:"无人机指挥",en:"-",d:"指挥无人机攻击敌人"},
+      {t:"secondary",n:"无人机派遣",en:"-",d:"派遣无人机执行任务"},
+      {t:"utility",n:"战场标记",en:"-",d:"标记战场目标"},
+      {t:"special",n:"无人机集群",en:"-",d:"召唤无人机集群"}
+    ]},
+  {name:"漂流者",nameEn:"Drifter",hp:170,hpLvl:52,dmg:12,dmgLvl:2.4,armor:20,unlock:"拥有DLC Alloyed Collective",dlc:"合金",
+    skills:[
+      {t:"primary",n:"废料回收",en:"-",d:"回收废料进行攻击"},
+      {t:"secondary",n:"修补",en:"Tinker",d:"修补制造物品"},
+      {t:"utility",n:"移动",en:"-",d:"移动技能"},
+      {t:"special",n:"废料利用",en:"Salvage",d:"利用废料产生效果"}
+    ]},
+  {name:"异端",nameEn:"Heretic",hp:440,hpLvl:132,dmg:18,dmgLvl:3.6,armor:0,unlock:"同时持有所有4件异端(Heresy)物品",dlc:"特殊",
+    skills:[
+      {t:"primary",n:"渴望凝视",en:"Hungering Gaze",d:"发射追踪碎片延迟爆炸造成120%伤害"},
+      {t:"secondary",n:"切割风暴",en:"Slicing Maelstrom",d:"充能发射切割风暴875%/s伤害"},
+      {t:"utility",n:"暗影步",en:"Shadowfade",d:"无形化+30%移速并回复生命"},
+      {t:"special",n:"毁灭",en:"Ruin",d:"Ruin印记引爆，每层+120%伤害"}
+    ]}
+];
+
+// ===== ARTIFACT DATA =====
+var ARTIFACTS = [
+  {name:"混沌",nameEn:"Chaos",code:"●▲●●▲●●▲●",desc:"友军伤害开启，你可以伤害和击杀队友"},
+  {name:"命令",nameEn:"Command",code:"■■■■■■▲▲▲",desc:"物品改为自选，每次拾取时从同品质物品中选择"},
+  {name:"死亡",nameEn:"Death",code:"●●●■▲■●▲●",desc:"一人死亡全队死亡，任意队友阵亡则游戏结束"},
+  {name:"幻觉",nameEn:"Delusion",code:"■●■●●●■▲■",desc:"传送器充能完成后重新生成所有打开的箱子"},
+  {name:"奉献",nameEn:"Devotion",code:"▲♦▲■♦■♦▲♦",desc:"替换损坏的无人机为Lemurian蛋"},
+  {name:"不谐",nameEn:"Dissonance",code:"●■■■■■■■●",desc:"怪物可出现在任何环境，无视生态限制"},
+  {name:"谜团",nameEn:"Enigma",code:"♦■■▲■▲●♦♦",desc:"随机装备，每次使用后变更为另一个随机装备"},
+  {name:"进化",nameEn:"Evolution",code:"♦♦♦■■■●●●",desc:"怪物每关获得物品，随时间增强"},
+  {name:"脆弱",nameEn:"Frailty",code:"●●●▲●▲▲▲▲",desc:"坠落伤害翻倍且可致死"},
+  {name:"玻璃",nameEn:"Glass",code:"♦♦♦♦♦♦♦♦♦",desc:"友军造成500%伤害但生命值减为10%"},
+  {name:"荣誉",nameEn:"Honor",code:"■■■■▲■■■■",desc:"敌人只能作为精英生成，无普通敌人"},
+  {name:"亲族",nameEn:"Kin",code:"●▲▲♦●▲♦♦●",desc:"每关只有一种怪物类型"},
+  {name:"蜕变",nameEn:"Metamorphosis",code:"♦■●♦■●♦■●",desc:"每次复活随机变成另一个角色"},
+  {name:"声望",nameEn:"Prestige",code:"▲●●■●▲●●■",desc:"每阶段至少一个山之祭坛且效果永久",dlc:"合金"},
+  {name:"重生",nameEn:"Rebirth",code:"",desc:"带着上一世的礼物降世，经验值继承",dlc:"风暴",unlock:"通过经历重生事件解锁"},
+  {name:"牺牲",nameEn:"Sacrifice",code:"▲▲▲▲▲▲▲♦▲",desc:"怪物死亡掉落物品，但无宝箱生成"},
+  {name:"灵魂",nameEn:"Soul",code:"●■●●♦●■♦■",desc:"击败怪物生成鬼火，攻击附近的敌人"},
+  {name:"怨恨",nameEn:"Spite",code:"▲●▲●●●▲●▲",desc:"敌人死亡掉落多个爆炸炸弹"},
+  {name:"蜂群",nameEn:"Swarms",code:"●●▲▲♦▲▲●●",desc:"怪物数量翻倍但生命值减半"},
+  {name:"复仇",nameEn:"Vengeance",code:"♦■■♦●■♦■■",desc:"每10分钟出现一个你的镜像分身来追杀你"}
 ];
 
 // ===== QUALITY CONFIG =====
-const QUALITIES = {
+var QUALITIES = {
   white: {label:"白",color:"#a0a0a0",bg:"#3a3a3a",cls:"q-white"},
   green: {label:"绿",color:"#4ade80",bg:"#14532d",cls:"q-green"},
   red:   {label:"红",color:"#f87171",bg:"#7f1d1d",cls:"q-red"},
@@ -327,109 +591,252 @@ const QUALITIES = {
   void:  {label:"虚空",color:"#c084fc",bg:"#3b0764",cls:"q-void"},
   boss:  {label:"合金(Boss)",color:"#facc15",bg:"#713f12",cls:"q-boss"},
   storm: {label:"风暴(DLC)",color:"#22d3ee",bg:"#164e63",cls:"q-storm"},
-  all:   {label:"全部",color:"#8b949e",bg:"#21262d",cls:""},
+  all:   {label:"全部",color:"#8b949e",bg:"#21262d",cls:""}
 };
-const TAB_ORDER = ["all","white","green","red","boss","orange","blue","void","storm"];
-let activeTab = "all";
-let searchTerm = "";
+var TAB_ORDER = ["all","white","green","red","boss","orange","blue","void","storm"];
 
-// ===== RENDER TABS =====
+var activeSection = "items";
+var activeTab = "all";
+var searchTerm = "";
+
+// ===== SECTION SWITCHING =====
+function setSection(section) {
+  activeSection = section;
+  document.getElementById("tabs-wrap").style.display = (section === "items") ? "block" : "none";
+  document.querySelectorAll(".section-tab").forEach(function(t){ t.classList.remove("active"); });
+  var st = document.querySelector('.section-tab[data-section="' + section + '"]');
+  if (st) st.classList.add("active");
+  document.querySelectorAll(".content-section").forEach(function(s){ s.classList.remove("active"); });
+  var cs = document.getElementById("sec-" + section);
+  if (cs) cs.classList.add("active");
+  renderCurrent();
+}
+
+// ===== RENDER TABS (quality) =====
 function getCount(q) {
-  if (q === "storm") return ITEMS.filter(i => i.dlc === "风暴").length;
+  if (q === "storm") return ITEMS.filter(function(i){ return i.dlc === "风暴"; }).length;
   if (q === "all") return ITEMS.length;
-  return ITEMS.filter(i => i.q === q).length;
+  return ITEMS.filter(function(i){ return i.q === q; }).length;
 }
 function renderTabs() {
-  const container = document.getElementById("tabs");
-  container.innerHTML = TAB_ORDER.map(q => {
-    const cfg = QUALITIES[q];
-    const count = getCount(q);
-    const active = q === activeTab ? " active" : "";
-    return `<div class="tab${active}" data-q="${q}" onclick="setTab('${q}')">
-      <span class="dot" style="background:${cfg.color}"></span>${cfg.label}
-      <span class="badge">${count}</span>
-    </div>`;
+  var container = document.getElementById("tabs");
+  container.innerHTML = TAB_ORDER.map(function(q) {
+    var cfg = QUALITIES[q];
+    var count = getCount(q);
+    var active = q === activeTab ? " active" : "";
+    return '<div class="tab' + active + '" data-q="' + q + '" onclick="setTab(\'' + q + '\')">' +
+      '<span class="dot" style="background:' + cfg.color + '"></span>' + cfg.label +
+      '<span class="badge">' + count + '</span></div>';
   }).join("");
 }
 
 // ===== RENDER ITEMS =====
 function renderItems() {
-  const container = document.getElementById("items");
-  let filtered = ITEMS;
-
+  var container = document.getElementById("items");
+  var filtered = ITEMS.slice();
   if (activeTab === "storm") {
-    filtered = filtered.filter(i => i.dlc === "风暴");
+    filtered = filtered.filter(function(i){ return i.dlc === "风暴"; });
   } else if (activeTab !== "all") {
-    filtered = filtered.filter(i => i.q === activeTab);
+    filtered = filtered.filter(function(i){ return i.q === activeTab; });
   }
   if (searchTerm) {
-    const s = searchTerm.toLowerCase();
-    filtered = filtered.filter(i =>
-      i.n.toLowerCase().includes(s) ||
-      i.en.toLowerCase().includes(s) ||
-      (i.d||"").toLowerCase().includes(s) ||
-      (i.dlc||"").toLowerCase().includes(s)
-    );
+    var s = searchTerm.toLowerCase();
+    filtered = filtered.filter(function(i){
+      return i.n.toLowerCase().indexOf(s) !== -1 ||
+        i.en.toLowerCase().indexOf(s) !== -1 ||
+        (i.d||"").toLowerCase().indexOf(s) !== -1 ||
+        (i.dlc||"").toLowerCase().indexOf(s) !== -1;
+    });
   }
-
-  document.getElementById("count").textContent = `共 ${filtered.length} 件`;
-
+  document.getElementById("count").textContent = "共 " + filtered.length + " 件";
   if (filtered.length === 0) {
     container.innerHTML = '<div class="no-results">没有找到匹配的物品</div>';
     return;
   }
-
-  container.innerHTML = filtered.map(i => {
-    const cfg = QUALITIES[i.q] || QUALITIES.white;
-    const initials = i.n.replace(/[^\u4e00-\u9fff]/g,'').slice(0,2) || i.en.slice(0,2);
-    const svgIcon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><rect width="44" height="44" rx="8" fill="${cfg.bg}"/><text x="22" y="29" text-anchor="middle" font-size="16" font-weight="bold" fill="${cfg.color}" font-family="sans-serif">${initials}</text></svg>`)}`;
-    const webpFile = i.en.replace(/'/g,'').replace(/ /g,'_').replace(/\./g,'');
-    const webpPath = `icons/${webpFile}.webp`;
-    const dlcTag = i.dlc ? `<span class="card-dlc" style="background:${i.dlc==='合金'?'#713f12':'#164e63'};color:${i.dlc==='合金'?'#facc15':'#22d3ee'}">${i.dlc} DLC</span>` : "";
-    const srcTag = i.src ? `<span class="card-dlc" style="background:#1a1a2e;color:#8b949e">${i.src}</span>` : "";
-    return `
-    <div class="card ${cfg.cls}">
-      <div class="card-header">
-        <div class="card-icon" data-svg="${svgIcon.replace(/"/g,'&quot;')}" data-webp="${webpPath}"></div>
-        <div class="card-info">
-          <div class="card-name" style="color:${cfg.color}">${i.n}</div>
-          <div class="card-name-en">${i.en}</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-desc">${i.d}</div>
-        ${i.s ? `<div class="card-stack">📊 叠加方式：${i.s}</div>` : ''}
-        ${dlcTag}${srcTag}
-      </div>
-    </div>`;
+  container.innerHTML = filtered.map(function(i){
+    var cfg = QUALITIES[i.q] || QUALITIES.white;
+    var initials = (i.n.replace(/[^\u4e00-\u9fff]/g,'').slice(0,2)) || i.en.slice(0,2);
+    var svgIcon = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><rect width="44" height="44" rx="8" fill="' + cfg.bg + '"/><text x="22" y="29" text-anchor="middle" font-size="16" font-weight="bold" fill="' + cfg.color + '" font-family="sans-serif">' + initials + '</text></svg>');
+    var webpFile = i.en.replace(/'/g,'').replace(/ /g,'_').replace(/\./g,'');
+    var webpPath = 'icons/' + webpFile + '.webp';
+    var dlcTag = i.dlc ? '<span class="card-dlc" style="background:' + (i.dlc==='合金'?'#713f12':'#164e63') + ';color:' + (i.dlc==='合金'?'#facc15':'#22d3ee') + '">' + i.dlc + ' DLC</span>' : "";
+    var srcTag = i.src ? '<span class="card-dlc" style="background:#1a1a2e;color:#8b949e">' + i.src + '</span>' : "";
+    return '<div class="card ' + cfg.cls + '">' +
+      '<div class="card-header">' +
+        '<div class="card-icon" data-svg="' + svgIcon.replace(/"/g,'&quot;') + '" data-webp="' + webpPath + '"></div>' +
+        '<div class="card-info">' +
+          '<div class="card-name" style="color:' + cfg.color + '">' + i.n + '</div>' +
+          '<div class="card-name-en">' + i.en + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-desc">' + i.d + '</div>' +
+        (i.s ? '<div class="card-stack">叠加方式：' + i.s + '</div>' : '') +
+        dlcTag + srcTag +
+      '</div></div>';
   }).join("");
-
-  // Load icons: try webp first, fall back to SVG on error
-  container.querySelectorAll('.card-icon').forEach(el => {
-    const img = document.createElement('img');
+  container.querySelectorAll('.card-icon').forEach(function(el){
+    var img = document.createElement('img');
     img.style.cssText = 'width:44px;height:44px';
     img.src = el.dataset.webp;
-    img.onerror = function() { this.src = el.dataset.svg; this.onerror = null; };
+    img.onerror = function(){ this.src = el.dataset.svg; this.onerror = null; };
     el.appendChild(img);
   });
 }
 
+// ===== RENDER SURVIVORS =====
+var SKILL_TYPE_MAP = {
+  primary:  {cls:"s-pri",tagCls:"s-tag-pri",label:"主"},
+  secondary:{cls:"s-sec",tagCls:"s-tag-sec",label:"副"},
+  utility:  {cls:"s-uti",tagCls:"s-tag-uti",label:"功能"},
+  special:  {cls:"s-spe",tagCls:"s-tag-spe",label:"特殊"},
+  passive:  {cls:"s-pas",tagCls:"s-tag-pas",label:"被动"}
+};
+var SURVIVOR_DLC_COLORS = {
+  "虚空":{bg:"#3b0764",fg:"#c084fc"},
+  "风暴":{bg:"#164e63",fg:"#22d3ee"},
+  "合金":{bg:"#713f12",fg:"#facc15"},
+  "特殊":{bg:"#4a044e",fg:"#e879f9"}
+};
+var SURVIVOR_BG_COLORS = [
+  "#1a3a5c","#1a3a2a","#3a1a1a","#3a2a1a","#1a2a3a",
+  "#2a1a3a","#3a3a1a","#1a3a3a","#2a2a3a","#3a1a2a",
+  "#2a3a1a","#1a1a3a","#3a2a2a","#2a1a2a","#1a2a2a",
+  "#2a2a1a","#1a1a2a","#3a1a3a","#2a3a3a"
+];
+
+function renderSurvivors() {
+  var container = document.getElementById("survivors");
+  var filtered = SURVIVORS.slice();
+  if (searchTerm) {
+    var s = searchTerm.toLowerCase();
+    filtered = filtered.filter(function(sv){
+      return sv.name.toLowerCase().indexOf(s) !== -1 ||
+        sv.nameEn.toLowerCase().indexOf(s) !== -1 ||
+        sv.unlock.toLowerCase().indexOf(s) !== -1 ||
+        (sv.dlc||"").toLowerCase().indexOf(s) !== -1 ||
+        sv.skills.some(function(sk){ return sk.n.indexOf(s) !== -1 || sk.en.toLowerCase().indexOf(s) !== -1; });
+    });
+  }
+  document.getElementById("count").textContent = "共 " + filtered.length + " 位角色";
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的角色</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(sv,idx){
+    var bgCol = SURVIVOR_BG_COLORS[idx % SURVIVOR_BG_COLORS.length];
+    var dlcBadge = "";
+    if (sv.dlc) {
+      var dc = SURVIVOR_DLC_COLORS[sv.dlc] || {bg:"#333",fg:"#aaa"};
+      dlcBadge = '<span class="survivor-dlc-badge" style="background:' + dc.bg + ';color:' + dc.fg + '">' + sv.dlc + ' DLC</span>';
+    }
+    var statsHtml = '<span>HP ' + sv.hp + '(+' + sv.hpLvl + ')</span>' +
+      '<span>DMG ' + sv.dmg + '(+' + sv.dmgLvl + ')</span>' +
+      '<span>ARM ' + sv.armor + '</span>';
+    var skillsHtml = sv.skills.map(function(sk){
+      var tm = SKILL_TYPE_MAP[sk.t] || {cls:"",tagCls:"",label:sk.t};
+      return '<div class="skill-item ' + tm.cls + '">' +
+        '<span class="skill-tag ' + tm.tagCls + '">' + tm.label + '</span>' +
+        '<div class="skill-info">' +
+          '<span class="skill-name">' + sk.n + '<span class="skill-name-en">' + sk.en + '</span></span>' +
+          '<div class="skill-desc">' + sk.d + (sk.cd ? ' <span class="skill-cd">' + sk.cd + '</span>' : '') + '</div>' +
+        '</div></div>';
+    }).join("");
+    return '<div class="survivor-card" onclick="this.classList.toggle(\'expanded\')">' +
+      '<div class="survivor-header">' +
+        '<div class="survivor-icon" style="background:' + bgCol + ';color:#e6edf3">' + sv.name.slice(0,2) + '</div>' +
+        '<div class="survivor-info">' +
+          '<div class="survivor-name">' + sv.name + '</div>' +
+          '<div class="survivor-name-en">' + sv.nameEn + '</div>' +
+          '<div class="survivor-stats">' + statsHtml + '</div>' +
+          dlcBadge +
+        '</div>' +
+        '<div class="survivor-expand">&#9660;</div>' +
+      '</div>' +
+      '<div class="survivor-body">' +
+        '<div class="survivor-unlock">解锁条件：' + sv.unlock + '</div>' +
+        '<div class="survivor-skills">' + skillsHtml + '</div>' +
+      '</div></div>';
+  }).join("");
+}
+
+// ===== RENDER ARTIFACTS =====
+var CODE_SYM_MAP = {
+  "●":"circle",
+  "▲":"triangle",
+  "■":"square",
+  "♦":"diamond"
+};
+
+function renderCode(code) {
+  if (!code) return '<span class="artifact-code-special">特殊获取</span>';
+  var result = '';
+  for (var i = 0; i < code.length; i++) {
+    var ch = code.charAt(i);
+    var cls = CODE_SYM_MAP[ch] || "";
+    result += '<span class="cs ' + cls + '">' + ch + '</span>';
+  }
+  return result;
+}
+
+function renderArtifacts() {
+  var container = document.getElementById("artifacts");
+  var filtered = ARTIFACTS.slice();
+  if (searchTerm) {
+    var s = searchTerm.toLowerCase();
+    filtered = filtered.filter(function(a){
+      return a.name.toLowerCase().indexOf(s) !== -1 ||
+        a.nameEn.toLowerCase().indexOf(s) !== -1 ||
+        a.desc.toLowerCase().indexOf(s) !== -1 ||
+        (a.dlc||"").toLowerCase().indexOf(s) !== -1;
+    });
+  }
+  document.getElementById("count").textContent = "共 " + filtered.length + " 个神器";
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的神器</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(a){
+    var dlcBadge = a.dlc ? '<span class="artifact-dlc" style="background:#164e63;color:#22d3ee">' + a.dlc + ' DLC</span>' : "";
+    var codeHtml = '<div class="artifact-code">' + renderCode(a.code) + '</div>';
+    var unlockNote = a.unlock ? '<div style="margin-top:6px;font-size:0.68rem;color:#8b949e;">解锁方式：' + a.unlock + '</div>' : "";
+    return '<div class="artifact-card">' +
+      '<div class="artifact-name">' + a.name + ' <span class="artifact-name-en">' + a.nameEn + '</span></div>' +
+      codeHtml +
+      '<div class="artifact-desc">' + a.desc + '</div>' +
+      dlcBadge + unlockNote +
+    '</div>';
+  }).join("");
+}
+
+// ===== SET TAB =====
 function setTab(q) {
   activeTab = q;
   renderTabs();
   renderItems();
 }
 
-// ===== SEARCH =====
-document.addEventListener("DOMContentLoaded", () => {
+// ===== RENDER CURRENT =====
+function renderCurrent() {
+  if (activeSection === "items") {
+    renderTabs();
+    renderItems();
+  } else if (activeSection === "survivors") {
+    renderSurvivors();
+  } else if (activeSection === "artifacts") {
+    renderArtifacts();
+  }
+}
+
+// ===== INIT =====
+document.addEventListener("DOMContentLoaded", function() {
   renderTabs();
   renderItems();
-  document.getElementById("search").addEventListener("input", e => {
+  document.getElementById("search").addEventListener("input", function(e) {
     searchTerm = e.target.value.trim();
-    renderItems();
+    renderCurrent();
   });
 });
 </script>
-
 </body>
 </html>
