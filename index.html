@@ -63,6 +63,7 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
 .q-void .card-header::before{background:#a371f7}
 .q-boss .card-header::before{background:#d29922}
 .q-storm .card-header::before{background:#22d3ee}
+.q-alloyed .card-header::before{background:#e8632e}
 .card-icon{width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden}
 .card-icon img{display:block;width:40px;height:40px}
 .card-info{min-width:0}
@@ -82,6 +83,7 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
 .q-void .card-icon{background:#1a0a2e}
 .q-boss .card-icon{background:#2d2008}
 .q-storm .card-icon{background:#0c2830}
+.q-alloyed .card-icon{background:#2d1a08}
 
 /* ===== Survivor Portrait Grid ===== */
 .survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
@@ -488,17 +490,18 @@ var ARTIFACTS = [
 
 // ===== QUALITY CONFIG =====
 var QUALITIES = {
-  white: {label:"白",color:"#a0a0a0",bg:"#3a3a3a",cls:"q-white"},
-  green: {label:"绿",color:"#4ade80",bg:"#14532d",cls:"q-green"},
-  red:   {label:"红",color:"#f87171",bg:"#7f1d1d",cls:"q-red"},
-  orange:{label:"橙(主动)",color:"#fb923c",bg:"#7c2d12",cls:"q-orange"},
-  blue:  {label:"蓝(月球)",color:"#60a5fa",bg:"#1e3a5f",cls:"q-blue"},
-  void:  {label:"虚空",color:"#c084fc",bg:"#3b0764",cls:"q-void"},
-  boss:  {label:"合金(Boss)",color:"#facc15",bg:"#713f12",cls:"q-boss"},
-  storm: {label:"风暴(DLC)",color:"#22d3ee",bg:"#164e63",cls:"q-storm"},
-  all:   {label:"全部",color:"#8b949e",bg:"#21262d",cls:""}
+  white:  {label:"白",color:"#a0a0a0",bg:"#2a2a2a",cls:"q-white"},
+  green:  {label:"绿",color:"#3fb950",bg:"#0d3320",cls:"q-green"},
+  red:    {label:"红",color:"#f85149",bg:"#2d1111",cls:"q-red"},
+  boss:   {label:"首领",color:"#d29922",bg:"#2d2008",cls:"q-boss"},
+  orange: {label:"橙(主动)",color:"#d29922",bg:"#2d1a08",cls:"q-orange"},
+  blue:   {label:"蓝(月球)",color:"#4493f8",bg:"#0c1a2d",cls:"q-blue"},
+  void:   {label:"虚空",color:"#a371f7",bg:"#1a0a2e",cls:"q-void"},
+  alloyed:{label:"合金",color:"#e8632e",bg:"#2d1a08",cls:"q-alloyed"},
+  storm:  {label:"风暴",color:"#22d3ee",bg:"#0c2830",cls:"q-storm"},
+  all:    {label:"全部",color:"#8b949e",bg:"#21262d",cls:""}
 };
-var TAB_ORDER = ["all","white","green","red","boss","orange","blue","void","storm"];
+var TAB_ORDER = ["all","white","green","red","boss","orange","blue","void","alloyed","storm"];
 
 var activeSection = "items";
 var activeTab = "all";
@@ -520,6 +523,7 @@ function setSection(section) {
 // ===== RENDER TABS (quality) =====
 function getCount(q) {
   if (q === "storm") return ITEMS.filter(function(i){ return i.dlc === "风暴"; }).length;
+  if (q === "alloyed") return ITEMS.filter(function(i){ return i.dlc === "合金"; }).length;
   if (q === "all") return ITEMS.length;
   return ITEMS.filter(function(i){ return i.q === q; }).length;
 }
@@ -541,6 +545,8 @@ function renderItems() {
   var filtered = ITEMS.slice();
   if (activeTab === "storm") {
     filtered = filtered.filter(function(i){ return i.dlc === "风暴"; });
+  } else if (activeTab === "alloyed") {
+    filtered = filtered.filter(function(i){ return i.dlc === "合金"; });
   } else if (activeTab !== "all") {
     filtered = filtered.filter(function(i){ return i.q === activeTab; });
   }
