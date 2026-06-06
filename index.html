@@ -163,6 +163,45 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
 .artifact-unlock{font-size:0.62rem;color:#484f58;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.04)}
 .artifact-dlc{display:inline-block;font-size:0.58rem;padding:2px 7px;border-radius:8px;margin-top:6px;font-weight:600;letter-spacing:0.3px}
 
+/* ===== Info Banner (Stacking Explanation) ===== */
+.info-banner{background:rgba(68,147,248,0.06);border:1px solid rgba(68,147,248,0.15);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+.info-banner summary{font-weight:600;font-size:0.85rem;color:#93c5fd;cursor:pointer;user-select:none;list-style:none}
+.info-banner summary::-webkit-details-marker{display:none}
+.info-banner summary::before{content:'▸ ';display:inline-block;transition:transform .2s;margin-right:2px}
+.info-banner[open] summary::before{transform:rotate(90deg)}
+.info-banner .stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-top:10px}
+.info-banner .stack-item{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)}
+.info-banner .stack-item .st-name{font-weight:600;font-size:0.78rem;color:#e6edf3}
+.info-banner .stack-item .st-desc{font-size:0.68rem;color:#8b949e;margin-top:2px}
+
+/* ===== Boss Grid ===== */
+.bosses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.boss-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;transition:all .2s}
+.boss-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.boss-card .boss-name{font-weight:700;font-size:0.95rem;color:#e6edf3}
+.boss-card .boss-name-en{font-size:0.68rem;color:#484f58;margin-top:1px}
+.boss-card .boss-stats{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}
+.boss-card .boss-stats span{padding:3px 10px;border-radius:10px;font-weight:600;font-size:0.68rem}
+.boss-card .boss-stats .bs-hp{background:rgba(248,81,73,0.12);color:#fca5a5}
+.boss-card .boss-stats .bs-dmg{background:rgba(210,153,34,0.12);color:#fdba74}
+.boss-card .boss-stats .bs-arm{background:rgba(68,147,248,0.12);color:#93c5fd}
+.boss-card .boss-drop{font-size:0.75rem;color:#8b949e;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.04);line-height:1.4}
+.boss-card .boss-drop .bd-name{color:#d29922;font-weight:600}
+.boss-card .boss-drop .bd-effect{font-size:0.68rem;color:#6e7681;margin-top:1px}
+
+/* ===== Mechanics Grid ===== */
+.mechanics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.mechanic-card{border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:#090c10;padding:14px;transition:all .2s}
+.mechanic-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.mechanic-card .mc-name{font-weight:700;font-size:0.9rem;color:#e6edf3}
+.mechanic-card .mc-name-en{font-size:0.66rem;color:#484f58;margin-top:1px}
+.mechanic-card .mc-desc{font-size:0.76rem;color:#8b949e;margin-top:6px;line-height:1.5}
+.mechanic-card .mc-cost{display:inline-block;margin-top:6px;font-size:0.62rem;padding:2px 8px;border-radius:8px;background:rgba(210,153,34,0.08);color:#d29922;font-weight:600}
+.mechanics-cat{margin-bottom:16px}
+.mechanics-cat-title{font-weight:700;font-size:0.85rem;color:#6e7681;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px}
+.section-tab.s-sec4.active{color:#fbbf24}
+.section-tab.s-sec5.active{color:#34d399}
+
 /* ===== Footer ===== */
 .footer{text-align:center;padding:30px;color:#30363d;font-size:0.7rem;letter-spacing:0.3px}
 
@@ -171,6 +210,8 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
   .items{grid-template-columns:1fr;gap:8px}
   .survivors{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
   .artifacts-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .bosses-grid{grid-template-columns:1fr;gap:8px}
+  .mechanics-grid{grid-template-columns:1fr;gap:8px}
   .modal-skills{grid-template-columns:repeat(2,1fr);gap:8px}
   .header{padding:8px 10px 0}
   .section-tab{font-size:0.8rem;padding:8px 6px}
@@ -198,6 +239,8 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
     <div class="section-tab active s-sec1" data-section="items" onclick="setSection('items')">物品图鉴</div>
     <div class="section-tab s-sec2" data-section="survivors" onclick="setSection('survivors')">人物技能</div>
     <div class="section-tab s-sec3" data-section="artifacts" onclick="setSection('artifacts')">神器解锁</div>
+    <div class="section-tab s-sec4" data-section="bosses" onclick="setSection('bosses')">BOSS图鉴</div>
+    <div class="section-tab s-sec5" data-section="mechanics" onclick="setSection('mechanics')">地图机关</div>
   </div>
 </div>
 
@@ -207,6 +250,15 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
 
 <div class="main">
   <div class="content-section active" id="sec-items">
+    <details class="info-banner">
+      <summary>物品叠加方式详解</summary>
+      <div class="stack-grid">
+        <div class="stack-item"><div class="st-name">线性叠加</div><div class="st-desc">每层固定加值 (e.g. +10%伤害/层)。大多数物品使用此方式。</div></div>
+        <div class="stack-item"><div class="st-name">双曲线叠加</div><div class="st-desc">收益递减 (e.g. Tougher Times 15%→28%→39%)</div></div>
+        <div class="stack-item"><div class="st-name">指数叠加</div><div class="st-desc">收益递增 (e.g. Fuel Cell冷却缩减)</div></div>
+        <div class="stack-item"><div class="st-name">特殊叠加</div><div class="st-desc">每件物品独特规则 (e.g. Bandolier, Dio's Best Friend)</div></div>
+      </div>
+    </details>
     <div class="items" id="items"></div>
   </div>
   <div class="content-section" id="sec-survivors">
@@ -214,6 +266,12 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe 
   </div>
   <div class="content-section" id="sec-artifacts">
     <div class="artifacts-grid" id="artifacts"></div>
+  </div>
+  <div class="content-section" id="sec-bosses">
+    <div class="bosses-grid" id="bosses"></div>
+  </div>
+  <div class="content-section" id="sec-mechanics">
+    <div class="mechanics-grid" id="mechanics"></div>
   </div>
 </div>
 
@@ -487,6 +545,43 @@ var ARTIFACTS = [
   {name:"怨恨",nameEn:"Spite",code:"▲●▲●●●▲●▲",desc:"敌人死亡后掉落多个爆炸炸弹"},
   {name:"蜂群",nameEn:"Swarms",code:"●●▲▲♦▲▲●●",desc:"怪物数量翻倍，但生命值减半"},
   {name:"复仇",nameEn:"Vengeance",code:"♦■■♦●■♦■■",desc:"每10分钟出现你的镜像分身，来追杀你"}
+];
+
+// ===== BOSS DATA (Teleporter Bosses) =====
+var BOSSES = [
+  {n:"石巨人",en:"Stone Titan",hp:2100,dmg:"40(+8)",arm:20,drop:"钛巨结",dropEn:"Titanic Knurl",dropEff:"最大生命值+40，基础生命回复+1.6 hp/s"},
+  {n:"甲虫女王",en:"Beetle Queen",hp:2100,dmg:"25(+5)",arm:20,drop:"女王之腺",dropEn:"Queen's Gland",dropEff:"每30秒召唤甲虫守卫，拥有300%伤害和100%生命值"},
+  {n:"流浪巨人",en:"Wandering Vagrant",hp:2100,dmg:"6.5(+1.3)",arm:15,drop:"起源循环",dropEn:"Genesis Loop",dropEff:"生命值低于25%时引发爆炸，造成6000%基础伤害"},
+  {n:"岩浆蠕虫",en:"Magma Worm",hp:2400,dmg:"10(+2)",arm:15,drop:"熔岩穿孔器",dropEn:"Molten Perforator",dropEff:"10%几率命中时召出3颗岩浆球，每颗300%伤害"},
+  {n:"小鬼霸主",en:"Imp Overlord",hp:2800,dmg:"16(+3.2)",arm:20,drop:"碎裂脾脏",dropEn:"Shatterspleen",dropEff:"暴击率+5%，暴击附加240%流血伤害，流血敌人死亡时爆炸"},
+  {n:"沙行者",en:"Clay Dunestrider",hp:2100,dmg:"20(+4)",arm:20,drop:"泥沼瓮",dropEn:"Mired Urn",dropEff:"战斗中牵引敌人，每秒100%伤害，回复100%造成伤害"},
+  {n:"丛林守护者",en:"Grovetender",hp:2800,dmg:"23(+4.6)",arm:20,drop:"小门徒",dropEn:"Little Disciple",dropEff:"冲刺时每1.6秒发射追踪小精灵造成300%伤害"},
+  {n:"爷爷",en:"Grandparent",hp:3625,dmg:"26(+5.2)",arm:20,drop:"海葵",dropEn:"Planula",dropEff:"受到伤害时回复15点生命值（每层+15）"},
+  {n:"超载蠕虫",en:"Overloading Worm",hp:12000,dmg:"50(+10)",arm:15,drop:"充能穿孔器",dropEn:"Charged Perforator",dropEff:"10%几率命中时落下闪电打击，造成500%伤害"},
+  {n:"Solus控制单元",en:"Solus Control Unit",hp:2500,dmg:"15(+3)",arm:20,drop:"共情核心",dropEn:"Empathy Cores",dropEff:"每30秒召唤2个Solus探测器，团队盟友+100%伤害"},
+  {n:"Xi构造体",en:"Xi Construct",hp:2800,dmg:"13(+2.6)",arm:15,drop:"防御核心",dropEn:"Defense Nucleus",dropEff:"击杀精英怪物生成Alpha构造体，最多4个"},
+  {n:"拾荒者",en:"Scavenger",hp:3800,dmg:"4(+0.8)",arm:20,drop:"随机物品包",dropEn:"Random Item Bag",dropEff:"掉落随机物品（多件同品质）"}
+];
+
+// ===== MAP MECHANICS DATA =====
+var MECHANICS = [
+  {cat:"祭坛 / Shrines",items:[
+    {n:"血之祭坛",en:"Shrine of Blood",cost:"消耗50%HP",d:"消耗当前生命值的50%，换取大量金币。金币数量随关卡进度缩放"},
+    {n:"战斗祭坛",en:"Shrine of Combat",cost:"免费激活",d:"激活后在附近召唤大量敌人。击败所有敌人后获得金币奖励"},
+    {n:"山之祭坛",en:"Shrine of the Mountain",cost:"免费/可多次",d:"激活后传送器Boss数量+1。每激活一次，Boss数量和奖励加倍，难度翻倍"},
+    {n:"机遇祭坛",en:"Shrine of Chance",cost:"消耗金币",d:"消耗金币赌一件物品。可能失败（只返少量金币），成功则获得一件随机物品"},
+    {n:"森林祭坛",en:"Shrine of the Woods",cost:"消耗金币",d:"消耗金币，在周围生成治疗区域，每秒恢复50%最大生命值"},
+    {n:"秩序祭坛",en:"Shrine of Order",cost:"1个月球币",d:"消耗1个月球币，将背包中所有物品按品质重新排列为同品质的随机物品"},
+    {n:"净化池",en:"Cleansing Pool",cost:"投入月球物品",d:"投入一件月球物品，换取珍珠(HP+10%/层)或光耀珍珠(全属性+10%/层)"}
+  ]},
+  {cat:"打印机 / Printers",items:[
+    {n:"3D打印机",en:"3D Printer",cost:"同品质物品×1",d:"使用一件同品质物品换取打印机显示的目标物品。每台打印机只能使用一次"},
+    {n:"回收机",en:"Scrapper",cost:"物品×1",d:"将一件物品转换为同品质的废料。废料可在3D打印机中作为交换物使用"}
+  ]},
+  {cat:"特殊 / Special",items:[
+    {n:"Newt祭坛",en:"Newt Altar",cost:"1月球币",d:"消耗1个月球币激活。传送器充能完成后出现蓝色传送门，可进入月球集市"},
+    {n:"时间集市",en:"Bazaar Between Time",cost:"月球币",d:"月球集市可购买月球物品、解锁角色(工匠)、选择下一关地图。通过蓝色传送门进入"}
+  ]}
 ];
 
 // ===== QUALITY CONFIG =====
@@ -817,6 +912,76 @@ function renderArtifacts() {
   }).join("");
 }
 
+// ===== RENDER BOSSES =====
+function renderBosses() {
+  var container = document.getElementById("bosses");
+  var filtered = BOSSES.slice();
+  if (searchTerm) {
+    var s = searchTerm.toLowerCase();
+    filtered = filtered.filter(function(b){
+      return b.n.toLowerCase().indexOf(s) !== -1 ||
+        b.en.toLowerCase().indexOf(s) !== -1 ||
+        b.drop.toLowerCase().indexOf(s) !== -1 ||
+        b.dropEn.toLowerCase().indexOf(s) !== -1;
+    });
+  }
+  document.getElementById("count").textContent = "共 " + filtered.length + " 个BOSS";
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的BOSS</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(b){
+    return '<div class="boss-card">' +
+      '<div class="boss-name">' + b.n + ' <span class="boss-name-en">' + b.en + '</span></div>' +
+      '<div class="boss-stats">' +
+        '<span class="bs-hp">HP ' + b.hp.toLocaleString() + '</span>' +
+        '<span class="bs-dmg">DMG ' + b.dmg + '</span>' +
+        '<span class="bs-arm">ARM ' + b.arm + '</span>' +
+      '</div>' +
+      '<div class="boss-drop">掉落: <span class="bd-name">' + b.drop + ' (' + b.dropEn + ')</span>' +
+        '<div class="bd-effect">' + b.dropEff + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+
+// ===== RENDER MECHANICS =====
+function renderMechanics() {
+  var container = document.getElementById("mechanics");
+  var filteredGroups = MECHANICS.slice();
+  if (searchTerm) {
+    var s = searchTerm.toLowerCase();
+    filteredGroups = MECHANICS.map(function(group){
+      return {
+        cat: group.cat,
+        items: group.items.filter(function(m){
+          return m.n.toLowerCase().indexOf(s) !== -1 ||
+            m.en.toLowerCase().indexOf(s) !== -1 ||
+            m.d.toLowerCase().indexOf(s) !== -1;
+        })
+      };
+    }).filter(function(g){ return g.items.length > 0; });
+  }
+  var total = filteredGroups.reduce(function(sum,g){ return sum + g.items.length; }, 0);
+  document.getElementById("count").textContent = "共 " + total + " 个机关";
+  if (total === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的机关</div>';
+    return;
+  }
+  container.innerHTML = filteredGroups.map(function(group){
+    var cards = group.items.map(function(m){
+      return '<div class="mechanic-card">' +
+        '<div class="mc-name">' + m.n + ' <span class="mc-name-en">' + m.en + '</span></div>' +
+        '<div class="mc-desc">' + m.d + '</div>' +
+        '<span class="mc-cost">' + m.cost + '</span>' +
+      '</div>';
+    }).join("");
+    return '<div class="mechanics-cat">' +
+      '<div class="mechanics-cat-title">' + group.cat + '</div>' +
+      '<div class="mechanics-grid">' + cards + '</div>' +
+    '</div>';
+  }).join("");
+}
+
 // ===== SET TAB =====
 function setTab(q) {
   activeTab = q;
@@ -833,6 +998,10 @@ function renderCurrent() {
     renderSurvivors();
   } else if (activeSection === "artifacts") {
     renderArtifacts();
+  } else if (activeSection === "bosses") {
+    renderBosses();
+  } else if (activeSection === "mechanics") {
+    renderMechanics();
   }
 }
 
