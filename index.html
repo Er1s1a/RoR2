@@ -78,40 +78,48 @@ a{color:inherit;text-decoration:none}
 .q-storm .card-icon{background:#164e63}
 
 /* ===== Survivor Card ===== */
-.survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.survivor-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s;cursor:pointer}
+.survivors{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}
+.survivor-card{border:1px solid #30363d;border-radius:10px;background:#161b22;overflow:hidden;transition:transform .15s,box-shadow .15s}
 .survivor-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}
-.survivor-header{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.survivor-icon{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700}
+.survivor-header{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)}
+.survivor-icon{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;overflow:hidden}
+.survivor-icon img{width:100%;height:100%;object-fit:contain}
 .survivor-info{min-width:0;flex:1}
 .survivor-name{font-weight:700;font-size:1rem;color:#f0f6fc}
 .survivor-name-en{font-size:0.73rem;color:#8b949e;margin-top:1px}
-.survivor-stats{font-size:0.7rem;color:#6e7681;margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
-.survivor-stats span{padding:1px 6px;border-radius:4px;background:rgba(255,255,255,0.05);white-space:nowrap}
+.survivor-stats{font-size:0.7rem;color:#6e7681;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+.survivor-stats span{padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);white-space:nowrap}
 .survivor-dlc-badge{font-size:0.65rem;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:3px;display:inline-block}
 .survivor-expand{font-size:1rem;color:#484f58;transition:transform .25s;flex-shrink:0}
 .survivor-card.expanded .survivor-expand{transform:rotate(180deg)}
-.survivor-body{display:none;padding:12px 14px;background:rgba(0,0,0,0.15)}
+.survivor-body{display:none;padding:14px;background:rgba(0,0,0,0.15)}
 .survivor-card.expanded .survivor-body{display:block}
-.survivor-unlock{font-size:0.75rem;color:#8b949e;margin-bottom:12px;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:2px solid #facc15}
-.survivor-skills{display:flex;flex-direction:column;gap:8px}
-.skill-icon-wrap{width:36px;height:36px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:rgba(255,255,255,0.05)}.skill-icon{width:100%;height:100%;object-fit:contain}.skill-item{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:6px;border-left:2px solid transparent}
-.skill-item.s-pri{border-left-color:#f87171}
-.skill-item.s-sec{border-left-color:#4ade80}
-.skill-item.s-uti{border-left-color:#60a5fa}
-.skill-item.s-spe{border-left-color:#fb923c}
-.skill-item.s-pas{border-left-color:#facc15}
-.skill-tag{flex-shrink:0;font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;line-height:1.4}
-.s-tag-pri{background:#7f1d1d;color:#f87171}
-.s-tag-sec{background:#14532d;color:#4ade80}
-.s-tag-uti{background:#1e3a5f;color:#60a5fa}
-.s-tag-spe{background:#7c2d12;color:#fb923c}
-.s-tag-pas{background:#713f12;color:#facc15}
-.skill-info{min-width:0;flex:1}
-.skill-name{font-size:0.82rem;font-weight:600;color:#e6edf3}
-.skill-name-en{font-size:0.68rem;color:#6e7681;margin-left:6px}
-.skill-desc{font-size:0.73rem;color:#8b949e;margin-top:2px;line-height:1.4}
-.skill-cd{display:inline-block;font-size:0.6rem;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:2px}
+.survivor-unlock{font-size:0.73rem;color:#8b949e;margin-bottom:12px;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:2px solid #facc15}
+
+/* Skills 4-column grid */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.skill-slot{display:flex;flex-direction:column;gap:6px}
+.skill-slot-hd{text-align:center;font-size:0.7rem;font-weight:700;padding:4px 0 6px;border-radius:4px;color:#c9d1d9}
+.skill-slot-hd.m1{background:rgba(248,113,113,0.15);color:#f87171}
+.skill-slot-hd.m2{background:rgba(74,222,128,0.15);color:#4ade80}
+.skill-slot-hd.sf{background:rgba(96,165,250,0.15);color:#60a5fa}
+.skill-slot-hd.rr{background:rgba(251,146,60,0.15);color:#fb923c}
+.skill-slot-hd .key{font-size:0.6rem;opacity:0.7;margin-top:2px;display:block}
+.skill-card{border:1px solid #30363d;border-radius:6px;padding:8px;text-align:center;position:relative;transition:border-color .15s}
+.skill-card.def{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.02)}
+.skill-card.alt{border-color:rgba(255,255,255,0.05);background:rgba(0,0,0,0.1);margin-top:4px}
+.skill-card .sk-icon{width:32px;height:32px;margin:0 auto 4px;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.04)}
+.skill-card .sk-icon img{width:100%;height:100%;object-fit:contain}
+.skill-card .sk-name{font-size:0.75rem;font-weight:600;color:#e6edf3;margin-bottom:2px}
+.skill-card .sk-desc{font-size:0.65rem;color:#8b949e;line-height:1.4}
+.skill-card .sk-tag{display:inline-block;font-size:0.55rem;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.08);color:#6e7681;margin-top:3px}
+.skill-alt-badge{font-size:0.55rem;color:#facc15;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+
+/* Passive section */
+.survivor-passive{padding:8px 10px;margin-bottom:10px;border-radius:6px;background:rgba(250,204,21,0.06);border:1px solid rgba(250,204,21,0.15);display:flex;align-items:center;gap:8px}
+.survivor-passive .psv-tag{font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:3px;background:#713f12;color:#facc15;flex-shrink:0}
+.survivor-passive .psv-text{font-size:0.72rem;color:#b0b8c1}
+.survivor-passive .psv-name{font-weight:600;color:#e6edf3}
 
 /* ===== Artifact Card ===== */
 .artifacts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -133,7 +141,8 @@ a{color:inherit;text-decoration:none}
 .footer{text-align:center;padding:30px;color:#484f58;font-size:0.75rem}
 
 /* ===== Mobile ===== */
-@media(max-width:600px){
+@media(max-width:700px){
+  .skills-grid{grid-template-columns:repeat(2,1fr);gap:6px}
   .items{grid-template-columns:1fr;gap:8px}
   .survivors{grid-template-columns:1fr;gap:8px}
   .artifacts-grid{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -601,16 +610,54 @@ function renderSurvivors() {
     
     var statsHtml = '<span>HP ' + sv.hp + '(+' + sv.hl + ')</span><span>DMG ' + sv.dg + '(+' + sv.dl + ')</span><span>ARM ' + sv.ar + '</span>';
     var iconFile = 'icons/survivor_' + sv.en.replace(/'/g,'').replace(/ /g,'_').replace(/-/g,'-') + '.webp';
-    var skillsHtml = sv.sk.map(function(sk){
-      var tm = SKILL_TYPE_MAP[sk.t] || {cls:"",tagCls:"",label:sk.t};
+    // Group skills by type: pri/sec/uti/spe/pas
+    var groups = {pri:[],sec:[],uti:[],spe:[],pas:[]};
+    sv.sk.forEach(function(sk){ if(groups[sk.t]) groups[sk.t].push(sk); });
+    
+    // Build skill icon helper
+    function skIcon(sk) {
       var icn = 'icons/skill_' + sk.e.replace(/'/g,'').replace(/:/g,'').replace(/!/g,'').replace(/\(/g,'').replace(/\)/g,'') + '.webp';
-      return '<div class="skill-item ' + tm.cls + '">' +
-        '<div class="skill-icon-wrap"><img src="' + icn + '" class="skill-icon" alt="" onerror="this.style.display=\'none\'"><span class="skill-tag ' + tm.tagCls + '">' + tm.label + '</span></div>' +
-        '<div class="skill-info">' +
-          '<span class="skill-name">' + sk.n + '<span class="skill-name-en">' + sk.e.replace(/_/g,' ') + '</span></span>' +
-          '<div class="skill-desc">' + sk.d + (sk.cd ? ' <span class="skill-cd">CD ' + sk.cd + '</span>' : '') + (sk.pc ? ' <span class="skill-cd">PC ' + sk.pc + '</span>' : '') + '</div>' +
-        '</div></div>';
-    }).join("");
+      return '<div class="sk-icon"><img src="' + icn + '" alt="" onerror="this.parentElement.textContent=\'' + sk.n.slice(0,2) + '\'"></div>';
+    }
+    
+    // Build one skill card
+    function skCard(sk, isAlt) {
+      var cls = isAlt ? 'alt' : 'def';
+      var altBadge = isAlt ? '<div class="skill-alt-badge">解锁替换</div>' : '';
+      return '<div class="skill-card ' + cls + '">' + altBadge +
+        skIcon(sk) +
+        '<div class="sk-name">' + sk.n + '</div>' +
+        '<div class="sk-desc">' + sk.d + '</div>' +
+        (sk.cd ? '<span class="sk-tag">CD ' + sk.cd + '</span>' : '') +
+        (sk.pc ? '<span class="sk-tag">PC ' + sk.pc + '</span>' : '') +
+        '</div>';
+    }
+    
+    // Build one skill slot column (M1/M2/Shift/R)
+    function skSlot(skills, label, cls) {
+      if (!skills.length) return '<div class="skill-slot"><div class="skill-slot-hd ' + cls + '">' + label + '</div><div class="skill-card alt"><div class="sk-desc" style="color:#484f58">无</div></div></div>';
+      var h = '<div class="skill-slot"><div class="skill-slot-hd ' + cls + '">' + label + '</div>';
+      h += skCard(skills[0], false);
+      for (var j = 1; j < skills.length; j++) { h += skCard(skills[j], true); }
+      h += '</div>';
+      return h;
+    }
+    
+    // Passive banner
+    var passiveHtml = '';
+    if (groups.pas.length) {
+      passiveHtml = groups.pas.map(function(ps){
+        return '<div class="survivor-passive"><span class="psv-tag">被动</span><div><span class="psv-name">' + ps.n + '</span> <span class="psv-text">' + ps.d + '</span></div></div>';
+      }).join('');
+    }
+    
+    // 4-column skills grid
+    var gridHtml = '<div class="skills-grid">' +
+      skSlot(groups.pri, 'M1<div class="key">左键</div>', 'm1') +
+      skSlot(groups.sec, 'M2<div class="key">右键</div>', 'm2') +
+      skSlot(groups.uti, 'Shift<div class="key">位移</div>', 'sf') +
+      skSlot(groups.spe, 'R<div class="key">大招</div>', 'rr') +
+      '</div>';
     return '<div class="survivor-card" onclick="this.classList.toggle(\'expanded\')">' +
       '<div class="survivor-header">' +
         '<div class="survivor-icon" style="background:' + bgCol + ';color:#e6edf3">' +
@@ -626,7 +673,8 @@ function renderSurvivors() {
       '</div>' +
       '<div class="survivor-body">' +
         '<div class="survivor-unlock">解锁条件：' + sv.uk + '</div>' +
-        '<div class="survivor-skills">' + skillsHtml + '</div>' +
+        passiveHtml +
+        gridHtml +
       '</div></div>';
   }).join("");
 }
